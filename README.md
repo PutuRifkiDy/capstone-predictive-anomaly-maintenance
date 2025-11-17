@@ -1,1 +1,1 @@
-"# capstone-predictive-anomaly-maintenance" 
+# capstone-predictive-anomaly-maintenance
