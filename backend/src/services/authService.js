@@ -8,25 +8,25 @@ const {
 
 class AuthService {
     async register({ name, email, password, role }) {
-        const exitingUser = await db.query('SELECT id FROM users WHERE email = $1', [email]);
-        if (exitingUser) {
+        const exitingUser = await db.query('SELECT * FROM users WHERE email = $1', [email]);
+        if (exitingUser.rows[0]) {
             throw new Error('User with this email already exists');
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const result = await db.one(
+        const result = await db.query(
             `INSERT INTO users (name, email, password, role)
              VALUES ($1, $2, $3, $4)
              RETURNING id, name, email, role, created_at`,
             [name, email, hashedPassword, role]
         );
 
-        return result.row[0];
+        return result.rows[0];
     }
 
     async login({ email, password }) {
         const result = await db.query('SELECT * FROM users WHERE email = $1', [email]);
-        const user = result.row[0];
+        const user = result.rows[0];
         if (!user) {
             throw new Error('Invalid email or password');
         }
@@ -65,7 +65,7 @@ class AuthService {
                 [oldRefreshToken]
             );
 
-            const tokenRecord = tokenResult.row[0];
+            const tokenRecord = tokenResult.rows[0];
             if (!tokenRecord) {
                 throw new Error('Invalid or expired refresh token');
             }
