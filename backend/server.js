@@ -23,9 +23,6 @@ app.use(
 app.get('/', (request, response) => {
   response.json({ Welcome: 'Testing' })
 });
-// contoh
-// app.get('/countries', db.getCountries);
-
 
 app.listen(3000, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
