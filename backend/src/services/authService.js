@@ -60,10 +60,23 @@ class AuthService {
 
     async refreshToken(oldRefreshToken) {
         try {
-            const tokenResult = await db.query(
-                'SELECT rt.*, u.role FROM refresh_tokens rt JOIN users u ON rt.user_id = u.id WHERE rt.token = $1 AND rt.expires_at > NOW()',
-                [oldRefreshToken]
-            );
+            const query = `
+            SELECT 
+                rt.id,
+                rt.user_id,
+                rt.token,
+                rt.expires_at,
+                rt.created_at,
+                u.role
+            FROM refresh_tokens AS rt
+            INNER JOIN users AS u 
+                ON rt.user_id = u.id
+            WHERE 
+                rt.token = $1
+                AND rt.expires_at > NOW();
+            `;
+
+            const tokenResult = await db.query(query, [oldRefreshToken]);
 
             const tokenRecord = tokenResult.rows[0];
             if (!tokenRecord) {
