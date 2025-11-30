@@ -1,4 +1,3 @@
-const { parse } = require('dotenv');
 const userService = require('../services/userService');
 
 class UserController {

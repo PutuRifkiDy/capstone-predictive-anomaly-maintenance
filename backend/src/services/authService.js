@@ -77,7 +77,9 @@ class AuthService {
 
             return { accessToken };
         } catch (error) {
-            throw new Error('Invalid or expired refresh token');
+            if (error) {
+                throw new Error('Invalid or expired refresh token');
+            }
         }
     }
 
