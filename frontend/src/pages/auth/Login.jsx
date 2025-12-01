@@ -7,7 +7,7 @@ export default function Login() {
   const handleShowPassword = () => setShowPassword(!showPassword);
 
   return (
-    <section className="lg:px-24 md:px-5 px-5 py-5 gap-24 flex lg:justify-between md:justify-center justify-center">
+    <section className="lg:px-24 md:px-5 px-5 py-5 flex gap-24 lg:justify-between md:justify-center justify-center">
       <div className="flex flex-col lg:w-1/2 md:w-full w-full">
         <header className="flex items-center gap-3">
           <CompanyLogo />
@@ -16,7 +16,7 @@ export default function Login() {
         <div className="flex flex-col mt-24">
           <header className="flex flex-col">
             <h4 className="font-semibold text-[40px] text-[#313131]">Login</h4>
-            <p className="text-[16px] text-[#313131]">Login untuk mengakses pengecekan mesin</p>
+            <p className="text-[16px] text-[#313131]"><span>Login</span> untuk mengakses pengecekan mesin</p>
           </header>
           <form className="mt-10 flex flex-col gap-5">
             <div className="flex flex-col gap-2">
@@ -47,7 +47,7 @@ export default function Login() {
                 />
               )}
             </div>
-            <button className="bg-[#515DEF] py-2 rounded-[4px] text-white mt-10">Login</button>
+            <button className="bg-[#515DEF] py-2 rounded-[4px] text-white mt-10 hover:shadow-2xl transition-all duration-300 ease-in-out">Login</button>
           </form>
         </div>
       </div>
