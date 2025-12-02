@@ -12,10 +12,16 @@ import {
 } from "@heroicons/react/24/outline";
 import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/solid";
 import { Link, useLocation } from "react-router";
+import { logout } from "../../../utils/api";
 
 export default function Sidebar({ isSidebarOpen }) {
   const location = useLocation();
   const currentPath = location.pathname;
+  
+  const handleLogout = async () => {
+    await logout();
+    window.location.href = "/login";
+  };
 
   console.log(currentPath);
 
@@ -121,7 +127,7 @@ export default function Sidebar({ isSidebarOpen }) {
                     <HomeIcon className="!w-6 !h-6 font-medium flex-shrink-0" />
                     Beranda
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="flex gap-5 items-center cursor-pointer text-red-600 font-medium">
+                  <DropdownMenuItem onClick={handleLogout} className="flex gap-5 items-center cursor-pointer text-red-600 font-medium">
                     <ArrowLeftEndOnRectangleIcon className="!w-6 !h-6 font-bold text-red-600 flex-shrink-0" />
                     Logout
                   </DropdownMenuItem>
@@ -226,7 +232,7 @@ export default function Sidebar({ isSidebarOpen }) {
                     <HomeIcon className="!w-6 !h-6 font-medium flex-shrink-0" />
                     Beranda
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="flex gap-5 items-center cursor-pointer text-red-600 font-medium">
+                  <DropdownMenuItem onClick={handleLogout} className="flex gap-5 items-center cursor-pointer text-red-600 font-medium">
                     <ArrowLeftEndOnRectangleIcon className="!w-6 !h-6 font-bold text-red-600 flex-shrink-0" />
                     Logout
                   </DropdownMenuItem>
