@@ -16,15 +16,15 @@ export default function Create() {
       </p>
       <form className="flex flex-col gap-5 mt-5">
         <div className="rounded-xl border-[1px] border-gray-200">
-          <div className="flex items-center justify-between px-10 py-5">
+          <div className="flex md:flex-row flex-col-reverse items-center justify-between lg:px-10 md:px-10 px-3 py-5 md:gap-0 gap-5">
             <p className="font-medium text-[16px]">User Information</p>
-            <button className="flex items-center gap-3 px-4 py-2 text-white bg-[#515DEF] rounded-md group">
+            <button className="flex items-center gap-3 md:w-40 w-full px-4 py-2 text-white bg-[#515DEF] rounded-md group">
               <ArrowLeftIcon className="text-white w-3 h-3 group-hover:-translate-x-1 transition-all duration-300 ease-in-out" />
               Back to User
             </button>
           </div>
           <div className="w-full h-[1px] bg-gray-200" />
-          <div className="flex flex-col gap-2 px-10 mb-3 mt-5">
+          <div className="flex flex-col gap-2 md:px-10 px-3 mb-3  mt-5">
             <label
               htmlFor="name"
               className="text-[14px] text-[#202224] flex gap-1 items-center dark:text-gray-400"
@@ -38,7 +38,7 @@ export default function Create() {
               className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-gray-400 dark:bg-[#081028]"
             />
           </div>
-          <div className="flex flex-col gap-2 px-10 mb-3">
+          <div className="flex flex-col gap-2 md:px-10 px-3 mb-3 ">
             <label
               htmlFor="email"
               className="text-[14px] text-[#202224] flex gap-1 items-center dark:text-gray-400"
@@ -52,7 +52,7 @@ export default function Create() {
               className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-gray-400 dark:bg-[#081028]"
             />
           </div>
-          <div className="flex flex-col gap-2 px-10 mb-3">
+          <div className="flex flex-col gap-2 md:px-10 px-3 mb-3 ">
             <label
               htmlFor="phone_number"
               className="text-[14px] text-[#202224] flex gap-1 items-center dark:text-gray-400"
@@ -66,7 +66,7 @@ export default function Create() {
               className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-gray-400 dark:bg-[#081028]"
             />
           </div>
-          <div className="flex flex-col gap-2 px-10 mb-5">
+          <div className="flex flex-col gap-2 md:px-10 px-3 mb-5">
             <label
               htmlFor="role"
               className="text-[14px] text-[#202224] flex gap-1 items-center dark:text-gray-400"
