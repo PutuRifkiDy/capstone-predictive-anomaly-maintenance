@@ -11,16 +11,22 @@ export default function Login() {
       <div className="flex flex-col lg:w-1/2 md:w-full w-full">
         <header className="flex items-center gap-3">
           <CompanyLogo />
-          <p className="font-bold text-[35.33px] leading-[150%] tracking-[-1%]">Predicta<span className="text-[#515DEF]">Energy</span></p>
+          <p className="font-bold text-[35.33px] leading-[150%] tracking-[-1%]">
+            Predicta<span className="text-[#515DEF]">Energy</span>
+          </p>
         </header>
         <div className="flex flex-col mt-24">
           <header className="flex flex-col">
             <h4 className="font-semibold text-[40px] text-[#313131]">Login</h4>
-            <p className="text-[16px] text-[#313131]"><span>Login</span> untuk mengakses pengecekan mesin</p>
+            <p className="text-[16px] text-[#313131]">
+              <span>Login</span> untuk mengakses pengecekan mesin
+            </p>
           </header>
           <form className="mt-10 flex flex-col gap-5">
             <div className="flex flex-col gap-2">
-              <label htmlFor="email" className="text-[14px] text-[#313131]">Email</label>
+              <label htmlFor="email" className="text-[14px] text-[#313131]">
+                Email
+              </label>
               <input
                 name="email"
                 placeholder="Masukkan email anda"
@@ -28,7 +34,9 @@ export default function Login() {
               />
             </div>
             <div className="flex flex-col gap-2 relative">
-              <label htmlFor="password" className="text-[14px] text-[#313131]">Password</label>
+              <label htmlFor="password" className="text-[14px] text-[#313131]">
+                Password
+              </label>
               <input
                 name="password"
                 placeholder="Masukkan password anda"
@@ -47,13 +55,15 @@ export default function Login() {
                 />
               )}
             </div>
-            <button className="bg-[#515DEF] py-2 rounded-[4px] text-white mt-10 hover:shadow-2xl transition-all duration-300 ease-in-out">Login</button>
+            <button className="bg-[#515DEF] py-2 rounded-[4px] text-white mt-10 hover:shadow-2xl transition-all duration-300 ease-in-out">
+              Login
+            </button>
           </form>
         </div>
       </div>
 
       <div className="w-1/2 lg:block md:hidden hidden">
-        <img src='/auth/auth-image.png' className="w-full h-auto" />
+        <img src="/auth/auth-image.png" className="w-full h-auto" />
       </div>
     </section>
   );
