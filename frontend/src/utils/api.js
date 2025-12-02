@@ -106,7 +106,7 @@ async function deleteUser(id) {
 
 async function addUser({ name, email, password, role }) {
   try {
-    const response = await fetch(`${BASE_URL}/users/register`, {
+    const response = await fetch(`${BASE_URL}/auth/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -115,6 +115,7 @@ async function addUser({ name, email, password, role }) {
     });
 
     const responseJson = await response.json();
+    console.log("Response:", responseJson);
 
     if (responseJson.status !== "success") {
       return {

@@ -7,14 +7,38 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import useInput from "@/hooks/useInput";
+import { addUser } from "@/utils/api";
+import { useState } from "react";
 
 export default function Create() {
+  const [name, onNameChange] = useInput("");
+  const [email, onEmailChange] = useInput("");
+  const [phoneNumber, onPhoneNumberChange] = useInput("");
+  const [password, onPasswordChange] = useInput("");
+  const [role, setRole] = useState("");
+
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
+    const result = await addUser({
+      name,
+      email,
+      phoneNumber,
+      role,
+      password,
+    });
+
+    if (result.error) {
+      alert(result.message);
+    }
+  };
+
   return (
     <AppLayout>
       <p className="font-medium text-[32px] tracking-[-0.11px] text-[#000000] dark:text-white">
         Create User
       </p>
-      <form className="flex flex-col gap-5 mt-5">
+      <form className="flex flex-col gap-5 mt-5" onSubmit={onSubmitHandler}>
         <div className="rounded-xl border-[1px] border-gray-200">
           <div className="flex md:flex-row flex-col-reverse items-center justify-between lg:px-10 md:px-10 px-3 py-5 md:gap-0 gap-5">
             <p className="font-medium text-[16px]">User Information</p>
@@ -36,6 +60,8 @@ export default function Create() {
               name="name"
               placeholder="Input your name here..."
               className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-gray-400 dark:bg-[#081028]"
+              value={name}
+              onChange={onNameChange}
             />
           </div>
           <div className="flex flex-col gap-2 md:px-10 px-3 mb-3 ">
@@ -50,6 +76,8 @@ export default function Create() {
               name="Email"
               placeholder="Input your email here..."
               className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-gray-400 dark:bg-[#081028]"
+              value={email}
+              onChange={onEmailChange}
             />
           </div>
           <div className="flex flex-col gap-2 md:px-10 px-3 mb-3 ">
@@ -64,6 +92,25 @@ export default function Create() {
               name="phone_number"
               placeholder="Input your phone number here..."
               className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-gray-400 dark:bg-[#081028]"
+              value={phoneNumber}
+              onChange={onPhoneNumberChange}
+            />
+          </div>
+          <div className="flex flex-col gap-2 md:px-10 px-3 mb-3 ">
+            <label
+              htmlFor="password"
+              className="text-[14px] text-[#202224] flex gap-1 items-center dark:text-gray-400"
+            >
+              Password
+              <span className="text-red-500">*</span>
+            </label>
+            <input
+              name="phone_number"
+              placeholder="Input your phone number here..."
+              className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-gray-400 dark:bg-[#081028]"
+              type="password"
+              value={password}
+              onChange={onPasswordChange}
             />
           </div>
           <div className="flex flex-col gap-2 md:px-10 px-3 mb-5">
@@ -74,13 +121,13 @@ export default function Create() {
               Role
               <span className="text-red-500">*</span>
             </label>
-            <Select>
+            <Select value={role} onValueChange={(value) => setRole(value)}>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Role" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="light">Admin</SelectItem>
-                <SelectItem value="dark">Engineer</SelectItem>
+                <SelectItem value="admin">Admin</SelectItem>
+                <SelectItem value="user">Engineer</SelectItem>
               </SelectContent>
             </Select>
           </div>
