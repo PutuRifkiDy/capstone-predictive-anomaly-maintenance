@@ -2,33 +2,36 @@ import { useState } from "react";
 import CompanyLogo from "../../components/icons/CompanyLogo";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import { login } from "../../utils/api";
+import useInput from "@/hooks/useInput";
+import { toast } from "sonner";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({ email: "", password: "" });
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [email, onEmailChange] = useInput("");
+  const [password, onPasswordChange] = useInput("");
   
   const handleShowPassword = () => setShowPassword(!showPassword);
-  
-  const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-  
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    
-    const result = await login(formData);
-    
-    if (result.error) {
-      alert(result.message);
-    } else {
-      // Redirect atau handle success
-      window.location.href = "/dashboard";
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+
+    if (email.trim() == "" || password.trim() == "") {
+      toast.error("Please fill all the fields");
+      return;
     }
-    
-    setIsLoading(false);
-  };
+
+    try {
+      const result = await login({ email, password });
+      if (result.error) {
+        toast.error(result.message);
+      } else {
+        toast.success(result.message);
+      }
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <section className="lg:px-24 md:px-5 px-5 py-5 flex gap-24 lg:justify-between md:justify-center justify-center">
@@ -54,8 +57,8 @@ export default function Login() {
               <input
                 name="email"
                 type="email"
-                value={formData.email}
-                onChange={handleInputChange}
+                value={email}
+                onChange={onEmailChange}
                 placeholder="Masukkan email anda"
                 className="border-[1px] px-4 py-2 border-[#79747E] rounded-[4px] focus:outline-none placeholder:text-[#79747E]"
                 required
@@ -67,8 +70,8 @@ export default function Login() {
               </label>
               <input
                 name="password"
-                value={formData.password}
-                onChange={handleInputChange}
+                value={password}
+                onChange={onPasswordChange}
                 placeholder="Masukkan password anda"
                 type={showPassword ? "text" : "password"}
                 className="border-[1px] px-4 py-2 border-[#79747E] rounded-[4px] focus:outline-none placeholder:text-[#79747E]"
@@ -88,10 +91,10 @@ export default function Login() {
             </div>
             <button 
               type="submit"
-              disabled={isLoading}
+              disabled={loading}
               className="bg-[#515DEF] py-2 rounded-[4px] text-white mt-10 hover:shadow-2xl transition-all duration-300 ease-in-out disabled:opacity-50"
             >
-              {isLoading ? "Loading..." : "Login"}
+              {loading ? "Loading..." : "Login"}
             </button>
           </form>
         </div>
