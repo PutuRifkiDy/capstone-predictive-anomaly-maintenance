@@ -1,10 +1,34 @@
 import { useState } from "react";
 import CompanyLogo from "../../components/icons/CompanyLogo";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
+import { login } from "../../utils/api";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [isLoading, setIsLoading] = useState(false);
+  
   const handleShowPassword = () => setShowPassword(!showPassword);
+  
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    
+    const result = await login(formData);
+    
+    if (result.error) {
+      alert(result.message);
+    } else {
+      // Redirect atau handle success
+      window.location.href = "/dashboard";
+    }
+    
+    setIsLoading(false);
+  };
 
   return (
     <section className="lg:px-24 md:px-5 px-5 py-5 flex gap-24 lg:justify-between md:justify-center justify-center">
@@ -22,15 +46,19 @@ export default function Login() {
               <span>Login</span> untuk mengakses pengecekan mesin
             </p>
           </header>
-          <form className="mt-10 flex flex-col gap-5">
+          <form className="mt-10 flex flex-col gap-5" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-2">
               <label htmlFor="email" className="text-[14px] text-[#313131]">
                 Email
               </label>
               <input
                 name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleInputChange}
                 placeholder="Masukkan email anda"
                 className="border-[1px] px-4 py-2 border-[#79747E] rounded-[4px] focus:outline-none placeholder:text-[#79747E]"
+                required
               />
             </div>
             <div className="flex flex-col gap-2 relative">
@@ -39,9 +67,12 @@ export default function Login() {
               </label>
               <input
                 name="password"
+                value={formData.password}
+                onChange={handleInputChange}
                 placeholder="Masukkan password anda"
                 type={showPassword ? "text" : "password"}
                 className="border-[1px] px-4 py-2 border-[#79747E] rounded-[4px] focus:outline-none placeholder:text-[#79747E]"
+                required
               />
               {showPassword ? (
                 <EyeIcon
@@ -55,8 +86,12 @@ export default function Login() {
                 />
               )}
             </div>
-            <button className="bg-[#515DEF] py-2 rounded-[4px] text-white mt-10 hover:shadow-2xl transition-all duration-300 ease-in-out">
-              Login
+            <button 
+              type="submit"
+              disabled={isLoading}
+              className="bg-[#515DEF] py-2 rounded-[4px] text-white mt-10 hover:shadow-2xl transition-all duration-300 ease-in-out disabled:opacity-50"
+            >
+              {isLoading ? "Loading..." : "Login"}
             </button>
           </form>
         </div>
