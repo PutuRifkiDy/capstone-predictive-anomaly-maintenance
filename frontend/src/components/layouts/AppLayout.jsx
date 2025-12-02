@@ -143,7 +143,7 @@ export default function AppLayout({ children }) {
               <ThemeSwitcher />
             </div>
           </div>
-          <div className="px-4 sm:px-6 lg:px-8 mt-5">{children}</div>
+          <div className="px-4 sm:px-6 lg:px-8 py-5">{children}</div>
           <div className="absolute bottom-0 right-5"></div>
         </main>
       </div>
