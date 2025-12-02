@@ -6,6 +6,8 @@ import Dashboard from './pages/app/Dashboard';
 
 import './index.css';
 import { ThemeProvider } from './components/ThemeProvider';
+import Create from './pages/app/users/Create';
+import Update from './pages/app/users/Update';
 
 const router = createBrowserRouter([
   {
@@ -15,6 +17,14 @@ const router = createBrowserRouter([
   {
     path: '/admin/users',
     element: <Dashboard />
+  },
+  {
+    path: '/admin/users/create',
+    element: <Create />
+  },
+  {
+    path: '/admin/users/update',
+    element: <Update />
   },
   {
     path: '/chatbot',
