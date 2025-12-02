@@ -17,6 +17,8 @@ export default function Sidebar({ isSidebarOpen }) {
   const location = useLocation();
   const currentPath = location.pathname;
 
+  console.log(currentPath);
+
   return (
     <nav className="flex flex-1 flex-col">
       <ul className="flex flex-1 flex-col gap-y-7" role="list">
@@ -54,19 +56,19 @@ export default function Sidebar({ isSidebarOpen }) {
                     to={"/admin/users"}
                     className={`
                   ${
-                    currentPath === "/admin/users"
+                    currentPath.startsWith("/admin/users")
                       ? "bg-[#515DEF]/10 relative text-[#515DEF] pl-5"
                       : "text-foreground hover:bg-gray-100 dark:hover:bg-[#7E89AC]/30 transition-all duration-300 ease-in-out"
                   }
                   group flex gap-x-3 rounded-md p-3 text-sm font-medium items-center
                 `}
                   >
-                    {currentPath === "/admin/users" && (
+                    {currentPath.startsWith("/admin/users") && (
                       <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
                     )}
                     <UserGroupIcon
                       className={`w-6 h-6 ${
-                        currentPath === "/admin/users"
+                        currentPath.startsWith("/admin/users")
                           ? "text-[#515DEF]"
                           : "text-foreground"
                       }`}
@@ -163,7 +165,7 @@ export default function Sidebar({ isSidebarOpen }) {
                     to={"/admin/users"}
                     className={`
                   ${
-                    currentPath === "/admin/users"
+                    currentPath.startsWith("/admin/users")
                       ? "bg-[#515DEF]/10 relative text-[#515DEF]"
                       : "text-foreground hover:bg-gray-100 dark:hover:bg-[#7E89AC]/30 transition-all duration-300 ease-in-out"
                   }
@@ -172,12 +174,12 @@ export default function Sidebar({ isSidebarOpen }) {
                   } p-3 text-sm font-medium items-center justify-center
                 `}
                   >
-                    {currentPath === "/admin/users" && (
+                    {currentPath.startsWith("/admin/users") && (
                       <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
                     )}
                     <UserGroupIcon
                       className={`w-6 h-6 ${
-                        currentPath === "/admin/users"
+                        currentPath.startsWith("/admin/users")
                           ? "text-[#515DEF]"
                           : "text-foreground"
                       }`}
