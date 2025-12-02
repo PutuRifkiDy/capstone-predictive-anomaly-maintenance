@@ -5,6 +5,7 @@ import Login from './pages/auth/Login';
 import Dashboard from './pages/app/Dashboard';
 
 import './index.css';
+import { ThemeProvider } from './components/ThemeProvider';
 
 const router = createBrowserRouter([
   {
@@ -26,5 +27,9 @@ const router = createBrowserRouter([
 ]);
 
 const root = createRoot(document.getElementById('root'));
-root.render(<RouterProvider router={router} />);
+root.render(
+  <ThemeProvider defaultTheme='light' storageKey='theme'>
+    <RouterProvider router={router} />
+  </ThemeProvider>
+);
 
