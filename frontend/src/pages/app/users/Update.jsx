@@ -14,9 +14,9 @@ export default function Update() {
       <h1 className="font-bold text-2xl">Update User</h1>
       <form action="">
         <div className="mt-10 rounded-xl border border-gray-200 bg-white shadow-md dark:bg-[#081028]">
-          <div className="flex flex-row justify-between items-center px-[23px] py-[17px] border-b border-gray-200">
+          <div className="flex md:flex-row flex-col-reverse justify-between items-center px-[23px] py-[17px] border-b border-gray-200 gap-5">
             <p className="font-medium">User Information</p>
-            <button className="bg-[#515DEF] text-white px-[20px] py-[10px] rounded-[8px] flex flex-row gap-[8px] justify-items-center items-center group">
+            <button className="bg-[#515DEF] text-white px-[20px] py-[10px] rounded-[8px] flex flex-row gap-[8px] justify-items-center items-center group w-full md:w-52 md:items-center md:justify-center">
               <ArrowLeftIcon className="w-3 h-3 group-hover:-translate-x-1  transition-all duration-300 ease-in-out" />
               Back to Users
             </button>
@@ -66,8 +66,8 @@ export default function Update() {
             </div>
           </div>
         </div>
-          <div className="flex justify-end pr-5">
-            <button className="bg-[#515DEF] text-white py-[10px] w-40 rounded-[8px] mt-10 flex flex-row justify-center items-center gap-2">
+          <div className="flex justify-center md:justify-end pr-5">
+            <button className="bg-[#515DEF] text-white py-[10px] w-full md:w-40 rounded-[8px] mt-10 flex flex-row justify-center items-center gap-2">
               Simpan
               <CheckIcon className="w-4 h-4"/>
             </button>
