@@ -1,8 +1,5 @@
 const BASE_URL = "http://localhost:3000";
-// bagi 2
-// candra
 
-// tri
 
 function getAccessToken() {
   return localStorage.getItem('accessToken');
@@ -38,7 +35,7 @@ async function login({ email, password }) {
 
     const responseJson = await response.json();
     console.log('Response:', responseJson); // Debug log
-    
+
     if (responseJson.status !== 'success') {
       return {
         error: true,
@@ -75,12 +72,38 @@ async function logout(refreshToken) {
       },
       body: JSON.stringify({ refreshToken })
     });
-    
+
     removeAccessToken();
     return { error: false }
   } catch (error) {
+    console.error(error);
     removeAccessToken();
     return { error: false }
+  }
+}
+
+async function deleteUser(id) {
+  try {
+    const response = await fetchWithToken(`${BASE_URL}/users/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
+
+    const responseJson = await response.json();
+
+    if (responseJson.status !== 'success') {
+      return {
+        error: true,
+        message: responseJson.message || 'Gagal menghapus user'
+      }
+    }
+  } catch (error) {
+    return {
+      error: true,
+      message: error
+    }
   }
 }
 
@@ -90,5 +113,6 @@ export {
   removeAccessToken,
   login,
   logout,
-  fetchWithToken
+  fetchWithToken,
+  deleteUser,
 }
