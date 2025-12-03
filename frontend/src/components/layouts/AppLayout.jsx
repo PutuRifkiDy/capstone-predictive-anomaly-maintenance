@@ -7,7 +7,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import SidebarResponsive from "./partials/SidebarResponsive";
 
-export default function AppLayout({ children }) {
+export default function AppLayout({ children, authedUser, onLogout }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSidebarOpenMobile, setIsSidebarOpenMobile] = useState(false);
 
@@ -70,6 +70,8 @@ export default function AppLayout({ children }) {
                   {/* Sidebar mobile */}
                   <SidebarResponsive
                     isSidebarOpenMobile={isSidebarOpenMobile}
+                    authedUser={authedUser}
+                    onLogout={onLogout}
                   />
                 </Dialog.Panel>
               </Transition.Child>
@@ -99,7 +101,11 @@ export default function AppLayout({ children }) {
                 <CompanyLogo />
               </header>
             )}
-            <Sidebar isSidebarOpen={isSidebarOpen} />
+            <Sidebar
+              isSidebarOpen={isSidebarOpen}
+              authedUser={authedUser}
+              onLogout={onLogout}
+            />
           </div>
         </div>
 

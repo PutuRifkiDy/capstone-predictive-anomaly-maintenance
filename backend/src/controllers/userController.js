@@ -4,7 +4,10 @@ class UserController {
     async getCurrentUser(req, res, next) {
         try {
             const user = await userService.getCurrentUser(req.user.id);
-            res.json({ user });
+            res.json({
+                status: 'success',
+                user
+            });
         } catch (error) {
             if (error.message === 'User not found') {
                 return res.status(404).json({ error: error.message });

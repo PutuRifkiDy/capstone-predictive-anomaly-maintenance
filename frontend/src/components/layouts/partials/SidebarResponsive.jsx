@@ -13,16 +13,10 @@ import {
 } from "@heroicons/react/24/outline";
 import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/solid";
 import { Link, useLocation } from "react-router";
-import { logout } from "../../../utils/api";
 
-export default function SidebarResponsive({ isSidebarOpenMobile }) {
+export default function SidebarResponsive({ isSidebarOpenMobile, authedUser, onLogout }) {
   const location = useLocation();
   const currentPath = location.pathname;
-  
-  const handleLogout = async () => {
-    await logout();
-    window.location.href = "/login";
-  };
 
   return (
     <nav className="flex flex-1 flex-col bg-white dark:bg-[#081028]">
@@ -121,10 +115,10 @@ export default function SidebarResponsive({ isSidebarOpenMobile }) {
                   <img src="/profile-sidebar-image.png" alt="sidebar-profile" />
                   <div className="flex flex-col gap-1 justify-center">
                     <p className="font-medium text-[14px] tracking-[-0.25px] text-foreground">
-                      Putu Rifki Dirkayuda
+                      {authedUser.name}
                     </p>
                     <div className="flex justify-center font-medium items-center bg-[#515DEF] rounded-full py-1 px-3 text-white w-fit text-[10px]">
-                      Admin
+                      {authedUser.role}
                     </div>
                   </div>
                 </DropdownMenuTrigger>
@@ -133,7 +127,7 @@ export default function SidebarResponsive({ isSidebarOpenMobile }) {
                     <HomeIcon className="!w-6 !h-6 font-medium flex-shrink-0" />
                     Beranda
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={handleLogout} className="flex gap-5 items-center cursor-pointer text-red-600 font-medium">
+                  <DropdownMenuItem onClick={onLogout} className="flex gap-5 items-center cursor-pointer text-red-600 font-medium">
                     <ArrowLeftEndOnRectangleIcon className="!w-6 !h-6 font-bold text-red-600 flex-shrink-0" />
                     Logout
                   </DropdownMenuItem>
@@ -238,7 +232,7 @@ export default function SidebarResponsive({ isSidebarOpenMobile }) {
                     <HomeIcon className="!w-6 !h-6 font-medium flex-shrink-0" />
                     Beranda
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={handleLogout} className="flex gap-5 items-center cursor-pointer text-red-600 font-medium">
+                  <DropdownMenuItem onClick={onLogout} className="flex gap-5 items-center cursor-pointer text-red-600 font-medium">
                     <ArrowLeftEndOnRectangleIcon className="!w-6 !h-6 font-bold text-red-600 flex-shrink-0" />
                     Logout
                   </DropdownMenuItem>

@@ -10,31 +10,50 @@ import {
 import useInput from "@/hooks/useInput";
 import { addUser } from "@/utils/api";
 import { useState } from "react";
+import { toast } from "sonner";
 
-export default function Create() {
-  const [name, onNameChange] = useInput("");
-  const [email, onEmailChange] = useInput("");
-  const [phoneNumber, onPhoneNumberChange] = useInput("");
-  const [password, onPasswordChange] = useInput("");
+export default function Create({ authedUser, onLogout }) {
+  const [name, onNameChange, setName] = useInput("");
+  const [email, onEmailChange, setEmail] = useInput("");
+  const [phoneNumber, onPhoneNumberChange, setPhoneNumber] = useInput("");
+  const [password, onPasswordChange, setPassword] = useInput("");
   const [role, setRole] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-    const result = await addUser({
-      name,
-      email,
-      phoneNumber,
-      role,
-      password,
-    });
+    if (!name || !email || !phoneNumber || !password || !role) {
+      toast.error("Please fill all the fields");
+      return;
+    }
 
-    if (result.error) {
-      alert(result.message);
+    setLoading(true);
+
+    try {
+      const result = await addUser({
+        name,
+        email,
+        phoneNumber,
+        role,
+        password,
+      });
+      if (result.error) {
+        toast.error(result.message);
+      } else {
+        toast.success(result.message);
+        setName("");
+        setEmail("");
+        setPhoneNumber("");
+        setPassword("");
+        setRole("");
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <AppLayout>
+    <AppLayout authedUser={authedUser} onLogout={onLogout}>
       <p className="font-medium text-[32px] tracking-[-0.11px] text-[#000000] dark:text-white">
         Create User
       </p>
@@ -134,8 +153,17 @@ export default function Create() {
         </div>
         <div className="flex items-center justify-end">
           <button className="bg-[#515DEF] md:w-32 w-full px-4 py-2 rounded-[4px] text-white hover:shadow-2xl transition-all duration-300 ease-in-out flex items-center justify-center gap-2">
-            Submit
-            <CheckIcon className="w-4 h-4 text-white" />
+            {loading ? (
+              <>
+                ...Loading
+                <CheckIcon className="w-4 h-4 text-white" />
+              </>
+            ) : (
+              <>
+                Submit
+                <CheckIcon className="w-4 h-4 text-white" />
+              </>
+            )}
           </button>
         </div>
       </form>

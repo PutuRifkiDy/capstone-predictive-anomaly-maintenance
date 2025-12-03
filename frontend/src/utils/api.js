@@ -33,19 +33,18 @@ async function login({ email, password }) {
     });
 
     const responseJson = await response.json();
-    console.log("Response:", responseJson); // Debug log
 
     if (responseJson.status !== "success") {
       return {
         error: true,
-        message: responseJson.message || "Login gagal",
+        message: responseJson.message || "Login failed",
       };
     }
 
     if (!responseJson.accessToken) {
       return {
         error: true,
-        message: "Response data tidak valid",
+        message: "Response data not valid",
       };
     }
 
@@ -60,6 +59,20 @@ async function login({ email, password }) {
       message: error,
     };
   }
+}
+
+async function getUserLogged() {
+  const response = await fetchWithToken(`${BASE_URL}/users/me`);
+  const responseJson = await response.json();
+
+  if (responseJson.status == "success") {
+    return {
+      error: false,
+      data: responseJson.user,
+    };
+  }
+
+  return { error: true, data: null };
 }
 
 async function logout(refreshToken) {
@@ -164,6 +177,7 @@ export {
   putAccessToken,
   removeAccessToken,
   login,
+  getUserLogged,
   logout,
   fetchWithToken,
   addUser,

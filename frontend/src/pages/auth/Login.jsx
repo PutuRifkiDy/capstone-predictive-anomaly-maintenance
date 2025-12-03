@@ -5,7 +5,7 @@ import { login } from "../../utils/api";
 import useInput from "@/hooks/useInput";
 import { toast } from "sonner";
 
-export default function Login() {
+export default function Login({ loginSuccess }) {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [email, onEmailChange] = useInput("");
@@ -17,7 +17,8 @@ export default function Login() {
     setLoading(true);
 
     if (email.trim() == "" || password.trim() == "") {
-      toast.error("Please fill all the fields");
+      toast.warning("Please fill all the fields");
+      setLoading(false);
       return;
     }
 
@@ -26,7 +27,7 @@ export default function Login() {
       if (result.error) {
         toast.error(result.message);
       } else {
-        toast.success(result.message);
+        loginSuccess(result.data)
       }
     } finally {
       setLoading(false);
@@ -60,7 +61,7 @@ export default function Login() {
                 value={email}
                 onChange={onEmailChange}
                 placeholder="Masukkan email anda"
-                className="border-[1px] px-4 py-2 border-[#79747E] rounded-[4px] focus:outline-none placeholder:text-[#79747E]"
+                className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-[#79747E]"
                 required
               />
             </div>
@@ -74,7 +75,7 @@ export default function Login() {
                 onChange={onPasswordChange}
                 placeholder="Masukkan password anda"
                 type={showPassword ? "text" : "password"}
-                className="border-[1px] px-4 py-2 border-[#79747E] rounded-[4px] focus:outline-none placeholder:text-[#79747E]"
+                className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-[#79747E]"
                 required
               />
               {showPassword ? (

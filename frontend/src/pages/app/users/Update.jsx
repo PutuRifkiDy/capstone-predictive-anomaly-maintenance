@@ -8,9 +8,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export default function Update() {
+export default function Update({ authedUser, onLogout }) {
   return (
-    <AppLayout>
+    <AppLayout authedUser={authedUser} onLogout={onLogout}>
       <h1 className="font-bold text-2xl">Update User</h1>
       <form action="">
         <div className="mt-10 rounded-xl border border-gray-200 bg-white shadow-md dark:bg-[#081028]">
