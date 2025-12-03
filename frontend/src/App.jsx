@@ -72,7 +72,7 @@ export default function App() {
         element={<Create authedUser={authedUser} onLogout={onLogout} />}
       />
       <Route
-        path="/admin/users/update"
+        path="/admin/users/update/:id"
         element={<Update authedUser={authedUser} onLogout={onLogout} />}
       />
       {/* <Route

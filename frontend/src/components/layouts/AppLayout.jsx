@@ -8,8 +8,8 @@ import { XMarkIcon } from "@heroicons/react/24/solid";
 import SidebarResponsive from "./partials/SidebarResponsive";
 
 export default function AppLayout({ children, authedUser, onLogout }) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isSidebarOpenMobile, setIsSidebarOpenMobile] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpenMobile, setIsSidebarOpenMobile] = useState(true);
 
   const handleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
   return (
@@ -142,7 +142,7 @@ export default function AppLayout({ children, authedUser, onLogout }) {
                 <span className="font-medium">
                   Predicta<span className="text-[#515DEF]">Energy</span>
                 </span>{" "}
-                aplikasi web untuk cek mesin anda.
+                web application for checking the performance of your machines
               </p>
             </div>
             <div className="pr-5">

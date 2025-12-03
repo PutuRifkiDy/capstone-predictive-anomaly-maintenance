@@ -79,7 +79,7 @@ export default function SidebarResponsive({ isSidebarOpenMobile, authedUser, onL
                           : "text-foreground"
                       }`}
                     />
-                    Manajemen Pengguna
+                    User Management
                   </Link>
                 </li>
                 <li>
@@ -190,7 +190,7 @@ export default function SidebarResponsive({ isSidebarOpenMobile, authedUser, onL
                           : "text-foreground"
                       }`}
                     />
-                    {/* Manajemen Pengguna */}
+                    {/* User Management */}
                   </Link>
                 </li>
                 <li>

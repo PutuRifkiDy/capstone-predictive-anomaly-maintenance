@@ -70,7 +70,7 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                           : "text-foreground"
                       }`}
                     />
-                    Manajemen Pengguna
+                    User Management
                   </Link>
                 </li>
                 <li>
@@ -181,7 +181,7 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                           : "text-foreground"
                       }`}
                     />
-                    {/* Manajemen Pengguna */}
+                    {/* User Management */}
                   </Link>
                 </li>
                 <li>
