@@ -62,17 +62,26 @@ async function login({ email, password }) {
 }
 
 async function getUserLogged() {
-  const response = await fetchWithToken(`${BASE_URL}/users/me`);
-  const responseJson = await response.json();
+  try {
+    const response = await fetchWithToken(`${BASE_URL}/users/me`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const responseJson = await response.json();
 
-  if (responseJson.status == "success") {
-    return {
-      error: false,
-      data: responseJson.user,
-    };
+    if (responseJson.status == "success") {
+      return {
+        error: false,
+        data: responseJson.user,
+      };
+    }
+
+    return { error: true, data: null };
+  } catch (error) {
+    console.error(error);
   }
-
-  return { error: true, data: null };
 }
 
 async function logout(refreshToken) {
@@ -98,19 +107,22 @@ async function deleteUser(id) {
   try {
     const response = await fetchWithToken(`${BASE_URL}/users/${id}`, {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
 
     const responseJson = await response.json();
 
-    if (responseJson.status !== "success") {
+    if (responseJson.status == "success") {
       return {
-        error: true,
-        data: null,
+        error: false,
+        data: responseJson,
       };
     }
     return {
-      error: false,
-      data: responseJson,
+      error: true,
+      data: null,
     };
   } catch (error) {
     console.error(error);
@@ -128,44 +140,95 @@ async function addUser({ name, email, password, role }) {
     });
 
     const responseJson = await response.json();
-    console.log("Response:", responseJson);
 
-    if (responseJson.status !== "success") {
+    if (responseJson.status == "success") {
       return {
-        error: true,
-        data: null,
+        error: false,
+        data: responseJson.data,
       };
     }
     return {
       error: false,
-      data: responseJson.data,
+      data: null,
     };
   } catch (error) {
     console.error(error);
   }
 }
 
-async function editUser(id, { name, email, password, role }) {
+async function editUser(id, { name, email, role }) {
   try {
     const response = await fetchWithToken(`${BASE_URL}/users/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name, email, password, role }),
+      body: JSON.stringify({ name, email, role }),
     });
 
     const responseJson = await response.json();
 
-    if (responseJson.status !== "success") {
+    if (responseJson.status == "success") {
       return {
-        error: true,
-        data: null,
+        error: false,
+        data: responseJson.data,
       };
     }
     return {
-      error: false,
-      data: responseJson.data,
+      error: true,
+      data: null,
+    };
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function getUsers() {
+  try {
+    const response = await fetchWithToken(`${BASE_URL}/users`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const responseJson = await response.json();
+
+    if (responseJson.status == "success") {
+      return {
+        error: false,
+        data: responseJson.users,
+      };
+    }
+    return {
+      error: true,
+      data: null,
+    };
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function getUserById(id) {
+  try {
+    const response = await fetchWithToken(`${BASE_URL}/users/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+
+    const responseJson = await response.json();
+
+    if (responseJson.status == "success") {
+      return {
+        error: false,
+        data: responseJson.user,
+      };
+    }
+    return {
+      error: true,
+      data: null,
     };
   } catch (error) {
     console.error(error);
@@ -183,4 +246,6 @@ export {
   addUser,
   deleteUser,
   editUser,
+  getUsers,
+  getUserById
 };

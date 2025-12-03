@@ -1,5 +1,10 @@
 import AppLayout from "@/components/layouts/AppLayout";
-import { ArrowLeftIcon, CheckIcon } from "@heroicons/react/24/solid";
+import {
+  ArrowLeftIcon,
+  CheckIcon,
+  EyeIcon,
+  EyeSlashIcon,
+} from "@heroicons/react/24/solid";
 import {
   Select,
   SelectContent,
@@ -7,71 +12,148 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import useInput from "@/hooks/useInput";
+import { editUser, getUserById } from "@/utils/api";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { Link, useNavigate, useParams } from "react-router";
 
 export default function Update({ authedUser, onLogout }) {
+  const [name, onNameChange, setName] = useInput("");
+  const [email, onEmailChange, setEmail] = useInput("");
+  const [role, setRole] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const params = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const result = await getUserById(params.id);
+        if (result.error) {
+          toast.error(result.message);
+        } else {
+          setName(result.data.name);
+          setEmail(result.data.email);
+          setRole(result.data.role);
+        }
+      } catch (error) {
+        toast.error(error.message);
+      }
+    };
+
+    fetchUserData();
+  }, [params.id, setName, setEmail, setRole]);
+
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
+    if (!name || !email || !role) {
+      toast.error("Please fill all the fields");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const result = await editUser(params.id, { name, email, role });
+
+      if (result.error) {
+        toast.error("Something went wrong");
+      } else {
+        navigate("/admin/users");
+        toast.success("User updated successfully");
+        setName("");
+        setEmail("");
+        setRole("");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <AppLayout authedUser={authedUser} onLogout={onLogout}>
-      <h1 className="font-bold text-2xl">Update User</h1>
-      <form action="">
-        <div className="mt-10 rounded-xl border border-gray-200 bg-white shadow-md dark:bg-[#081028]">
-          <div className="flex md:flex-row flex-col-reverse justify-between items-center px-[23px] py-[17px] border-b border-gray-200 gap-5">
-            <p className="font-medium">User Information</p>
-            <button className="bg-[#515DEF] text-white px-[20px] py-[10px] rounded-[8px] flex flex-row gap-[8px] justify-items-center items-center group w-full md:w-52 md:items-center md:justify-center">
-              <ArrowLeftIcon className="w-3 h-3 group-hover:-translate-x-1  transition-all duration-300 ease-in-out" />
-              Back to Users
-            </button>
+      <p className="font-medium text-[32px] tracking-[-0.11px] text-[#000000] dark:text-white">
+        Create User
+      </p>
+      <form className="flex flex-col gap-5 mt-5" onSubmit={onSubmitHandler}>
+        <div className="rounded-xl border-[1px] border-gray-200">
+          <div className="flex md:flex-row flex-col-reverse items-center justify-between lg:px-10 md:px-10 px-3 py-5 md:gap-0 gap-5">
+            <p className="font-medium text-[16px]">User Information</p>
+            <Link
+              to={"/admin/users"}
+              className="flex items-center gap-3 md:w-40 w-full px-4 py-2 text-white bg-[#515DEF] rounded-md group"
+            >
+              <ArrowLeftIcon className="text-white w-3 h-3 group-hover:-translate-x-1 transition-all duration-300 ease-in-out" />
+              Back to User
+            </Link>
           </div>
-          <div className="flex flex-col p-6 gap-6">
-            <div className="flex flex-col gap-1">
-              <label htmlFor="name">
-                Name 
-                <span className="text-red-500">*</span>
-              </label>
-              <input 
+          <div className="w-full h-[1px] bg-gray-200" />
+          <div className="flex flex-col gap-2 md:px-10 px-3 mb-3  mt-5">
+            <label
+              htmlFor="name"
+              className="text-[14px] text-[#202224] flex gap-1 items-center dark:text-gray-400"
+            >
+              Name
+              <span className="text-red-500">*</span>
+            </label>
+            <input
               name="name"
-              placeholder="Your name"
-              className="w-full h-12 border-[1px] border-gray-200 rounded-[5px] focus:outline-none p-2 dark:bg-[#081028]"/>
-            </div>
-            <div className="flex flex-col gap-1">
-              <label htmlFor="email">
-                Email 
-                <span className="text-red-500">*</span>
-              </label>
-              <input 
-              name="email"
-              placeholder="example@email.com"
-              className="w-full h-12 border-[1px] border-gray-200 rounded-[5px] focus:outline-none p-2 dark:bg-[#081028]"/>
-            </div>
-            <div className="flex flex-col gap-1">
-              <label htmlFor="phone_number">
-                Phone Number 
-                <span className="text-red-500">*</span>
-              </label>
-              <input 
-              name="phone_number"
-              placeholder="08XXXXXXX"
-              className="w-full h-12 border-[1px] border-gray-200 rounded-[5px] focus:outline-none p-2 dark:bg-[#081028]"/>
-            </div>
-            <div className="flex flex-col gap-1">
-              <label>Role <span className="text-red-500">*</span></label>
-              <Select>
-                <SelectTrigger className="w-full h-12 border-[1px] border-gray-200 rounded-[5px] focus:outline-none px-2">
-                  <SelectValue placeholder="Select Role" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="light">Admin</SelectItem>
-                  <SelectItem value="dark">Engineer</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+              placeholder="Input your name here..."
+              className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-gray-400 dark:bg-[#081028]"
+              value={name}
+              onChange={onNameChange}
+            />
+          </div>
+          <div className="flex flex-col gap-2 md:px-10 px-3 mb-3 ">
+            <label
+              htmlFor="email"
+              className="text-[14px] text-[#202224] flex gap-1 items-center dark:text-gray-400"
+            >
+              Email
+              <span className="text-red-500">*</span>
+            </label>
+            <input
+              name="Email"
+              placeholder="Input your email here..."
+              className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-gray-400 dark:bg-[#081028]"
+              value={email}
+              onChange={onEmailChange}
+            />
+          </div>
+          <div className="flex flex-col gap-2 md:px-10 px-3 mb-5">
+            <label
+              htmlFor="role"
+              className="text-[14px] text-[#202224] flex gap-1 items-center dark:text-gray-400"
+            >
+              Role
+              <span className="text-red-500">*</span>
+            </label>
+            <Select value={role} onValueChange={(value) => setRole(value)}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Role" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="admin">Admin</SelectItem>
+                <SelectItem value="user">Engineer</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </div>
-          <div className="flex justify-center md:justify-end pr-5">
-            <button className="bg-[#515DEF] text-white py-[10px] w-full md:w-40 rounded-[8px] mt-10 flex flex-row justify-center items-center gap-2">
-              Simpan
-              <CheckIcon className="w-4 h-4"/>
-            </button>
-          </div>
+        <div className="flex items-center justify-end">
+          <button className="bg-[#515DEF] md:w-32 w-full px-4 py-2 rounded-[4px] text-white hover:shadow-2xl transition-all duration-300 ease-in-out flex items-center justify-center gap-2">
+            {loading ? (
+              <>
+                ...Loading
+                <CheckIcon className="w-4 h-4 text-white" />
+              </>
+            ) : (
+              <>
+                Submit
+                <CheckIcon className="w-4 h-4 text-white" />
+              </>
+            )}
+          </button>
+        </div>
       </form>
     </AppLayout>
   );
