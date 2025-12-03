@@ -46,9 +46,9 @@ class UserController {
 
     async updateUserById(req, res, next) {
         try {
-            const { id } = parseInt(req.params);
-            const { name, email, role, password } = req.body;
-            const user = await userService.updateUserId(id, { name, email, role, password });
+            const id = parseInt(req.params.id);
+            const { name, email, role } = req.body;
+            const user = await userService.updateUserId(id, { name, email, role });
             res.json({
                 user,
                 status: 'success',
