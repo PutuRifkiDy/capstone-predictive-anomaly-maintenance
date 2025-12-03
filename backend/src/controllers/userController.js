@@ -5,8 +5,8 @@ class UserController {
         try {
             const user = await userService.getCurrentUser(req.user.id);
             res.json({
+                user,
                 status: 'success',
-                user
             });
         } catch (error) {
             if (error.message === 'User not found') {
@@ -19,7 +19,10 @@ class UserController {
     async getAllUsers(req, res, next) {
         try {
             const users = await userService.getAllUsers();
-            res.json({ users });
+            res.json({
+                users,
+                status: 'success',
+            });
         } catch (error) {
             next(error);
         }
@@ -29,7 +32,10 @@ class UserController {
         try {
             const { id } = req.params;
             const user = await userService.getUserById(parseInt(id));
-            res.json({ user });
+            res.json({
+                user,
+                status: 'success',
+            });
         } catch (error) {
             if (error.message === 'User not found') {
                 return res.status(404).json({ error: error.message });
@@ -43,7 +49,11 @@ class UserController {
             const { id } = parseInt(req.params);
             const { name, email, role, password } = req.body;
             const user = await userService.updateUserId(id, { name, email, role, password });
-            res.json({ user });
+            res.json({
+                user,
+                status: 'success',
+                message: 'User updated successfully',
+            });
         } catch (error) {
             if (error.message === 'User not found') {
                 return res.status(404).json({ error: error.message });
