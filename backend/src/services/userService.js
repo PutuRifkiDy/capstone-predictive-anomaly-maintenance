@@ -29,7 +29,8 @@ class UserService {
     }
 
     async updateUserId(id, { name, email, phone_number, role }) {
-        const result = await db.query('UPDATE users SET name = $1, email = $2, phone_number = $3, role = $4 WHERE id = $5 RETURNING id', [name, email, phone_number, role, id]);
+        const updated_at = new Date().toISOString();
+        const result = await db.query('UPDATE users SET name = $1, email = $2, phone_number = $3, role = $4, updated_at = $5 WHERE id = $6 RETURNING id', [name, email, phone_number, role, updated_at, id]);
 
         if (!result.rows.length) {
             throw new Error('User not found');

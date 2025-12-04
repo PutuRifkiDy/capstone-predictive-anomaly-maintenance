@@ -110,10 +110,10 @@ export default function Index({ authedUser, onLogout }) {
       cell: ({ row }) => {
         const user = row.original;
         return (
-          <div className="flex gap-2">
+          <div className="flex gap-2 items-center">
             <Link
               to={`/admin/users/update/${user.id}`}
-              className="text-sm bg-yellow-100 rounded-md p-2 dark:bg-[#D9A72E]/30 dark:text-[#D9A72E] dark:border-[#D9A72E]/30"
+              className="text-sm bg-yellow-100 rounded-md p-2 dark:bg-[#D9A72E]/30 dark:text-[#D9A72E] dark:border-[#D9A72E]/30 h-fit"
             >
               <PencilSquareIcon className="h-4 w-4 text-yellow-500" />
             </Link>
@@ -121,7 +121,7 @@ export default function Index({ authedUser, onLogout }) {
               <DialogTrigger asChild>
                 <Button
                   variant="none"
-                  className="text-sm bg-red-100 rounded-md p-2 dark:bg-[#515DEF]/10  dark:border-[1px] dark:border-[#515DEF]/30"
+                  className="text-sm bg-red-100 rounded-md p-2 dark:bg-[#515DEF]/10  dark:border-[1px] dark:border-[#515DEF]/30 h-fit"
                 >
                   <TrashIcon className="h-4 w-4 text-red-500 dark:text-[#515DEF]" />
                 </Button>

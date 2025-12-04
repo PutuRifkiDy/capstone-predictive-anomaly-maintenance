@@ -6,41 +6,21 @@ exports.up = (pgm) => {
     phone_number: { type: 'varchar(50)', notNull: true },
     password: { type: 'text', notNull: true },
     role: { type: 'varchar(50)', notNull: true, default: 'user' },
-    created_at: { type: 'timestamp with time zone', notNull: true, default: pgm.func('NOW()') },
-    updated_at: { type: 'timestamp with time zone', notNull: true, default: pgm.func('NOW()') }
+    created_at: { type: 'varchar(50)', notNull: true },
+    updated_at: { type: 'varchar(50)', notNull: true },
   });
 
   pgm.addConstraint('users', 'users_role_check', 'CHECK (role IN (\'user\', \'admin\'))');
   pgm.createIndex('users', 'email');
 
   pgm.sql(`
-    INSERT INTO users(name, email, phone_number, password, role) VALUES 
-    ('Admin Putu Rifki', 'puturifki56@gmail.com', '0881038194017', '$2b$10$kujFrozzV8b48pYBjMOZUem7mGQu4E46OsxdKpxzff5RzahYNZ7S2', 'admin'),
-    ('Admin Candra Wikananta', 'candrawikananta@gmail.com', '0881038194017', '$2b$10$kujFrozzV8b48pYBjMOZUem7mGQu4E46OsxdKpxzff5RzahYNZ7S2', 'admin'),
-    ('Admin Tri Darma', 'tridarma@gmail.com', '0881038194017', '$2b$10$kujFrozzV8b48pYBjMOZUem7mGQu4E46OsxdKpxzff5RzahYNZ7S2', 'admin');
-  `);
-
-  // Create function to update updated_at
-  pgm.sql(`
-    CREATE OR REPLACE FUNCTION update_updated_at_column()
-    RETURNS TRIGGER AS $$
-    BEGIN
-        NEW.updated_at = NOW();
-        RETURN NEW;
-    END;
-    $$ language 'plpgsql';
-  `);
-
-  // Create trigger
-  pgm.sql(`
-    CREATE TRIGGER update_users_updated_at 
-        BEFORE UPDATE ON users 
-        FOR EACH ROW 
-        EXECUTE FUNCTION update_updated_at_column();
+    INSERT INTO users(name, email, phone_number, password, role, created_at, updated_at) VALUES 
+    ('Admin Putu Rifki', 'puturifki56@gmail.com', '0881038194017', '$2b$10$kujFrozzV8b48pYBjMOZUem7mGQu4E46OsxdKpxzff5RzahYNZ7S2', 'admin', '25-12-04 22:32:01.01072+08', '25-12-04 22:32:01.01072+08'),
+    ('Admin Candra Wikananta', 'candrawikananta@gmail.com', '0881038194017', '$2b$10$kujFrozzV8b48pYBjMOZUem7mGQu4E46OsxdKpxzff5RzahYNZ7S2', 'admin', '25-12-04 22:32:01.01072+08', '25-12-04 22:32:01.01072+08'),
+    ('Admin Tri Darma', 'tridarma@gmail.com', '0881038194017', '$2b$10$kujFrozzV8b48pYBjMOZUem7mGQu4E46OsxdKpxzff5RzahYNZ7S2', 'admin', '25-12-04 22:32:01.01072+08', '25-12-04 22:32:01.01072+08');
   `);
 };
 
 exports.down = (pgm) => {
   pgm.dropTable('users');
-  pgm.sql('DROP FUNCTION IF EXISTS update_updated_at_column() CASCADE;');
 };

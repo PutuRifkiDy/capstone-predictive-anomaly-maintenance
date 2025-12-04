@@ -8,6 +8,8 @@ const {
 
 class AuthService {
     async register({ name, email, phone_number, password, role }) {
+        const created_at = new Date().toISOString();
+        const updated_at = created_at;
         const exitingUser = await db.query('SELECT * FROM users WHERE email = $1', [email]);
         if (exitingUser.rows[0]) {
             throw new Error('User with this email already exists');
@@ -15,10 +17,10 @@ class AuthService {
 
         const hashedPassword = await bcrypt.hash(password, 10);
         const result = await db.query(
-            `INSERT INTO users (name, email, phone_number, password, role)
-             VALUES ($1, $2, $3, $4, $5)
-             RETURNING id, name, email, phone_number, role, created_at`,
-            [name, email, phone_number, hashedPassword, role]
+            `INSERT INTO users (name, email, phone_number, password, role, created_at, updated_at)
+             VALUES ($1, $2, $3, $4, $5, $6, $7)
+             RETURNING id, name, email, phone_number, role, created_at, updated_at`,
+            [name, email, phone_number, hashedPassword, role, created_at, updated_at]
         );
 
         return result.rows[0];
