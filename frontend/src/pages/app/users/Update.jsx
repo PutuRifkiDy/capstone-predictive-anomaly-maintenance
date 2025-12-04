@@ -1,9 +1,7 @@
 import AppLayout from "@/components/layouts/AppLayout";
 import {
   ArrowLeftIcon,
-  CheckIcon,
-  EyeIcon,
-  EyeSlashIcon,
+  CheckBadgeIcon,
 } from "@heroicons/react/24/solid";
 import {
   Select,
@@ -163,12 +161,12 @@ export default function Update({ authedUser, onLogout }) {
             {loading ? (
               <>
                 ...Loading
-                <CheckIcon className="w-4 h-4 text-white" />
+                <CheckBadgeIcon className="w-4 h-4 text-white" />
               </>
             ) : (
               <>
                 Submit
-                <CheckIcon className="w-4 h-4 text-white" />
+                <CheckBadgeIcon className="w-4 h-4 text-white" />
               </>
             )}
           </button>

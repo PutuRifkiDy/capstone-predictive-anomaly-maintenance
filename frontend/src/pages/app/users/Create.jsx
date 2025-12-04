@@ -1,5 +1,5 @@
 import AppLayout from "@/components/layouts/AppLayout";
-import { ArrowLeftIcon, CheckIcon } from "@heroicons/react/24/solid";
+import { ArrowLeftIcon, CheckBadgeIcon } from "@heroicons/react/24/solid";
 import {
   Select,
   SelectContent,
@@ -162,12 +162,12 @@ export default function Create({ authedUser, onLogout }) {
             {loading ? (
               <>
                 ...Loading
-                <CheckIcon className="w-4 h-4 text-white" />
+                <CheckBadgeIcon className="w-4 h-4 text-white" />
               </>
             ) : (
               <>
                 Submit
-                <CheckIcon className="w-4 h-4 text-white" />
+                <CheckBadgeIcon className="w-4 h-4 text-white" />
               </>
             )}
           </button>
