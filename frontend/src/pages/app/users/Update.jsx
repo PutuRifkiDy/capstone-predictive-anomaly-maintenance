@@ -161,12 +161,12 @@ export default function Update({ authedUser, onLogout }) {
             {loading ? (
               <>
                 ...Loading
-                <CheckBadgeIcon className="w-4 h-4 text-white" />
+                <CheckBadgeIcon className="w-6 h-6 text-white" />
               </>
             ) : (
               <>
                 Submit
-                <CheckBadgeIcon className="w-4 h-4 text-white" />
+                <CheckBadgeIcon className="w-6 h-6 text-white" />
               </>
             )}
           </button>
