@@ -133,14 +133,14 @@ async function deleteUser(id) {
   }
 }
 
-async function addUser({ name, email, password, role }) {
+async function addUser({ name, email, phone_number, password, role }) {
   try {
     const response = await fetch(`${BASE_URL}/auth/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name, email, password, role }),
+      body: JSON.stringify({ name, email, phone_number, password, role }),
     });
 
     const responseJson = await response.json();
@@ -162,14 +162,14 @@ async function addUser({ name, email, password, role }) {
   }
 }
 
-async function editUser(id, { name, email, role }) {
+async function editUser(id, { name, email, phone_number, role }) {
   try {
     const response = await fetchWithToken(`${BASE_URL}/users/${id}`, {
-      method: "PUT",
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name, email, role }),
+      body: JSON.stringify({ name, email, phone_number, role }),
     });
 
     const responseJson = await response.json();

@@ -16,6 +16,7 @@ import { Link, useNavigate } from "react-router";
 export default function Create({ authedUser, onLogout }) {
   const [name, onNameChange, setName] = useInput("");
   const [email, onEmailChange, setEmail] = useInput("");
+  const [phoneNumber, onPhoneNumberChange, setPhoneNumber] = useInput("");
   const [password, onPasswordChange, setPassword] = useInput("");
   const [role, setRole] = useState("");
   const [loading, setLoading] = useState(false);
@@ -23,7 +24,7 @@ export default function Create({ authedUser, onLogout }) {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-    if (!name || !email || !password || !role) {
+    if (!name || !email || !password || !phoneNumber || !role) {
       toast.error("Please fill all the fields");
       return;
     }
@@ -34,6 +35,7 @@ export default function Create({ authedUser, onLogout }) {
       const result = await addUser({
         name,
         email,
+        phone_number: phoneNumber,
         role,
         password,
       });
@@ -43,6 +45,7 @@ export default function Create({ authedUser, onLogout }) {
         toast.success(result.message);
         setName("");
         setEmail("");
+        setPhoneNumber("");
         setPassword("");
         setRole("");
         navigate("/admin/users");
@@ -100,6 +103,22 @@ export default function Create({ authedUser, onLogout }) {
               className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-gray-400 dark:bg-[#081028]"
               value={email}
               onChange={onEmailChange}
+            />
+          </div>
+          <div className="flex flex-col gap-2 md:px-10 px-3 mb-3 ">
+            <label
+              htmlFor="phone_number"
+              className="text-[14px] text-[#202224] flex gap-1 items-center dark:text-gray-400"
+            >
+              Phone Number
+              <span className="text-red-500">*</span>
+            </label>
+            <input
+              name="phone_number"
+              placeholder="Input your phone number here..."
+              className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-gray-400 dark:bg-[#081028]"
+              value={phoneNumber}
+              onChange={onPhoneNumberChange}
             />
           </div>
           <div className="flex flex-col gap-2 md:px-10 px-3 mb-3 ">

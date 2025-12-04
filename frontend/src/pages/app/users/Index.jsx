@@ -69,10 +69,23 @@ export default function Index({ authedUser, onLogout }) {
       ),
     },
     {
+      accessorKey: "phone_number",
+      header: "Phone Number",
+      cell: ({ row }) => (
+        <div className="font-normal">{row.getValue("phone_number")}</div>
+      ),
+    },
+    {
       accessorKey: "role",
       header: "Role",
       cell: ({ row }) => (
-        <div className={`font-medium p-2 rounded-md w-fit ${row.getValue("role") == "admin" ? "bg-yellow-100 text-yellow-500 w-fit" : "bg-[#515DEF]/10 text-[#515DEF]"}`}>
+        <div
+          className={`font-medium p-2 rounded-md w-fit ${
+            row.getValue("role") == "admin"
+              ? "bg-yellow-100 text-yellow-500 border-[1px] border-yellow-300 dark:bg-[#D9A72E]/30 dark:text-[#D9A72E] dark:border-[#D9A72E]/30"
+              : "bg-[#515DEF]/10 text-[#515DEF] border-[1px] border-[#515DEF]/30"
+          }`}
+        >
           {row.getValue("role") == "admin" ? "Admin" : "Engineer"}
         </div>
       ),
@@ -86,12 +99,12 @@ export default function Index({ authedUser, onLogout }) {
           <div className="flex gap-2">
             <Link
               to={`/admin/users/update/${user.id}`}
-              className="text-sm bg-yellow-100 rounded-md p-2"
+              className="text-sm bg-yellow-100 rounded-md p-2 dark:bg-[#D9A72E]/30 dark:text-[#D9A72E] dark:border-[#D9A72E]/30"
             >
               <PencilSquareIcon className="h-4 w-4 text-yellow-500" />
             </Link>
             <Link
-              className="text-sm bg-red-100 rounded-md p-2"
+              className="text-sm bg-red-100 rounded-md p-2 dark:bg-[#515DEF]/10  dark:border-[1px] dark:border-[#515DEF]/30"
               onClick={async () => {
                 const response = await deleteUser(user.id);
                 if (response.error) {
@@ -102,7 +115,7 @@ export default function Index({ authedUser, onLogout }) {
                 }
               }}
             >
-              <TrashIcon className="h-4 w-4 text-red-500" />
+              <TrashIcon className="h-4 w-4 text-red-500 dark:text-[#515DEF]" />
             </Link>
           </div>
         );

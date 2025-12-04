@@ -2,7 +2,7 @@ const db = require('../config/db');
 
 class UserService {
     async getCurrentUser(userId) {
-        const result = await db.query('SELECT name, email, role FROM users WHERE id = $1', [userId]);
+        const result = await db.query('SELECT name, email, phone_number, role FROM users WHERE id = $1', [userId]);
         const user = result.rows[0];
         if (!user) {
             throw new Error('User not found');
@@ -13,13 +13,13 @@ class UserService {
 
     async getAllUsers() {
         const result = await db.query(
-            'SELECT id, name, email, role, created_at, updated_at FROM users ORDER BY created_at DESC'
+            'SELECT id, name, email, phone_number, role, created_at, updated_at FROM users ORDER BY created_at ASC'
         );
         return result.rows;
     }
 
     async getUserById(id) {
-        const result = await db.query('SELECT name, email, role, password FROM users WHERE id = $1', [id]);
+        const result = await db.query('SELECT name, email, phone_number, role, password FROM users WHERE id = $1', [id]);
         const user = result.rows[0];
         if (!user) {
             throw new Error('User not found');
@@ -28,8 +28,8 @@ class UserService {
         return user;
     }
 
-    async updateUserId(id, { name, email, role }) {
-        const result = await db.query('UPDATE users SET name = $1, email = $2, role = $3 WHERE id = $4 RETURNING id', [name, email, role, id]);
+    async updateUserId(id, { name, email, phone_number, role }) {
+        const result = await db.query('UPDATE users SET name = $1, email = $2, phone_number = $3, role = $4 WHERE id = $5 RETURNING id', [name, email, phone_number, role, id]);
 
         if (!result.rows.length) {
             throw new Error('User not found');

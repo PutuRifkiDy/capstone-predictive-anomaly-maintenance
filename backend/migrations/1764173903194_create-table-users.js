@@ -3,6 +3,7 @@ exports.up = (pgm) => {
     id: 'id',
     name: { type: 'varchar(255)', notNull: true },
     email: { type: 'varchar(255)', notNull: true, unique: true },
+    phone_number: { type: 'varchar(50)', notNull: true },
     password: { type: 'text', notNull: true },
     role: { type: 'varchar(50)', notNull: true, default: 'user' },
     created_at: { type: 'timestamp with time zone', notNull: true, default: pgm.func('NOW()') },
@@ -11,6 +12,13 @@ exports.up = (pgm) => {
 
   pgm.addConstraint('users', 'users_role_check', 'CHECK (role IN (\'user\', \'admin\'))');
   pgm.createIndex('users', 'email');
+
+  pgm.sql(`
+    INSERT INTO users(name, email, phone_number, password, role) VALUES 
+    ('Admin Putu Rifki', 'puturifki56@gmail.com', '0881038194017', '$2b$10$kujFrozzV8b48pYBjMOZUem7mGQu4E46OsxdKpxzff5RzahYNZ7S2', 'admin'),
+    ('Admin Candra Wikananta', 'candrawikananta@gmail.com', '0881038194017', '$2b$10$kujFrozzV8b48pYBjMOZUem7mGQu4E46OsxdKpxzff5RzahYNZ7S2', 'admin'),
+    ('Admin Tri Darma', 'tridarma@gmail.com', '0881038194017', '$2b$10$kujFrozzV8b48pYBjMOZUem7mGQu4E46OsxdKpxzff5RzahYNZ7S2', 'admin');
+  `);
 
   // Create function to update updated_at
   pgm.sql(`

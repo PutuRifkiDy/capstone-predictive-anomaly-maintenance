@@ -7,7 +7,7 @@ const {
 } = require('../utils/tokenUtils');
 
 class AuthService {
-    async register({ name, email, password, role }) {
+    async register({ name, email, phone_number, password, role }) {
         const exitingUser = await db.query('SELECT * FROM users WHERE email = $1', [email]);
         if (exitingUser.rows[0]) {
             throw new Error('User with this email already exists');
@@ -15,10 +15,10 @@ class AuthService {
 
         const hashedPassword = await bcrypt.hash(password, 10);
         const result = await db.query(
-            `INSERT INTO users (name, email, password, role)
-             VALUES ($1, $2, $3, $4)
-             RETURNING id, name, email, role, created_at`,
-            [name, email, hashedPassword, role]
+            `INSERT INTO users (name, email, phone_number, password, role)
+             VALUES ($1, $2, $3, $4, $5)
+             RETURNING id, name, email, phone_number, role, created_at`,
+            [name, email, phone_number, hashedPassword, role]
         );
 
         return result.rows[0];
@@ -51,6 +51,7 @@ class AuthService {
                 id: user.id,
                 name: user.name,
                 email: user.email,
+                phone_number: user.phone_number,
                 role: user.role,
             },
             accessToken,

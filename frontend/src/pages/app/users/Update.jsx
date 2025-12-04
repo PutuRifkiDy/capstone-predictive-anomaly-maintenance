@@ -21,6 +21,7 @@ import { Link, useNavigate, useParams } from "react-router";
 export default function Update({ authedUser, onLogout }) {
   const [name, onNameChange, setName] = useInput("");
   const [email, onEmailChange, setEmail] = useInput("");
+  const [phoneNumber, onPhoneNumberChange, setPhoneNumber] = useInput("");
   const [role, setRole] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -36,6 +37,7 @@ export default function Update({ authedUser, onLogout }) {
         } else {
           setName(result.data.name);
           setEmail(result.data.email);
+          setPhoneNumber(result.data.phone_number);
           setRole(result.data.role);
         }
       } catch (error) {
@@ -44,26 +46,27 @@ export default function Update({ authedUser, onLogout }) {
     };
 
     fetchUserData();
-  }, [params.id, setName, setEmail, setRole]);
+  }, [params.id, setName, setEmail, setPhoneNumber, setRole]);
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-    if (!name || !email || !role) {
+    if (!name || !email || !phoneNumber || !role) {
       toast.error("Please fill all the fields");
       return;
     }
 
     setLoading(true);
     try {
-      const result = await editUser(params.id, { name, email, role });
+      const result = await editUser(params.id, { name, email, phone_number: phoneNumber, role });
 
       if (result.error) {
-        toast.error(result.message);
+        toast.error(result.error);
       } else {
         navigate("/admin/users");
         toast.success(result.message);
         setName("");
         setEmail("");
+        setPhoneNumber("");
         setRole("");
       }
     } finally {
@@ -118,6 +121,22 @@ export default function Update({ authedUser, onLogout }) {
               className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-gray-400 dark:bg-[#081028]"
               value={email}
               onChange={onEmailChange}
+            />
+          </div>
+          <div className="flex flex-col gap-2 md:px-10 px-3 mb-3 ">
+            <label
+              htmlFor="phone_number"
+              className="text-[14px] text-[#202224] flex gap-1 items-center dark:text-gray-400"
+            >
+              Phone Number
+              <span className="text-red-500">*</span>
+            </label>
+            <input
+              name="phone_number"
+              placeholder="Input your phone number here..."
+              className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-gray-400 dark:bg-[#081028]"
+              value={phoneNumber}
+              onChange={onPhoneNumberChange}
             />
           </div>
           <div className="flex flex-col gap-2 md:px-10 px-3 mb-5">

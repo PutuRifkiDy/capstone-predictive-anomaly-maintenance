@@ -131,11 +131,11 @@ export default function AppLayout({ children, authedUser, onLogout }) {
           {/* header dekstop */}
           <div className="py-5 lg:flex hidden items-center justify-between">
             <div className="flex items-center gap-3">
-              <button className="border-0 hover:bg-gray-200 dark:hover:bg-[#7E89AC]/20 p-2 sm:ml-2 lg:ml-4 w-fit rounded-lg transition-all duration-300 ease-in-out group">
-                <ViewColumnsIcon
-                  className="w-6 h-6 text-gray-600"
-                  onClick={handleSidebar}
-                />
+              <button
+                className="border-0 hover:bg-gray-200 dark:hover:bg-[#7E89AC]/20 p-2 sm:ml-2 lg:ml-4 w-fit rounded-lg transition-all duration-300 ease-in-out group"
+                onClick={handleSidebar}
+              >
+                <ViewColumnsIcon className="w-6 h-6 text-gray-600" />
               </button>
               <div className="h-5 w-0.5 bg-gray-300" />
               <p className="text-[16px] tracking-[-0.25px] text-gray-500">
