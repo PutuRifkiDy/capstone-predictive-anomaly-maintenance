@@ -117,20 +117,6 @@ export default function Index({ authedUser, onLogout }) {
             >
               <PencilSquareIcon className="h-4 w-4 text-yellow-500" />
             </Link>
-            {/* <Link
-              className="text-sm bg-red-100 rounded-md p-2 dark:bg-[#515DEF]/10  dark:border-[1px] dark:border-[#515DEF]/30"
-              onClick={async () => {
-                const response = await deleteUser(user.id);
-                if (response.error) {
-                  toast.error(response.message);
-                } else {
-                  fetchUsersData();
-                  toast.success(response.message);
-                }
-              }}
-            >
-              <TrashIcon className="h-4 w-4 text-red-500 dark:text-[#515DEF]" />
-            </Link> */}
             <Dialog>
               <DialogTrigger asChild>
                 <Button
