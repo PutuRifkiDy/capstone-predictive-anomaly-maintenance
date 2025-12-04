@@ -58,10 +58,10 @@ export default function Update({ authedUser, onLogout }) {
       const result = await editUser(params.id, { name, email, role });
 
       if (result.error) {
-        toast.error("Something went wrong");
+        toast.error(result.message);
       } else {
         navigate("/admin/users");
-        toast.success("User updated successfully");
+        toast.success(result.message);
         setName("");
         setEmail("");
         setRole("");

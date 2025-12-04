@@ -52,6 +52,7 @@ async function login({ email, password }) {
     return {
       error: false,
       data: responseJson,
+      message: responseJson.message
     };
   } catch (error) {
     return {
@@ -75,10 +76,11 @@ async function getUserLogged() {
       return {
         error: false,
         data: responseJson.user,
+        message: responseJson.message
       };
     }
 
-    return { error: true, data: null };
+    return { error: true, data: null, message: responseJson.error };
   } catch (error) {
     console.error(error);
   }
@@ -118,11 +120,13 @@ async function deleteUser(id) {
       return {
         error: false,
         data: responseJson,
+        message: responseJson.message
       };
     }
     return {
       error: true,
       data: null,
+      message: responseJson.error,
     };
   } catch (error) {
     console.error(error);
@@ -145,11 +149,13 @@ async function addUser({ name, email, password, role }) {
       return {
         error: false,
         data: responseJson.data,
+        message: responseJson.message,
       };
     }
     return {
       error: false,
       data: null,
+      message: responseJson.error
     };
   } catch (error) {
     console.error(error);
@@ -172,11 +178,13 @@ async function editUser(id, { name, email, role }) {
       return {
         error: false,
         data: responseJson.data,
+        message: responseJson.message,
       };
     }
     return {
       error: true,
       data: null,
+      message: responseJson.error
     };
   } catch (error) {
     console.error(error);
@@ -198,11 +206,13 @@ async function getUsers() {
       return {
         error: false,
         data: responseJson.users,
+        message: responseJson.message,
       };
     }
     return {
       error: true,
       data: null,
+      message: responseJson.error,
     };
   } catch (error) {
     console.error(error);
@@ -223,12 +233,14 @@ async function getUserById(id) {
     if (responseJson.status == "success") {
       return {
         error: false,
+        message: responseJson.message,
         data: responseJson.user,
       };
     }
     return {
       error: true,
       data: null,
+      message: responseJson.error,
     };
   } catch (error) {
     console.error(error);
