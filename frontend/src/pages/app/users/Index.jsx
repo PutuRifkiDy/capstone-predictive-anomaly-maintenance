@@ -1,5 +1,15 @@
 import AppLayout from "@/components/layouts/AppLayout";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -17,7 +27,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { deleteUser, getUsers } from "@/utils/api";
-import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
+import {
+  InformationCircleIcon,
+  PencilSquareIcon,
+  TrashIcon,
+} from "@heroicons/react/24/solid";
 import {
   flexRender,
   getCoreRowModel,
@@ -103,7 +117,7 @@ export default function Index({ authedUser, onLogout }) {
             >
               <PencilSquareIcon className="h-4 w-4 text-yellow-500" />
             </Link>
-            <Link
+            {/* <Link
               className="text-sm bg-red-100 rounded-md p-2 dark:bg-[#515DEF]/10  dark:border-[1px] dark:border-[#515DEF]/30"
               onClick={async () => {
                 const response = await deleteUser(user.id);
@@ -116,7 +130,45 @@ export default function Index({ authedUser, onLogout }) {
               }}
             >
               <TrashIcon className="h-4 w-4 text-red-500 dark:text-[#515DEF]" />
-            </Link>
+            </Link> */}
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button
+                  variant="none"
+                  className="text-sm bg-red-100 rounded-md p-2 dark:bg-[#515DEF]/10  dark:border-[1px] dark:border-[#515DEF]/30"
+                >
+                  <TrashIcon className="h-4 w-4 text-red-500 dark:text-[#515DEF]" />
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>Are you sure to delete this user?</DialogTitle>
+                  <DialogDescription>
+                    This action cannot be undone. This will permanently delete
+                  </DialogDescription>
+                </DialogHeader>
+
+                <DialogFooter>
+                  <DialogClose asChild>
+                    <Button variant="outline">Cancel</Button>
+                  </DialogClose>
+                  <Button
+                    variant="destructive"
+                    onClick={async () => {
+                      const response = await deleteUser(user.id);
+                      if (response.error) {
+                        toast.error(response.message);
+                      } else {
+                        fetchUsersData();
+                        toast.success(response.message);
+                      }
+                    }}
+                  >
+                    Confirm
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           </div>
         );
       },
