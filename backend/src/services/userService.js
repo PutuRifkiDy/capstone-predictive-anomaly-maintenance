@@ -37,6 +37,10 @@ class UserService {
     }
 
     async deleteUserById(id) {
+        const isAdmin = await db.query('SELECT role FROM users WHERE id = $1', [id]);
+        if (isAdmin.rows[0].role === 'admin') {
+            throw new Error('Cannot delete admin user');
+        }
         const result = await db.query('DELETE FROM users WHERE id = $1 RETURNING id', [id]);
         if (!result.rows.length) {
             throw new Error('User not found');
