@@ -11,7 +11,7 @@ import useInput from "@/hooks/useInput";
 import { addUser } from "@/utils/api";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 export default function Create({ authedUser, onLogout }) {
   const [name, onNameChange, setName] = useInput("");
@@ -19,6 +19,7 @@ export default function Create({ authedUser, onLogout }) {
   const [password, onPasswordChange, setPassword] = useInput("");
   const [role, setRole] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
@@ -44,6 +45,7 @@ export default function Create({ authedUser, onLogout }) {
         setEmail("");
         setPassword("");
         setRole("");
+        navigate("/admin/users");
       }
     } finally {
       setLoading(false);
@@ -109,8 +111,8 @@ export default function Create({ authedUser, onLogout }) {
               <span className="text-red-500">*</span>
             </label>
             <input
-              name="phone_number"
-              placeholder="Input your phone number here..."
+              name="password"
+              placeholder="Input your password here"
               className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-gray-400 dark:bg-[#081028]"
               type="password"
               value={password}
