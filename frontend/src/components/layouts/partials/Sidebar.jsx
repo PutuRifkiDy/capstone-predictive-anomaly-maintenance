@@ -102,8 +102,10 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
             </li>
             <li className="mt-auto flex items-center justify-center">
               <DropdownMenu>
-                <DropdownMenuTrigger className="py-6 flex gap-2 items-center">
-                  <img src="/profile-sidebar-image.png" alt="sidebar-profile" />
+                <DropdownMenuTrigger className="py-6 flex gap-5 items-center">
+                  <div className="flex items-center justify-center w-12 h-12 p-4 rounded-full bg-[#515DEF] text-white">
+                    {authedUser.name.substring(0, 2).toUpperCase()}
+                  </div>
                   <div className="flex flex-col gap-1 justify-center">
                     <p className="font-medium text-[14px] tracking-[-0.25px] text-foreground">
                       {authedUser.name}
@@ -114,11 +116,28 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                   </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="min-w-[13rem] flex flex-col gap-1 dark:bg-[#081028]">
+                  <div className="flex items-center gap-2 p-2">
+                    <div className="flex items-center justify-center w-6 h-6 p-4 rounded-full bg-[#515DEF] text-white">
+                      {authedUser.name.substring(0, 2).toUpperCase()}
+                    </div>
+                    <div className="flex flex-col justify-center">
+                      <p className="font-medium text-[14px] tracking-[-0.25px] text-foreground">
+                        {authedUser.name}
+                      </p>
+                      <p className="font-medium text-[10px] tracking-[-0.25px] text-gray-500">
+                        {authedUser.email}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="bg-gray-100 w-full h-[1px]" />
                   <DropdownMenuItem className="flex gap-5 items-center cursor-pointer font-medium">
                     <HomeIcon className="!w-6 !h-6 font-medium flex-shrink-0" />
                     Beranda
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={onLogout} className="flex gap-5 items-center cursor-pointer text-red-600 font-medium">
+                  <DropdownMenuItem
+                    onClick={onLogout}
+                    className="flex gap-5 items-center cursor-pointer text-red-600 font-medium"
+                  >
                     <ArrowLeftEndOnRectangleIcon className="!w-6 !h-6 font-bold text-red-600 flex-shrink-0" />
                     Logout
                   </DropdownMenuItem>
@@ -215,15 +234,34 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
             </li>
             <li className="mt-auto flex items-center justify-center">
               <DropdownMenu>
-                <DropdownMenuTrigger className="py-6 flex gap-2 items-center">
-                  <img src="/profile-sidebar-image.png" alt="sidebar-profile" />
+                <DropdownMenuTrigger className="py-6 flex items-center">
+                  <div className="flex items-center justify-center w-12 h-12 p-4 rounded-full bg-[#515DEF] text-white">
+                    {authedUser.name.substring(0, 2).toUpperCase()}
+                  </div>{" "}
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="min-w-[13rem] flex flex-col gap-1 dark:bg-[#081028]">
+                  <div className="flex items-center gap-2 p-2">
+                    <div className="flex items-center justify-center w-6 h-6 p-4 rounded-full bg-[#515DEF] text-white">
+                      {authedUser.name.substring(0, 2).toUpperCase()}
+                    </div>
+                    <div className="flex flex-col justify-center">
+                      <p className="font-medium text-[14px] tracking-[-0.25px] text-foreground">
+                        {authedUser.name}
+                      </p>
+                      <p className="font-medium text-[10px] tracking-[-0.25px] text-gray-500">
+                        {authedUser.email}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="bg-gray-100 w-full h-[1px]" />
                   <DropdownMenuItem className="flex gap-5 items-center cursor-pointer font-medium">
                     <HomeIcon className="!w-6 !h-6 font-medium flex-shrink-0" />
                     Beranda
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={onLogout} className="flex gap-5 items-center cursor-pointer text-red-600 font-medium">
+                  <DropdownMenuItem
+                    onClick={onLogout}
+                    className="flex gap-5 items-center cursor-pointer text-red-600 font-medium"
+                  >
                     <ArrowLeftEndOnRectangleIcon className="!w-6 !h-6 font-bold text-red-600 flex-shrink-0" />
                     Logout
                   </DropdownMenuItem>
