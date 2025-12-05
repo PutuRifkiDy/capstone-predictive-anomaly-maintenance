@@ -6,6 +6,7 @@ import { ThemeSwitcher } from "../ThemeSwitcher";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import SidebarResponsive from "./partials/SidebarResponsive";
+import SidebarOpenContext from "@/context/SidebarOpenContext";
 
 export default function AppLayout({ children, authedUser, onLogout }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -13,8 +14,8 @@ export default function AppLayout({ children, authedUser, onLogout }) {
 
   const handleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
   return (
-    <>
-      <div>
+    <div>
+      <SidebarOpenContext.Provider value={isSidebarOpen}>
         {/* sidebar mobile */}
         <Transition.Root show={isSidebarOpenMobile} as={Fragment}>
           <Dialog
@@ -152,7 +153,7 @@ export default function AppLayout({ children, authedUser, onLogout }) {
           <div className="px-4 sm:px-6 lg:px-8 py-5">{children}</div>
           <div className="absolute bottom-0 right-5"></div>
         </main>
-      </div>
-    </>
+      </SidebarOpenContext.Provider>
+    </div>
   );
 }
