@@ -1,7 +1,10 @@
 import AppLayout from "@/components/layouts/AppLayout";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import useInput from "@/hooks/useInput";
 import { chatCopilot } from "@/utils/api";
+import { DocumentDuplicateIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { CpuChipIcon, PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -43,28 +46,100 @@ export default function ChatbotIndex({ authedUser, onLogout }) {
 
   return (
     <AppLayout authedUser={authedUser} onLogout={onLogout}>
-      <div>
-        <p className="font-medium text-[32px] tracking-[-0.11px] text-[#000000] dark:text-white">
-          Chatbot
-        </p>
-        <div>
-          {chatHistory.map((message, index) => (
-            <div key={index}>
-              <p className="font-medium text-[#000000] dark:text-white">
-                {message.sender}
+      <div className="relative">
+        <div className="mb-24">
+          {chatHistory.length == 0 ? (
+            <div className="flex flex-col items-center justify-center p-36 gap-5">
+              <img
+                src="/empty-chatbot-icon.png"
+                className="w-24 h-24"
+                alt="empty chatbot"
+              />
+              <p className="font-medium text-[32px] tracking-[-0.11px] text-[#646B72] dark:text-white">
+                Predictive Maintenance Copilot
               </p>
-              <p className="text-[#000000] dark:text-white">{message.text}</p>
             </div>
-          ))}
+          ) : (
+            <>
+              {chatHistory.map((message, index) => (
+                <div key={index} className="flex flex-col mb-1">
+                  <div
+                    className={`flex items-center gap-4 ${
+                      message.sender == "agent"
+                        ? "justify-start"
+                        : "justify-end"
+                    }`}
+                  >
+                    <div
+                      className={`flex items-center justify-center w-12 h-12 p-4 rounded-full ${
+                        message.sender == "agent"
+                          ? "bg-[#515DEF]/30 border-[1px] border-[#515DEF]/10"
+                          : "bg-[#515DEF]"
+                      } text-white`}
+                    >
+                      {message.sender == "agent" ? (
+                        <CpuChipIcon className="w-8 h-8 shrink-0 text-[#515DEF]" />
+                      ) : (
+                        authedUser.name.substring(0, 2).toUpperCase()
+                      )}
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <p className="font-medium text-[#1E293B] dark:text-white">
+                        {message.sender == "agent"
+                          ? "Predicta Chatbot"
+                          : message.sender}
+                      </p>
+                      <div
+                        className={`p-3 rounded-lg ${
+                          message.sender == "agent"
+                            ? "bg-gray-50 border-[1px] border-gray-200"
+                            : "bg-[#515DEF] border-[1px] border-[#515DEF]/30"
+                        }`}
+                      >
+                        <p
+                          className={`${
+                            message.sender == "agent"
+                              ? "text-gray-800"
+                              : "text-white"
+                          }`}
+                        >
+                          {message.text}
+                        </p>
+                      </div>
+                      {message.sender == "agent" && (
+                        <div className="flex items-center gap-2 mt-2">
+                          <TrashIcon className="w-6 h-6 text-red-500" />
+                          <DocumentDuplicateIcon className="w-6 h-6 text-gray-500" />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </>
+          )}
         </div>
-        <form onSubmit={handleSendMessage}>
-          <Input
-            type="text"
-            value={inputMessage}
-            onChange={onInputMessageChange}
-            placeholder="Type your message here"
-          />
-          <button type="submit">Send</button>
+        <form
+          onSubmit={handleSendMessage}
+          className="px-4 sm:px-6 lg:px-8 fixed bottom-0 pb-8 z-50 left-72 right-0 bg-white "
+        >
+          <div className="relative flex gap-3">
+            <Input
+              type="text"
+              className="focus-visible:ring-0 py-6 rounded-full pl-5"
+              value={inputMessage}
+              onChange={onInputMessageChange}
+              placeholder="Checking your machine here..."
+            />
+            <Button
+              variant="none"
+              type="submit"
+              className="bg-[#515DEF] text-white flex gap-2 items-center absolute right-2 top-1.5 rounded-full outline-none "
+            >
+              Send
+              <PaperAirplaneIcon className="w-5 h-5 text-white transform rotate-30" />
+            </Button>
+          </div>
         </form>
       </div>
     </AppLayout>
