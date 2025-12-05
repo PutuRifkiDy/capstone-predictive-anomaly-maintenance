@@ -49,7 +49,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { toast } from "sonner";
 
-export default function Index({ authedUser, onLogout }) {
+export default function UserIndex({ authedUser, onLogout }) {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({

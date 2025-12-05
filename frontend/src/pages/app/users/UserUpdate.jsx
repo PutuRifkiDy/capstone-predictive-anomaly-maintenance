@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Link, useNavigate, useParams } from "react-router";
 
-export default function Update({ authedUser, onLogout }) {
+export default function UserUpdate({ authedUser, onLogout }) {
   const [name, onNameChange, setName] = useInput("");
   const [email, onEmailChange, setEmail] = useInput("");
   const [phoneNumber, onPhoneNumberChange, setPhoneNumber] = useInput("");

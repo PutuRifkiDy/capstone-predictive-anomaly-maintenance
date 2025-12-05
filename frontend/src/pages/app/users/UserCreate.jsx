@@ -13,7 +13,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Link, useNavigate } from "react-router";
 
-export default function Create({ authedUser, onLogout }) {
+export default function UserCreate({ authedUser, onLogout }) {
   const [name, onNameChange, setName] = useInput("");
   const [email, onEmailChange, setEmail] = useInput("");
   const [phoneNumber, onPhoneNumberChange, setPhoneNumber] = useInput("");

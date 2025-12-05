@@ -3,10 +3,11 @@ import { Route, Routes, useNavigate } from "react-router";
 import { getUserLogged, putAccessToken } from "./utils/api";
 import { toast } from "sonner";
 import Login from "./pages/auth/Login";
-import Index from "./pages/app/users/Index";
-import Create from "./pages/app/users/Create";
-import Update from "./pages/app/users/Update";
 import Dashboard from "./pages/app/Dashboard";
+import UserIndex from "./pages/app/users/UserIndex";
+import UserCreate from "./pages/app/users/UserCreate";
+import UserUpdate from "./pages/app/users/UserUpdate";
+import ChatbotIndex from "./pages/app/chatbot/ChatbotIndex";
 
 export default function App() {
   const [authedUser, setAuthedUser] = useState(null);
@@ -65,20 +66,20 @@ export default function App() {
       />
       <Route
         path="/admin/users"
-        element={<Index authedUser={authedUser} onLogout={onLogout} />}
+        element={<UserIndex authedUser={authedUser} onLogout={onLogout} />}
       />
       <Route
         path="/admin/users/create"
-        element={<Create authedUser={authedUser} onLogout={onLogout} />}
+        element={<UserCreate authedUser={authedUser} onLogout={onLogout} />}
       />
       <Route
         path="/admin/users/update/:id"
-        element={<Update authedUser={authedUser} onLogout={onLogout} />}
+        element={<UserUpdate authedUser={authedUser} onLogout={onLogout} />}
       />
-      {/* <Route
-        path="/login"
-        element={<Dashboard authedUser={authedUser} onLogout={onLogout} />}
-      /> */}
+      <Route
+        path="/chatbot"
+        element={<ChatbotIndex authedUser={authedUser} onLogout={onLogout} />}
+      />
     </Routes>
   );
 }

@@ -51,8 +51,8 @@ async function login({ email, password }) {
     putAccessToken(responseJson.accessToken);
     return {
       error: false,
+      message: responseJson.message,
       data: responseJson,
-      message: responseJson.message
     };
   } catch (error) {
     return {
@@ -75,12 +75,16 @@ async function getUserLogged() {
     if (responseJson.status == "success") {
       return {
         error: false,
+        message: responseJson.message,
         data: responseJson.user,
-        message: responseJson.message
       };
     }
 
-    return { error: true, data: null, message: responseJson.error };
+    return {
+      error: true,
+      message: responseJson.error,
+      data: null,
+    };
   } catch (error) {
     console.error(error);
   }
@@ -119,14 +123,14 @@ async function deleteUser(id) {
     if (responseJson.status == "success") {
       return {
         error: false,
+        message: responseJson.message,
         data: responseJson,
-        message: responseJson.message
       };
     }
     return {
       error: true,
-      data: null,
       message: responseJson.error,
+      data: null,
     };
   } catch (error) {
     console.error(error);
@@ -148,14 +152,14 @@ async function addUser({ name, email, phone_number, password, role }) {
     if (responseJson.status == "success") {
       return {
         error: false,
-        data: responseJson.data,
         message: responseJson.message,
+        data: responseJson.data,
       };
     }
     return {
       error: false,
+      message: responseJson.error,
       data: null,
-      message: responseJson.error
     };
   } catch (error) {
     console.error(error);
@@ -177,14 +181,14 @@ async function editUser(id, { name, email, phone_number, role }) {
     if (responseJson.status == "success") {
       return {
         error: false,
-        data: responseJson.data,
         message: responseJson.message,
+        data: responseJson.data,
       };
     }
     return {
       error: true,
+      message: responseJson.error,
       data: null,
-      message: responseJson.error
     };
   } catch (error) {
     console.error(error);
@@ -205,14 +209,14 @@ async function getUsers() {
     if (responseJson.status == "success") {
       return {
         error: false,
-        data: responseJson.users,
         message: responseJson.message,
+        data: responseJson.users,
       };
     }
     return {
       error: true,
-      data: null,
       message: responseJson.error,
+      data: null,
     };
   } catch (error) {
     console.error(error);
@@ -239,8 +243,37 @@ async function getUserById(id) {
     }
     return {
       error: true,
-      data: null,
       message: responseJson.error,
+      data: null,
+    };
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function chatCopilot({ message, userId }) {
+  try {
+    const response = await fetchWithToken(`${BASE_URL}/chatbot`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message, userId }),
+    });
+
+    const responseJson = await response.json();
+
+    if (responseJson.status == "success") {
+      return {
+        error: false,
+        message: responseJson.message,
+        data: responseJson.data,
+      };
+    }
+    return {
+      error: true,
+      message: responseJson.error,
+      data: null,
     };
   } catch (error) {
     console.error(error);
@@ -259,5 +292,6 @@ export {
   deleteUser,
   editUser,
   getUsers,
-  getUserById
+  getUserById,
+  chatCopilot
 };

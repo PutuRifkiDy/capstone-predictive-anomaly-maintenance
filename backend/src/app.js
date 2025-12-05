@@ -1,6 +1,7 @@
 const express = require('express');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
+const aiAgentRoutes = require('./routes/aiAgentRoutes');
 
 const app = express();
 
@@ -22,10 +23,10 @@ app.use(express.json());
 // Routes
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
-
+app.use('/chatbot', aiAgentRoutes);
 
 // Global Error Handler
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
     res.status(err.status || 500).json({
         error: err.message || 'Internal Server Error'
     });
