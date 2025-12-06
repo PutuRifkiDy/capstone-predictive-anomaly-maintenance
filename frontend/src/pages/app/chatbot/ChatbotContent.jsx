@@ -15,6 +15,7 @@ import useInput from "@/hooks/useInput";
 import {
   chatCopilot,
   deleteAllChatLogsByUserId,
+  deleteChatLogById,
   getChatLogsCopilotByUserId,
 } from "@/utils/api";
 import { DocumentDuplicateIcon, TrashIcon } from "@heroicons/react/24/outline";
@@ -73,10 +74,25 @@ export default function ChatbotContent({ authedUser }) {
     try {
       const response = await deleteAllChatLogsByUserId(params.id);
       if (response.error) {
-        toast.error(response.error);
+        toast.error(response.message);
       } else {
         toast.success(response.message);
         setChatHistory([]);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDeleteChatLog = async (id) => {
+    try {
+      const response = await deleteChatLogById(id);
+      console.log(response);
+      if (response.error) {
+        toast.error(response.message);
+      } else {
+        toast.success(response.message);
+        setChatHistory(chatHistory.filter((chat) => chat.id != id));
       }
     } catch (error) {
       console.error(error);
@@ -180,7 +196,33 @@ export default function ChatbotContent({ authedUser }) {
                     </div>
                     {message.sender_type == "agent" && (
                       <div className="flex items-center gap-2 mt-2">
-                        <TrashIcon className="w-6 h-6 text-red-500" />
+                        <Dialog>
+                          <DialogTrigger asChild className="cursor-pointer">
+                            <TrashIcon className="w-6 h-6 text-red-500" />
+                          </DialogTrigger>
+                          <DialogContent className="sm:max-w-[425px]">
+                            <DialogHeader>
+                              <DialogTitle>
+                                Are you sure to delete this chat logs?
+                              </DialogTitle>
+                              <DialogDescription>
+                                This action cannot be undone. This will
+                                permanently delete
+                              </DialogDescription>
+                            </DialogHeader>
+                            <DialogFooter>
+                              <DialogClose asChild>
+                                <Button variant="outline">Cancel</Button>
+                              </DialogClose>
+                              <Button
+                                variant="destructive"
+                                onClick={() => handleDeleteChatLog(message.id)}
+                              >
+                                Confirm
+                              </Button>
+                            </DialogFooter>
+                          </DialogContent>
+                        </Dialog>
                         <DocumentDuplicateIcon className="w-6 h-6 text-gray-500" />
                       </div>
                     )}

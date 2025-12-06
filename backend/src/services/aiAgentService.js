@@ -42,6 +42,13 @@ class AIAgentService {
       throw new Error('No chat logs found');
     }
   }
+
+  async deleteChatLogById(id) {
+    const result = await db.query('DELETE FROM chat_logs WHERE id = $1 RETURNING id', [id]);
+    if (!result.rows.length) {
+      throw new Error('Chat log not found');
+    }
+  }
 }
 
 module.exports = new AIAgentService();

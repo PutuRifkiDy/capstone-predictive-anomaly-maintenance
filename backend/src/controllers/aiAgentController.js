@@ -50,6 +50,22 @@ class AIAgentController {
       next(error);
     }
   }
+
+  async deleteChatLogById(req, res, next) {
+    try {
+      const id = parseInt(req.params.id);
+      await aiAgentService.deleteChatLogById(id);
+      res.json({
+        status: 'success',
+        message: 'Chat log deleted successfully'
+      });
+    } catch (error) {
+      if (error.message === "Chat log not found") {
+        return res.status(404).json({ error: error.message });
+      }
+      next(error);
+    }
+  }
 }
 
 module.exports = new AIAgentController();
