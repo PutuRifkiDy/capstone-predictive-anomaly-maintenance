@@ -10,7 +10,7 @@ export default function Dashboard({ authedUser, onLogout }) {
       <p className="font-medium text-[32px] text-[#000000] dark:text-white">
         Dashboard
       </p>
-      <div className="flex flex-col md:flex-row gap-3 md:justify-between pt-[45px]">
+      <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-3 pt-[45px]">
         <div className="flex flex-row justify-center items-center bg-white dark:bg-[#081028] border-gray-200 border-[1px] rounded-[15px] px-[24px] py-[29px] gap-[35px] shadow-sm">
           <div>
             <p className="text-gray-400">Total Machine</p>
