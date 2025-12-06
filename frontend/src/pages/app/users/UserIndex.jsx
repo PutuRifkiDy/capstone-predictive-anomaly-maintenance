@@ -132,19 +132,19 @@ export default function UserIndex({ authedUser, onLogout }) {
             </TooltipProvider>
             <Dialog>
               <DialogTrigger asChild>
-                <TooltipProvider delayDuration={200}>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        variant="none"
-                        className="text-sm bg-red-100 rounded-md p-2 dark:bg-[#515DEF]/10  dark:border-[1px] dark:border-[#515DEF]/30 h-fit"
-                      >
+                <Button
+                  variant="none"
+                  className="text-sm bg-red-100 rounded-md p-2 dark:bg-[#515DEF]/10  dark:border-[1px] dark:border-[#515DEF]/30 h-fit"
+                >
+                  <TooltipProvider delayDuration={200}>
+                    <Tooltip>
+                      <TooltipTrigger>
                         <TrashIcon className="h-4 w-4 text-red-500 dark:text-[#515DEF]" />
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>Delete User</TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
+                      </TooltipTrigger>
+                      <TooltipContent>Delete User</TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
@@ -198,7 +198,7 @@ export default function UserIndex({ authedUser, onLogout }) {
 
   return (
     <AppLayout authedUser={authedUser} onLogout={onLogout}>
-      <div className="flex justify-between">
+      <div className="flex md:flex-row flex-col md:mb-0 md:gap-0 gap-5 justify-between">
         <p className="font-medium text-[32px] tracking-[-0.11px] text-[#000000] dark:text-white">
           User Management
         </p>
@@ -274,7 +274,7 @@ export default function UserIndex({ authedUser, onLogout }) {
               </Table>
             </div>
 
-            <div className="flex items-center justify-between space-x-2 py-4">
+            <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between space-x-2 py-4 lg:gap-0 md:gap-0 gap-5">
               <div className="flex text-sm text-muted-foreground">
                 Page {table.getState().pagination.pageIndex + 1} of{" "}
                 {table.getPageCount()} (
@@ -310,7 +310,7 @@ export default function UserIndex({ authedUser, onLogout }) {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="dark:bg-[#515DEF]/10"
+                  className="dark:bg-[#515DEF]/10 "
                   onClick={() => table.previousPage()}
                   disabled={!table.getCanPreviousPage()}
                 >

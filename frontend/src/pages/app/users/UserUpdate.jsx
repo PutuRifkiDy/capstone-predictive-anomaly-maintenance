@@ -35,6 +35,7 @@ export default function UserUpdate({ authedUser, onLogout }) {
           setEmail(result.data.email);
           setPhoneNumber(result.data.phone_number);
           setRole(result.data.role);
+          setPassword(result.data.password);
         }
       } catch (error) {
         toast.error(error.message);
@@ -42,7 +43,7 @@ export default function UserUpdate({ authedUser, onLogout }) {
     };
 
     fetchUserData();
-  }, [params.id, setName, setEmail, setPhoneNumber, setRole]);
+  }, [params.id, setName, setEmail, setPhoneNumber, setRole, setPassword]);
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
@@ -154,7 +155,7 @@ export default function UserUpdate({ authedUser, onLogout }) {
               name="password"
               placeholder="Input your password here..."
               className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-gray-400 dark:bg-[#081028]"
-              value={password}
+              value={password ? "" : password}
               onChange={onPasswordChange}
             />
           </div>

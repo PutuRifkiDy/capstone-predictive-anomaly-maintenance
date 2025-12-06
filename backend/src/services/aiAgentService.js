@@ -1,7 +1,7 @@
 const axios = require('axios');
 const db = require('../config/db');
 
-const N8N_WEBHOOK_URL = 'https://puturifkidy.app.n8n.cloud/webhook/35a4b870-8fa6-4784-88fe-ed1a87eccec2';
+const N8N_WEBHOOK_URL = 'https://puturifkidy.app.n8n.cloud/webhook/37b65439-3076-4247-bb3a-0e2349c98259';
 class AIAgentService {
   async sendChatToAgent(message, userId) {
     const created_at = new Date().toISOString();
@@ -15,6 +15,7 @@ class AIAgentService {
         message,
         userId
       });
+
       await db.query('INSERT INTO chat_logs (sender_type, message, user_id, created_at, updated_at) VALUES ($1, $2, $3, $4, $5)', ['user', message, userId, created_at, updated_at]);
 
       await db.query('INSERT INTO chat_logs (sender_type, message, user_id, created_at, updated_at) VALUES ($1, $2, $3, $4, $5)', ['agent', n8nResponse.data.message, userId, created_at, updated_at]);

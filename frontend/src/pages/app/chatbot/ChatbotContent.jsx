@@ -19,7 +19,11 @@ import {
   getChatLogsCopilotByUserId,
 } from "@/utils/api";
 import { DocumentDuplicateIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { CpuChipIcon, PaperAirplaneIcon } from "@heroicons/react/24/solid";
+import {
+  ClipboardDocumentCheckIcon,
+  CpuChipIcon,
+  PaperAirplaneIcon,
+} from "@heroicons/react/24/solid";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { toast } from "sonner";
@@ -94,6 +98,16 @@ export default function ChatbotContent({ authedUser }) {
         toast.success(response.message);
         setChatHistory(chatHistory.filter((chat) => chat.id != id));
       }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const copyClipboard = (message) => {
+    try {
+      const result = navigator.clipboard.writeText(message);
+      console.log(result);
+      toast.success("Copied to clipboard");
     } catch (error) {
       console.error(error);
     }
@@ -223,7 +237,10 @@ export default function ChatbotContent({ authedUser }) {
                             </DialogFooter>
                           </DialogContent>
                         </Dialog>
-                        <DocumentDuplicateIcon className="w-6 h-6 text-gray-500" />
+                        <DocumentDuplicateIcon
+                          className="w-6 h-6 text-gray-500 cursor-pointer"
+                          onClick={() => copyClipboard(message.message)}
+                        />
                       </div>
                     )}
                   </div>
