@@ -79,6 +79,8 @@ class UserController {
     } catch (error) {
       if (error.message === "User not found") {
         return res.status(404).json({ error: error.message });
+      } else if (error.message == "Cannot delete admin user") {
+        return res.status(400).json({ error: error.message });
       }
       next(error);
     }
