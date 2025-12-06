@@ -186,7 +186,7 @@ export default function ChatbotContent({ authedUser }) {
                     <p className="font-medium text-[#1E293B] dark:text-white">
                       {message.sender_type == "agent"
                         ? "Predicta Chatbot"
-                        : message.sender_type}
+                        : authedUser.name}
                     </p>
                     <div
                       className={`p-3 ${
