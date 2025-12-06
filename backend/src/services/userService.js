@@ -1,4 +1,5 @@
 const db = require('../config/db');
+const bcrypt = require('bcrypt');
 
 class UserService {
     async getCurrentUser(userId) {
@@ -28,9 +29,10 @@ class UserService {
         return user;
     }
 
-    async updateUserId(id, { name, email, phone_number, role }) {
+    async updateUserId(id, { name, email, phone_number, role, password }) {
         const updated_at = new Date().toISOString();
-        const result = await db.query('UPDATE users SET name = $1, email = $2, phone_number = $3, role = $4, updated_at = $5 WHERE id = $6 RETURNING id', [name, email, phone_number, role, updated_at, id]);
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const result = await db.query('UPDATE users SET name = $1, email = $2, phone_number = $3, role = $4, password = $5, updated_at = $6 WHERE id = $7 RETURNING id', [name, email, phone_number, role, hashedPassword, updated_at, id]);
 
         if (!result.rows.length) {
             throw new Error('User not found');

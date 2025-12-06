@@ -1,8 +1,5 @@
 import AppLayout from "@/components/layouts/AppLayout";
-import {
-  ArrowLeftIcon,
-  CheckBadgeIcon,
-} from "@heroicons/react/24/solid";
+import { ArrowLeftIcon, CheckBadgeIcon } from "@heroicons/react/24/solid";
 import {
   Select,
   SelectContent,
@@ -20,6 +17,7 @@ export default function UserUpdate({ authedUser, onLogout }) {
   const [name, onNameChange, setName] = useInput("");
   const [email, onEmailChange, setEmail] = useInput("");
   const [phoneNumber, onPhoneNumberChange, setPhoneNumber] = useInput("");
+  const [password, onPasswordChange, setPassword] = useInput("");
   const [role, setRole] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -55,7 +53,13 @@ export default function UserUpdate({ authedUser, onLogout }) {
 
     setLoading(true);
     try {
-      const result = await editUser(params.id, { name, email, phone_number: phoneNumber, role });
+      const result = await editUser(params.id, {
+        name,
+        email,
+        phone_number: phoneNumber,
+        role,
+        password,
+      });
 
       if (result.error) {
         toast.error(result.error);
@@ -66,6 +70,7 @@ export default function UserUpdate({ authedUser, onLogout }) {
         setEmail("");
         setPhoneNumber("");
         setRole("");
+        setPassword("");
       }
     } finally {
       setLoading(false);
@@ -135,6 +140,22 @@ export default function UserUpdate({ authedUser, onLogout }) {
               className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-gray-400 dark:bg-[#081028]"
               value={phoneNumber}
               onChange={onPhoneNumberChange}
+            />
+          </div>
+          <div className="flex flex-col gap-2 md:px-10 px-3 mb-3 ">
+            <label
+              htmlFor="password"
+              className="text-[14px] text-[#202224] flex gap-1 items-center dark:text-gray-400"
+            >
+              Password
+              <span className="text-red-500">*</span>
+            </label>
+            <input
+              name="password"
+              placeholder="Input your password here..."
+              className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-gray-400 dark:bg-[#081028]"
+              value={password}
+              onChange={onPasswordChange}
             />
           </div>
           <div className="flex flex-col gap-2 md:px-10 px-3 mb-5">
