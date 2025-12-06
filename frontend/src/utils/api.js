@@ -164,14 +164,14 @@ async function addUser({ name, email, phone_number, password, role }) {
   }
 }
 
-async function editUser(id, { name, email, phone_number, role }) {
+async function editUser(id, { name, email, phone_number, role, password }) {
   try {
     const response = await fetchWithToken(`${BASE_URL}/users/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name, email, phone_number, role }),
+      body: JSON.stringify({ name, email, phone_number, role, password }),
     });
 
     const responseJson = await response.json();

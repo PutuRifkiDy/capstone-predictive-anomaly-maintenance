@@ -24,8 +24,9 @@ export default function Login({ loginSuccess }) {
 
     try {
       const result = await login({ email, password });
+      console.log(result);
       if (result.error) {
-        toast.error(result.message);
+        toast.error('Login failed, please check your credentials');
       } else {
         loginSuccess(result.data)
       }
