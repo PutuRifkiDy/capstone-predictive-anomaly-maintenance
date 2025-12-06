@@ -2,7 +2,7 @@ const db = require('../config/db');
 
 class UserService {
     async getCurrentUser(userId) {
-        const result = await db.query('SELECT name, email, phone_number, role FROM users WHERE id = $1', [userId]);
+        const result = await db.query('SELECT id, name, email, phone_number, role FROM users WHERE id = $1', [userId]);
         const user = result.rows[0];
         if (!user) {
             throw new Error('User not found');

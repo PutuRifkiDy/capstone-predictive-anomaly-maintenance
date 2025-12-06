@@ -1,7 +1,9 @@
 const express = require('express');
-const { handleChatRequest } = require('../controllers/aiAgentController');
+const aiAgentController = require('../controllers/aiAgentController');
+const { authenticate } = require('../middlewares/authMiddleware');
 const router = express.Router();
 
-router.post('/', handleChatRequest);
+router.post('/', authenticate, aiAgentController.handleChatRequest);
+router.get('/', authenticate, aiAgentController.getAllChatLogs);
 
 module.exports = router;

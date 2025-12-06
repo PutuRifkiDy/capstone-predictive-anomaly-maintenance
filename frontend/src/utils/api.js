@@ -153,7 +153,7 @@ async function addUser({ name, email, phone_number, password, role }) {
       return {
         error: false,
         message: responseJson.message,
-        data: responseJson.data,
+        data: responseJson.user,
       };
     }
     return {
@@ -182,7 +182,7 @@ async function editUser(id, { name, email, phone_number, role }) {
       return {
         error: false,
         message: responseJson.message,
-        data: responseJson.data,
+        data: responseJson.user,
       };
     }
     return {
@@ -209,7 +209,6 @@ async function getUsers() {
     if (responseJson.status == "success") {
       return {
         error: false,
-        message: responseJson.message,
         data: responseJson.users,
       };
     }
@@ -237,7 +236,6 @@ async function getUserById(id) {
     if (responseJson.status == "success") {
       return {
         error: false,
-        message: responseJson.message,
         data: responseJson.user,
       };
     }
@@ -266,8 +264,36 @@ async function chatCopilot({ message, userId }) {
     if (responseJson.status == "success") {
       return {
         error: false,
+        data: responseJson.agentResponse,
+      };
+    }
+    return {
+      error: true,
+      message: responseJson.error,
+      data: null,
+    };
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function getChatLogsCopilot() {
+  try {
+
+    const response = await fetchWithToken(`${BASE_URL}/chatbot`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const responseJson = await response.json();
+
+    if (responseJson.status == "success") {
+      return {
+        error: false,
         message: responseJson.message,
-        data: responseJson.data,
+        data: responseJson.chatLogs,
       };
     }
     return {
@@ -293,5 +319,6 @@ export {
   editUser,
   getUsers,
   getUserById,
-  chatCopilot
+  chatCopilot,
+  getChatLogsCopilot
 };

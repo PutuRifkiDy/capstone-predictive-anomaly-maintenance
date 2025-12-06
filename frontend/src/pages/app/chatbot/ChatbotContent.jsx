@@ -3,16 +3,35 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import SidebarOpenContext from "@/context/SidebarOpenContext";
 import useInput from "@/hooks/useInput";
-import { chatCopilot } from "@/utils/api";
+import { chatCopilot, getChatLogsCopilot } from "@/utils/api";
 import { DocumentDuplicateIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { CpuChipIcon, PaperAirplaneIcon } from "@heroicons/react/24/solid";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export default function ChatbotContent({ authedUser }) {
   const context = useContext(SidebarOpenContext);
   const [inputMessage, onInputMessageChange, setInputMessage] = useInput();
   const [chatHistory, setChatHistory] = useState([]);
+
+  
+  useEffect(() => {
+    const fetchChatHistory = async () => {
+      try {
+        const response = await getChatLogsCopilot();
+        console.log(response);
+        if (response.error) {
+          setChatHistory([]);
+        } else {
+          setChatHistory(response.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    
+    fetchChatHistory();
+  }, [chatHistory]);
 
   const handleSendMessage = async (event) => {
     event.preventDefault();
@@ -21,26 +40,17 @@ export default function ChatbotContent({ authedUser }) {
       toast.error("Please enter a message");
       return;
     }
-
-    const userMessage = {
-      sender: authedUser.name,
-      text: inputMessage,
-    };
-    setChatHistory((prev) => [...prev, userMessage]);
-    setInputMessage("");
-
     try {
       const response = await chatCopilot({
         message: inputMessage,
         userId: authedUser.id,
       });
 
-      const agentResponse = {
-        sender: "agent",
-        text: response.data.message,
-      };
-      console.log(agentResponse);
-      setChatHistory((prev) => [...prev, agentResponse]);
+      if (response.error) {
+        toast.error(response.message);
+      } else {
+        setInputMessage("");
+      }
     } catch (error) {
       console.error(error);
     }
@@ -66,17 +76,17 @@ export default function ChatbotContent({ authedUser }) {
               <div key={index} className="flex flex-col mb-1">
                 <div
                   className={`flex items-center gap-4 ${
-                    message.sender == "agent" ? "justify-start" : "justify-end"
+                    message.sender_type == "agent" ? "justify-start" : "justify-end"
                   }`}
                 >
                   <div
                     className={`flex items-center justify-center w-12 h-12 p-4 rounded-full ${
-                      message.sender == "agent"
+                      message.sender_type == "agent"
                         ? "bg-[#515DEF]/30 border-[1px] border-[#515DEF]/10"
                         : "bg-[#515DEF]"
                     } text-white`}
                   >
-                    {message.sender == "agent" ? (
+                    {message.sender_type == "agent" ? (
                       <CpuChipIcon className="w-8 h-8 shrink-0 text-[#515DEF]" />
                     ) : (
                       authedUser.name.substring(0, 2).toUpperCase()
@@ -84,31 +94,31 @@ export default function ChatbotContent({ authedUser }) {
                   </div>
                   <div className="flex flex-col gap-1">
                     <p className="font-medium text-[#1E293B] dark:text-white">
-                      {message.sender == "agent"
+                      {message.sender_type == "agent"
                         ? "Predicta Chatbot"
-                        : message.sender}
+                        : message.sender_type}
                     </p>
                     <div
                       className={`p-3 ${
-                        message.sender == "agent"
+                        message.sender_type == "agent"
                           ? "bg-gray-50 border-[1px] border-gray-200 dark:bg-[#515DEF]/20 dark:border-[#515DEF]/20 relative rounded-r-lg rounded-br-lg"
                           : "bg-[#515DEF] border-[1px] border-[#515DEF]/30 rounded-lg"
                       }`}
                     >
-                      {message.sender == "agent" && (
+                      {message.sender_type == "agent" && (
                         <div className="absolute -left-1 right-0 h-full w-[5px] bg-[#515DEF] inset-y-0 rounded-tl-md rounded-bl-lg"></div>
                       )}
                       <p
                         className={`${
-                          message.sender == "agent"
+                          message.sender_type == "agent"
                             ? "text-gray-800 dark:text-white"
                             : "text-white"
                         }`}
                       >
-                        {message.text}
+                        {message.message}
                       </p>
                     </div>
-                    {message.sender == "agent" && (
+                    {message.sender_type == "agent" && (
                       <div className="flex items-center gap-2 mt-2">
                         <TrashIcon className="w-6 h-6 text-red-500" />
                         <DocumentDuplicateIcon className="w-6 h-6 text-gray-500" />
