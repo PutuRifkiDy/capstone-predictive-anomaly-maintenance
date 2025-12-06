@@ -1,25 +1,38 @@
-import AppLayout from "@/components/layouts/AppLayout";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import SidebarOpenContext from "@/context/SidebarOpenContext";
 import useInput from "@/hooks/useInput";
-import { chatCopilot, getChatLogsCopilot } from "@/utils/api";
+import {
+  chatCopilot,
+  deleteAllChatLogsByUserId,
+  getChatLogsCopilotByUserId,
+} from "@/utils/api";
 import { DocumentDuplicateIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { CpuChipIcon, PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router";
 import { toast } from "sonner";
 
 export default function ChatbotContent({ authedUser }) {
   const context = useContext(SidebarOpenContext);
   const [inputMessage, onInputMessageChange, setInputMessage] = useInput();
   const [chatHistory, setChatHistory] = useState([]);
+  const params = useParams();
 
-  
   useEffect(() => {
     const fetchChatHistory = async () => {
       try {
-        const response = await getChatLogsCopilot();
-        console.log(response);
+        const response = await getChatLogsCopilotByUserId(params.id);
         if (response.error) {
           setChatHistory([]);
         } else {
@@ -29,9 +42,9 @@ export default function ChatbotContent({ authedUser }) {
         console.error(error);
       }
     };
-    
+
     fetchChatHistory();
-  }, [chatHistory]);
+  }, [params.id, chatHistory]);
 
   const handleSendMessage = async (event) => {
     event.preventDefault();
@@ -56,6 +69,20 @@ export default function ChatbotContent({ authedUser }) {
     }
   };
 
+  const handleDeleteAllChatLog = async () => {
+    try {
+      const response = await deleteAllChatLogsByUserId(params.id);
+      if (response.error) {
+        toast.error(response.error);
+      } else {
+        toast.success(response.message);
+        setChatHistory([]);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="relative">
       <div className="mb-24">
@@ -72,11 +99,44 @@ export default function ChatbotContent({ authedUser }) {
           </div>
         ) : (
           <>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button
+                  variant="default"
+                  className="bg-[#515DEF] hover:bg-[#515DEF]/90"
+                >
+                  Clear All Chat
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>
+                    Are you sure to delete all of chat logs?
+                  </DialogTitle>
+                  <DialogDescription>
+                    This action cannot be undone. This will permanently delete
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter>
+                  <DialogClose asChild>
+                    <Button variant="outline">Cancel</Button>
+                  </DialogClose>
+                  <Button
+                    variant="destructive"
+                    onClick={() => handleDeleteAllChatLog()}
+                  >
+                    Confirm
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
             {chatHistory.map((message, index) => (
               <div key={index} className="flex flex-col mb-1">
                 <div
                   className={`flex items-center gap-4 ${
-                    message.sender_type == "agent" ? "justify-start" : "justify-end"
+                    message.sender_type == "agent"
+                      ? "justify-start"
+                      : "justify-end"
                   }`}
                 >
                   <div

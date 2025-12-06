@@ -277,10 +277,9 @@ async function chatCopilot({ message, userId }) {
   }
 }
 
-async function getChatLogsCopilot() {
+async function getChatLogsCopilotByUserId(userId) {
   try {
-
-    const response = await fetchWithToken(`${BASE_URL}/chatbot`, {
+    const response = await fetchWithToken(`${BASE_URL}/chatbot/${userId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -306,6 +305,34 @@ async function getChatLogsCopilot() {
   }
 }
 
+async function deleteAllChatLogsByUserId(userId) {
+  try {
+    const response = await fetchWithToken(`${BASE_URL}/chatbot/${userId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const responseJson = await response.json();
+
+    if (responseJson.status == "success") {
+      return {
+        error: false,
+        message: responseJson.message,
+        data: responseJson.chatLogs,
+      };
+    }
+    return {
+      error: true,
+      message: responseJson.error,
+      data: null,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export {
   getAccessToken,
   putAccessToken,
@@ -320,5 +347,6 @@ export {
   getUsers,
   getUserById,
   chatCopilot,
-  getChatLogsCopilot
+  getChatLogsCopilotByUserId,
+  deleteAllChatLogsByUserId
 };

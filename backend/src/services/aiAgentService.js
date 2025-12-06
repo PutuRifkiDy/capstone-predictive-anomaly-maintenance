@@ -28,9 +28,19 @@ class AIAgentService {
     }
   }
 
-  async getAllChatLogs() {
-    const result = await db.query('SELECT * FROM chat_logs');
+  async getAllChatLogsByUserId(userId) {
+    const result = await db.query('SELECT * FROM chat_logs WHERE user_id = $1', [userId]);
+    if (!result.rows) {
+      throw new Error('No chat logs found');
+    }
     return result.rows;
+  }
+
+  async deleteChatLogsByUserId(userId) {
+    const result = await db.query('DELETE FROM chat_logs WHERE user_id = $1 RETURNING id', [userId]);
+    if (!result.rows.length) {
+      throw new Error('No chat logs found');
+    }
   }
 }
 

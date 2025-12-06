@@ -13,7 +13,7 @@ class UserService {
 
     async getAllUsers() {
         const result = await db.query(
-            'SELECT id, name, email, phone_number, role, created_at, updated_at FROM users ORDER BY created_at ASC'
+            'SELECT name, email, phone_number, role, created_at, updated_at FROM users ORDER BY created_at ASC'
         );
         return result.rows;
     }

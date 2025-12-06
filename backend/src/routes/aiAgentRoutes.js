@@ -4,6 +4,7 @@ const { authenticate } = require('../middlewares/authMiddleware');
 const router = express.Router();
 
 router.post('/', authenticate, aiAgentController.handleChatRequest);
-router.get('/', authenticate, aiAgentController.getAllChatLogs);
+router.get('/:userId', authenticate, aiAgentController.getAllChatLogsByUserId);
+router.delete('/:userId', authenticate, aiAgentController.deleteAllChatLogsByUserId);
 
 module.exports = router;

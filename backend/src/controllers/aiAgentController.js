@@ -22,14 +22,31 @@ class AIAgentController {
     }
   }
 
-  async getAllChatLogs(req, res, next) {
+  async getAllChatLogsByUserId(req, res, next) {
     try {
-      const chatLogs = await aiAgentService.getAllChatLogs();
+      const userId = parseInt(req.params.userId);
+      const chatLogs = await aiAgentService.getAllChatLogsByUserId(userId);
       res.json({
         chatLogs,
         status: "success",
       });
     } catch (error) {
+      next(error);
+    }
+  }
+
+  async deleteAllChatLogsByUserId(req, res, next) {
+    try {
+      const userId = parseInt(req.params.userId);
+      await aiAgentService.deleteChatLogsByUserId(userId);
+      res.json({
+        status: 'success',
+        message: 'All chat logs deleted successfully'
+      });
+    } catch (error) {
+      if (error.message === "No chat logs found") {
+        return res.status(404).json({ error: error.message });
+      }
       next(error);
     }
   }

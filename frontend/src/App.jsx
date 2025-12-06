@@ -77,7 +77,7 @@ export default function App() {
         element={<UserUpdate authedUser={authedUser} onLogout={onLogout} />}
       />
       <Route
-        path="/chatbot"
+        path="/chatbot/:id"
         element={<ChatbotIndex authedUser={authedUser} onLogout={onLogout} />}
       />
     </Routes>
