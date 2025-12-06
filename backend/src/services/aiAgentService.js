@@ -15,7 +15,6 @@ class AIAgentService {
         message,
         userId
       });
-      console.log('Agent response:', n8nResponse.data);
       await db.query('INSERT INTO chat_logs (sender_type, message, user_id, created_at, updated_at) VALUES ($1, $2, $3, $4, $5)', ['user', message, userId, created_at, updated_at]);
 
       await db.query('INSERT INTO chat_logs (sender_type, message, user_id, created_at, updated_at) VALUES ($1, $2, $3, $4, $5)', ['agent', n8nResponse.data.message, userId, created_at, updated_at]);
