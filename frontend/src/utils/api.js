@@ -355,6 +355,33 @@ async function deleteChatLogById(id) {
   }
 }
 
+async function getMaintenanceTicketById(userId) {
+  try {
+    const response = await fetchWithToken(`${BASE_URL}/maintenancetickets/${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const responseJson = await response.json();
+
+    if (responseJson.status == "success") {
+      return {
+        error: false,
+        data: responseJson.maintenanceTickets,
+      };
+    }
+    return {
+      error: true,
+      message: responseJson.error,
+      data: null,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export {
   getAccessToken,
   putAccessToken,
@@ -371,5 +398,6 @@ export {
   chatCopilot,
   getChatLogsCopilotByUserId,
   deleteAllChatLogsByUserId,
-  deleteChatLogById
+  deleteChatLogById,
+  getMaintenanceTicketById
 };

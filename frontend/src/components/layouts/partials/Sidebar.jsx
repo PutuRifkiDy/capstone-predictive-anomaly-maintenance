@@ -9,6 +9,7 @@ import {
   HomeIcon,
   UserGroupIcon,
   ChatBubbleLeftRightIcon,
+  TicketIcon,
 } from "@heroicons/react/24/outline";
 import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/solid";
 import { Link, useLocation } from "react-router";
@@ -28,19 +29,19 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                     to={"/dashboard"}
                     className={`
                   ${
-                    currentPath.startsWith("/dashboard") 
+                    currentPath.startsWith("/dashboard")
                       ? "bg-[#515DEF]/10 relative text-[#515DEF] pl-5"
                       : "text-foreground hover:bg-gray-100 dark:hover:bg-[#7E89AC]/30 transition-all duration-300 ease-in-out"
                   }
                   group flex gap-x-3 rounded-md p-3 text-sm font-medium items-center
                 `}
                   >
-                    {currentPath.startsWith("/dashboard")  && (
+                    {currentPath.startsWith("/dashboard") && (
                       <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
                     )}
                     <HomeIcon
                       className={`w-6 h-6 ${
-                        currentPath.startsWith("/dashboard") 
+                        currentPath.startsWith("/dashboard")
                           ? "text-[#515DEF]"
                           : "text-foreground"
                       }`}
@@ -75,22 +76,47 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                 </li>
                 <li>
                   <Link
-                    to={`/chatbot/${authedUser.id}`}
+                    to={`/maintenance-ticket/${authedUser.id}`}
                     className={`
                   ${
-                    currentPath.startsWith("/chatbot") 
+                    currentPath.startsWith("/maintenance-ticket")
                       ? "bg-[#515DEF]/10 relative text-[#515DEF] pl-5"
                       : "text-foreground hover:bg-gray-100 dark:hover:bg-[#7E89AC]/30 transition-all duration-300 ease-in-out"
                   }
                   group flex gap-x-3 rounded-md p-3 text-sm font-medium items-center
                 `}
                   >
-                    {currentPath.startsWith("/chatbot")  && (
+                    {currentPath.startsWith("/maintenance-ticket") && (
+                      <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                    )}
+                    <TicketIcon
+                      className={`w-6 h-6 ${
+                        currentPath.startsWith("/maintenance-ticket")
+                          ? "text-[#515DEF]"
+                          : "text-foreground"
+                      }`}
+                    />
+                    Maintenance Tickets
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to={`/chatbot/${authedUser.id}`}
+                    className={`
+                  ${
+                    currentPath.startsWith("/chatbot")
+                      ? "bg-[#515DEF]/10 relative text-[#515DEF] pl-5"
+                      : "text-foreground hover:bg-gray-100 dark:hover:bg-[#7E89AC]/30 transition-all duration-300 ease-in-out"
+                  }
+                  group flex gap-x-3 rounded-md p-3 text-sm font-medium items-center
+                `}
+                  >
+                    {currentPath.startsWith("/chatbot") && (
                       <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
                     )}
                     <ChatBubbleLeftRightIcon
                       className={`w-6 h-6 ${
-                        currentPath.startsWith("/chatbot") 
+                        currentPath.startsWith("/chatbot")
                           ? "text-[#515DEF]"
                           : "text-foreground"
                       }`}
@@ -201,6 +227,31 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                       }`}
                     />
                     {/* User Management */}
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to={`/maintenance-ticket/${authedUser.id}`}
+                    className={`
+                  ${
+                    currentPath.startsWith("/maintenance-ticket")
+                      ? "bg-[#515DEF]/10 relative text-[#515DEF] pl-5"
+                      : "text-foreground hover:bg-gray-100 dark:hover:bg-[#7E89AC]/30 transition-all duration-300 ease-in-out"
+                  }
+                  group flex gap-x-3 rounded-md p-3 text-sm font-medium items-center
+                `}
+                  >
+                    {currentPath.startsWith("/maintenance-ticket") && (
+                      <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                    )}
+                    <TicketIcon
+                      className={`w-6 h-6 ${
+                        currentPath.startsWith("/maintenance-ticket")
+                          ? "text-[#515DEF]"
+                          : "text-foreground"
+                      }`}
+                    />
+                    {/* Maintenance Tickets{} */}
                   </Link>
                 </li>
                 <li>

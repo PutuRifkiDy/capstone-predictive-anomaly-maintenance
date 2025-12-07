@@ -10,6 +10,7 @@ import {
   HomeIcon,
   UserGroupIcon,
   ChatBubbleLeftRightIcon,
+  TicketIcon,
 } from "@heroicons/react/24/outline";
 import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/solid";
 import { Link, useLocation } from "react-router";
@@ -78,6 +79,31 @@ export default function SidebarResponsive({ authedUser, onLogout }) {
                   }`}
                 />
                 User Management
+              </Link>
+            </li>
+            <li>
+              <Link
+                to={`/maintenance-ticket/${authedUser.id}`}
+                className={`
+                  ${
+                    currentPath.startsWith("/maintenance-ticket")
+                      ? "bg-[#515DEF]/10 relative text-[#515DEF] pl-5"
+                      : "text-foreground hover:bg-gray-100 dark:hover:bg-[#7E89AC]/30 transition-all duration-300 ease-in-out"
+                  }
+                  group flex gap-x-3 rounded-md p-3 text-sm font-medium items-center
+                `}
+              >
+                {currentPath.startsWith("/maintenance-ticket") && (
+                  <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                )}
+                <TicketIcon
+                  className={`w-6 h-6 ${
+                    currentPath.startsWith("/maintenance-ticket")
+                      ? "text-[#515DEF]"
+                      : "text-foreground"
+                  }`}
+                />
+                Maintenance Tickets
               </Link>
             </li>
             <li>

@@ -6,11 +6,6 @@ const maintenanceTicketSchema = Joi.object({
   status: Joi.string().valid('need_maintenance', 'in_progress', 'completed').default('need_maintenance'),
 });
 
-const userIdSchema = Joi.object({
-  userId: Joi.number().integer().required(),
-});
-
 module.exports = {
   maintenanceTicketSchema,
-  userIdSchema
 };

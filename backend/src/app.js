@@ -2,6 +2,7 @@ const express = require('express');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const aiAgentRoutes = require('./routes/aiAgentRoutes');
+const maintenanceTicketRoutes = require('./routes/maintenanceTicketsRoutes');
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(express.json());
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 app.use('/chatbot', aiAgentRoutes);
+app.use('/maintenancetickets', maintenanceTicketRoutes);
 
 // Global Error Handler
 app.use((err, req, res) => {
