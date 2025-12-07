@@ -1,4 +1,4 @@
-const userService = require("../services/userService");
+const userService = require('../services/userService');
 
 class UserController {
   async getCurrentUser(req, res, next) {
@@ -6,10 +6,10 @@ class UserController {
       const user = await userService.getCurrentUser(req.user.id);
       res.json({
         user,
-        status: "success",
+        status: 'success',
       });
     } catch (error) {
-      if (error.message === "User not found") {
+      if (error.message === 'User not found') {
         return res.status(404).json({ error: error.message });
       }
       next(error);
@@ -21,7 +21,7 @@ class UserController {
       const users = await userService.getAllUsers();
       res.json({
         users,
-        status: "success",
+        status: 'success',
       });
     } catch (error) {
       next(error);
@@ -34,10 +34,10 @@ class UserController {
       const user = await userService.getUserById(parseInt(id));
       res.json({
         user,
-        status: "success",
+        status: 'success',
       });
     } catch (error) {
-      if (error.message === "User not found") {
+      if (error.message === 'User not found') {
         return res.status(404).json({ error: error.message });
       }
       next(error);
@@ -57,11 +57,11 @@ class UserController {
       });
       res.json({
         user,
-        status: "success",
-        message: "User updated successfully",
+        status: 'success',
+        message: 'User updated successfully',
       });
     } catch (error) {
-      if (error.message === "User not found") {
+      if (error.message === 'User not found') {
         return res.status(404).json({ error: error.message });
       }
       next(error);
@@ -73,13 +73,13 @@ class UserController {
       const id = parseInt(req.params.id);
       await userService.deleteUserById(id);
       res.json({
-        status: "success",
-        message: "User deleted successfully",
+        status: 'success',
+        message: 'User deleted successfully',
       });
     } catch (error) {
-      if (error.message === "User not found") {
+      if (error.message === 'User not found') {
         return res.status(404).json({ error: error.message });
-      } else if (error.message == "Cannot delete admin user") {
+      } else if (error.message == 'Cannot delete admin user') {
         return res.status(400).json({ error: error.message });
       }
       next(error);

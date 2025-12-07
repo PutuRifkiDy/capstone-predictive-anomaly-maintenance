@@ -1,4 +1,4 @@
-const authService = require("../services/authService");
+const authService = require('../services/authService');
 
 class AuthController {
   async register(req, res, next) {
@@ -13,14 +13,14 @@ class AuthController {
       });
 
       res.status(201).json({
-        status: "success",
-        message: "User registered successfully",
+        status: 'success',
+        message: 'User registered successfully',
         user,
       });
     } catch (error) {
-      if (error.message.includes("already exists")) {
+      if (error.message.includes('already exists')) {
         return res.status(409).json({
-          status: "fail",
+          status: 'fail',
           error: error.message,
         });
       }
@@ -34,14 +34,14 @@ class AuthController {
       const result = await authService.login({ email, password });
 
       res.json({
-        status: "success",
-        message: "Login successful",
+        status: 'success',
+        message: 'Login successful',
         ...result,
       });
     } catch (error) {
-      if (error.message === "Invalid credentials") {
+      if (error.message === 'Invalid credentials') {
         return res.status(401).json({
-          status: "fail",
+          status: 'fail',
           message: error.message,
         });
       }
@@ -55,14 +55,14 @@ class AuthController {
       const result = await authService.refreshToken(refreshToken);
 
       res.json({
-        status: "success",
-        message: "Token refreshed successfully",
+        status: 'success',
+        message: 'Token refreshed successfully',
         ...result,
       });
     } catch (error) {
-      if (error.message === "Invalid refresh token") {
+      if (error.message === 'Invalid refresh token') {
         return res.status(401).json({
-          status: "fail",
+          status: 'fail',
           message: error.message,
         });
       }
