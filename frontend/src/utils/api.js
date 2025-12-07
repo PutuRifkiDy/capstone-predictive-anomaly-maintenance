@@ -382,6 +382,61 @@ async function getMaintenanceTicketById(userId) {
   }
 }
 
+async function createMaintenanceTicket({ title, description, status, userId }) {
+  try {
+    const response = await fetchWithToken(`${BASE_URL}/maintenancetickets/${userId}`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ title, description, status })
+    });
+
+    const responseJson = await response.json();
+
+    if (responseJson.status == "success") {
+      return {
+        error: false,
+        message: responseJson.message,
+        data: responseJson.maintenanceTicket,
+      };
+    }
+    return {
+      error: true,
+      message: responseJson.error,
+      data: null,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function deleteMaintenanceTicketById(id) {
+  try {
+    const response = await fetchWithToken(`${BASE_URL}/maintenancetickets/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+
+    const responseJson = await response.json();
+
+    if (responseJson.status == "success") {
+      return {
+        error: false,
+        message: responseJson.message,
+      };
+    }
+    return {
+      error: true,
+      message: responseJson.error,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export {
   getAccessToken,
   putAccessToken,
@@ -399,5 +454,7 @@ export {
   getChatLogsCopilotByUserId,
   deleteAllChatLogsByUserId,
   deleteChatLogById,
-  getMaintenanceTicketById
+  getMaintenanceTicketById,
+  createMaintenanceTicket,
+  deleteMaintenanceTicketById
 };

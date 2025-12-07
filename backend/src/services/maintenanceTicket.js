@@ -9,7 +9,22 @@ class MaintenanceTickets {
     return result.rows;
   }
 
+  async createMaintenanceTicket(userId, { title, description, status }) {
+    const created_at = new Date().toISOString();
+    const updated_at = created_at;
 
+    const result = await db.query('INSERT INTO maintenance_tickets(title, description, status, user_id, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id', [title, description, status, userId, created_at, updated_at]);
+
+    return result.rows[0];
+  }
+
+  async deleteMaintenanceTicketById(id) {
+    const result = await db.query('DELETE FROM maintenance_tickets WHERE id = $1 RETURNING id', [id]);
+
+    if (!result.rows.length) {
+      throw new Error('Maintenance ticket not found');
+    }
+  }
 }
 
 module.exports = new MaintenanceTickets();

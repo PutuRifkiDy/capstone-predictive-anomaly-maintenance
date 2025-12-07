@@ -32,7 +32,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { getMaintenanceTicketById } from "@/utils/api";
+import {
+  deleteMaintenanceTicketById,
+  getMaintenanceTicketById,
+} from "@/utils/api";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 import {
   flexRender,
@@ -43,8 +46,9 @@ import {
 } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
+import { toast } from "sonner";
 
-export default function MaintenanceTicketsIndex({ authedUser, onLogout }) {
+export default function MaintenanceTicketIndex({ authedUser, onLogout }) {
   const params = useParams();
   const [maintenanceTickets, setMaintenanceTickets] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -82,7 +86,9 @@ export default function MaintenanceTicketsIndex({ authedUser, onLogout }) {
       accessorKey: "description",
       header: "Description",
       cell: ({ row }) => (
-        <div className="font-normal">{row.getValue("description")}</div>
+        <div className="font-normal w-64 text-justify">
+          {row.getValue("description")}
+        </div>
       ),
     },
     {
@@ -168,8 +174,8 @@ export default function MaintenanceTicketsIndex({ authedUser, onLogout }) {
               </DialogTrigger>
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                  <DialogTitle>
-                    Are you sure to delete this maintenance tickets?
+                  <DialogTitle className="leading-6">
+                    Are you sure to delete this maintenance ticket?
                   </DialogTitle>
                   <DialogDescription>
                     This action cannot be undone. This will permanently delete
@@ -180,7 +186,22 @@ export default function MaintenanceTicketsIndex({ authedUser, onLogout }) {
                   <DialogClose asChild>
                     <Button variant="outline">Cancel</Button>
                   </DialogClose>
-                  <Button variant="destructive">Confirm</Button>
+                  <Button
+                    variant="destructive"
+                    onClick={async () => {
+                      const response = await deleteMaintenanceTicketById(
+                        maintenaceTickets.id
+                      );
+                      if (response.error) {
+                        toast.error(response.message);
+                      } else {
+                        fetchMaintenanceTicketsData();
+                        toast.success(response.message);
+                      }
+                    }}
+                  >
+                    Confirm
+                  </Button>
                 </DialogFooter>
               </DialogContent>
             </Dialog>
@@ -212,7 +233,7 @@ export default function MaintenanceTicketsIndex({ authedUser, onLogout }) {
           Maintenance Tickets
         </p>
         <Link
-          // to={"/admin/users/create"}
+          to={`/maintenance-ticket/create/${authedUser.id}`}
           className="bg-[#515DEF] px-4 py-2 rounded-[4px] text-white hover:shadow-2xl transition-all duration-300 ease-in-out flex items-center justify-center gap-2 h-fit"
         >
           Create Maintenance Ticket

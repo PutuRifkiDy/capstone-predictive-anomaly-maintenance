@@ -16,6 +16,38 @@ class MaintenanceTicketController {
       next(error);
     }
   }
+
+  async createMaintenanceTicket(req, res, next) {
+    try {
+      const userId = parseInt(req.params.userId);
+      const { title, description, status } = req.body;
+      const result = await maintenanceTicket.createMaintenanceTicket(userId, { title, description, status });
+
+      res.json({
+        status: 'success',
+        message: 'Maintenance ticket created successfully',
+        result,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async deleteMaintenanceTicketById(req, res, next) {
+    try {
+      const id = parseInt(req.params.id);
+      await maintenanceTicket.deleteMaintenanceTicketById(id);
+      res.json({
+        status: 'success',
+        message: 'Maintenance ticket deleted successfully',
+      });
+    } catch (error) {
+      if (error.message === 'Maintenance ticket not found') {
+        return res.status(404).json({ error: error.message });
+      }
+      next(error);
+    }
+  }
 }
 
 module.exports = new MaintenanceTicketController();

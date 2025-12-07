@@ -8,7 +8,8 @@ import UserIndex from "./pages/app/users/UserIndex";
 import UserCreate from "./pages/app/users/UserCreate";
 import UserUpdate from "./pages/app/users/UserUpdate";
 import ChatbotIndex from "./pages/app/chatbot/ChatbotIndex";
-import MaintenanceTicketsIndex from "./pages/app/maintenancetickets/MaintenanceTicketsIndex";
+import MaintenanceTicketIndex from "./pages/app/maintenancetickets/MaintenanceTicketIndex";
+import MaintenanceTicketCreate from "./pages/app/maintenancetickets/MaintenanceTicketCreate";
 
 export default function App() {
   const [authedUser, setAuthedUser] = useState(null);
@@ -79,7 +80,18 @@ export default function App() {
       />
       <Route
         path="/maintenance-ticket/:id"
-        element={<MaintenanceTicketsIndex authedUser={authedUser} onLogout={onLogout} />}
+        element={
+          <MaintenanceTicketIndex authedUser={authedUser} onLogout={onLogout} />
+        }
+      />
+      <Route
+        path="/maintenance-ticket/create/:id"
+        element={
+          <MaintenanceTicketCreate
+            authedUser={authedUser}
+            onLogout={onLogout}
+          />
+        }
       />
       <Route
         path="/chatbot/:id"
