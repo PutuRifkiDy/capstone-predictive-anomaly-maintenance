@@ -33,6 +33,24 @@ class MaintenanceTicketController {
     }
   }
 
+  async updateMaintenanceTicketById(req, res, next) {
+    try {
+      const id = parseInt(req.params.id);
+      const { title, description, status } = req.body;
+      const maintenanceTicketUpdate = await maintenanceTicket.updateMaintenanceTicketById(id, { title, description, status });
+      res.json({
+        maintenanceTicketUpdate,
+        status: 'success',
+        message: 'Maintenance ticket updated successfully',
+      });
+    } catch (error) {
+      if (error.message === 'Maintenance ticket not found') {
+        return res.status(404).json({ error: error.message });
+      }
+      next(error);
+    }
+  }
+
   async deleteMaintenanceTicketById(req, res, next) {
     try {
       const id = parseInt(req.params.id);
@@ -40,6 +58,22 @@ class MaintenanceTicketController {
       res.json({
         status: 'success',
         message: 'Maintenance ticket deleted successfully',
+      });
+    } catch (error) {
+      if (error.message === 'Maintenance ticket not found') {
+        return res.status(404).json({ error: error.message });
+      }
+      next(error);
+    }
+  }
+
+  async getMaintenanceTicketById(req, res, next) {
+    try {
+      const { id } = req.params;
+      const maintenanceTicketSingle = await maintenanceTicket.getMaintenanceById(id);
+      res.json({
+        maintenanceTicketSingle,
+        status: 'success',
       });
     } catch (error) {
       if (error.message === 'Maintenance ticket not found') {

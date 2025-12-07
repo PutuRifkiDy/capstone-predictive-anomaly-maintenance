@@ -59,7 +59,6 @@ export default function MaintenanceTicketIndex({ authedUser, onLogout }) {
 
   const fetchMaintenanceTicketsData = async () => {
     const result = await getMaintenanceTicketById(params.id);
-    console.log(result);
     if (result.error == false) {
       setMaintenanceTickets(result.data);
     } else {
@@ -145,7 +144,7 @@ export default function MaintenanceTicketIndex({ authedUser, onLogout }) {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Link
-                    // to={`/admin/users/update/${user.id}`}
+                    to={`/maintenance-ticket/update/${maintenaceTickets.id}`}
                     className="text-sm bg-yellow-100 rounded-md p-2 dark:bg-[#D9A72E]/30 dark:text-[#D9A72E] dark:border-[#D9A72E]/30 h-fit"
                   >
                     <PencilSquareIcon className="h-4 w-4 text-yellow-500" />

@@ -25,6 +25,23 @@ class MaintenanceTickets {
       throw new Error('Maintenance ticket not found');
     }
   }
+
+  async getMaintenanceById(id) {
+    const result = await db.query('SELECT * FROM maintenance_tickets WHERE id = $1', [id]);
+    if (!result.rows.length) {
+      throw new Error('Maintenance ticket not found');
+    }
+    return result.rows[0];
+  }
+
+  async updateMaintenanceTicketById(id, { title, description, status }) {
+    const updated_at = new Date().toISOString();
+    const result = await db.query('UPDATE maintenance_tickets SET title = $1, description = $2, status = $3, updated_at = $4 WHERE id = $5 RETURNING id', [title, description, status, updated_at, id]);
+
+    if (!result.rows.length) {
+      throw new Error('Maintenance ticket not found');
+    }
+  }
 }
 
 module.exports = new MaintenanceTickets();

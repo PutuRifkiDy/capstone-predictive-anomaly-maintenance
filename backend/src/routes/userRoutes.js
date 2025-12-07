@@ -16,10 +16,7 @@ router.get('/', authenticate, authorizeRoles('admin'), userController.getAllUser
 // GET /users/:id - Get specific user (admin only)
 router.get('/:id', validate(userIdSchema, 'params'), authenticate, authorizeRoles('admin'), userController.getUserById);
 
-// put admin
 router.patch('/:id', validate(userIdSchema, 'params'), validate(updateUserSchema, 'body'), authenticate, authorizeRoles('admin'), userController.updateUserById);
-
-// delete admin
 router.delete('/:id', validate(userIdSchema, 'params'), authenticate, authorizeRoles('admin'), userController.deleteUserById);
 
 

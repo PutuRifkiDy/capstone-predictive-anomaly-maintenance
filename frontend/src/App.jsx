@@ -10,6 +10,7 @@ import UserUpdate from "./pages/app/users/UserUpdate";
 import ChatbotIndex from "./pages/app/chatbot/ChatbotIndex";
 import MaintenanceTicketIndex from "./pages/app/maintenancetickets/MaintenanceTicketIndex";
 import MaintenanceTicketCreate from "./pages/app/maintenancetickets/MaintenanceTicketCreate";
+import MaintenanceTicketUpdate from "./pages/app/maintenancetickets/MaintenanceTicketUpdate";
 
 export default function App() {
   const [authedUser, setAuthedUser] = useState(null);
@@ -88,6 +89,15 @@ export default function App() {
         path="/maintenance-ticket/create/:id"
         element={
           <MaintenanceTicketCreate
+            authedUser={authedUser}
+            onLogout={onLogout}
+          />
+        }
+      />
+      <Route
+        path="/maintenance-ticket/update/:id"
+        element={
+          <MaintenanceTicketUpdate
             authedUser={authedUser}
             onLogout={onLogout}
           />
