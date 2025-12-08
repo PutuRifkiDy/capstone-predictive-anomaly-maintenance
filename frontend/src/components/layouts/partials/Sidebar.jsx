@@ -141,7 +141,7 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                       {authedUser.name}
                     </p>
                     <div className="flex justify-center font-medium items-center bg-[#515DEF] rounded-full py-1 px-3 text-white w-fit text-[10px]">
-                      {authedUser.role}
+                      {authedUser.role == "admin" ? "Admin" :  "Engineer"}
                     </div>
                   </div>
                 </DropdownMenuTrigger>
