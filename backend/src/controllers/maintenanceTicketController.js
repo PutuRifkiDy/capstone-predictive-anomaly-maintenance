@@ -1,6 +1,18 @@
 const maintenanceTicket = require('../services/maintenanceTicketService');
 
 class MaintenanceTicketController {
+  async getAllMaintenance(req, res, next) {
+    try {
+      const maintenanceTickets = await maintenanceTicket.getAllMaintenances();
+      res.json({
+        maintenanceTickets,
+        status: 'success'
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async getAllMaintenanceTickets(req, res, next) {
     try {
       const userId = parseInt(req.params.userId);

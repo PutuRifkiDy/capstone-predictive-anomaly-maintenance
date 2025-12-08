@@ -1,7 +1,6 @@
 const db = require('../config/db');
 
 class AssignMaintenanceTaskService {
-
   async createAssignUserToTicket(userId, maintenanceTicketId) {
     const created_at = new Date().toISOString();
     const updated_at = created_at;
@@ -12,7 +11,14 @@ class AssignMaintenanceTaskService {
   }
 
   async getAssignedUsers(maintenanceTicketId) {
-    const result = await db.query('SELECT users.id, users.name, users.role FROM assign_maintenance_taks INNER JOIN users ON assign_maintenance_tasks.user_id = users.id WHERE assign_maintenance_tasks.maintenance_ticket_id = $1', [maintenanceTicketId]);
+    const result = await db.query(
+      `SELECT users.id, users.name, users.role 
+     FROM assign_maintenance_tasks 
+     INNER JOIN users 
+       ON assign_maintenance_tasks.user_id = users.id 
+     WHERE assign_maintenance_tasks.maintenance_ticket_id = $1`,
+      [maintenanceTicketId]
+    );
 
     return result.rows;
   }
@@ -22,7 +28,7 @@ class AssignMaintenanceTaskService {
 
     const tickets = ticketResponse.rows;
 
-    const userResponse = await db.query('SELECT assign_maintenance_tasks.maintenance_ticket_id, users.id, users.name, users.role FROM assign_maintenance_tasks LEFT JOIN users ON users.id = assign_maintenance_tasks.user_id WHERE assign_maintenance_tasks.maintenance_ticket_id = $1', [maintenanceTicketId]);
+    const userResponse = await db.query('SELECT assign_maintenance_tasks.maintenance_ticket_id, users.id, users.name, users.role, users.email, users.phone_number FROM assign_maintenance_tasks LEFT JOIN users ON users.id = assign_maintenance_tasks.user_id WHERE assign_maintenance_tasks.maintenance_ticket_id = $1', [maintenanceTicketId]);
 
     const userAssignments = userResponse.rows;
 
@@ -37,7 +43,9 @@ class AssignMaintenanceTaskService {
         ticketMap[userAssignment.maintenance_ticket_id].assign_users.push({
           id: userAssignment.id,
           name: userAssignment.name,
-          role: userAssignment.role
+          role: userAssignment.role,
+          email: userAssignment.email,
+          phone_number: userAssignment.phone_number
         });
       }
     });

@@ -34,7 +34,7 @@ import {
 } from "@/components/ui/tooltip";
 import {
   deleteMaintenanceTicketById,
-  getMaintenanceTicketById,
+  getAllMaintenanceTickets,
 } from "@/utils/api";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 import {
@@ -58,7 +58,8 @@ export default function MaintenanceTicketIndex({ authedUser, onLogout }) {
 
   const fetchMaintenanceTicketsData = async () => {
     try {
-      const result = await getMaintenanceTicketById(authedUser.id);
+      const result = await getAllMaintenanceTickets();
+      console.log(result);
       if (result.error == false) {
         setMaintenanceTickets(result.data);
       } else {

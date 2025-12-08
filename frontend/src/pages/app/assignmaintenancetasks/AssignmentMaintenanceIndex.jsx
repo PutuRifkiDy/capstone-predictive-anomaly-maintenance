@@ -42,27 +42,42 @@ import {
 } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { getAllAssignsAndUsers } from "@/utils/api";
+import { getAllAssignsAndUsers, getMaintenanceById } from "@/utils/api";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { Button } from "@/components/ui/button";
 
 export default function AssignmentMaintenanceIndex({ authedUser, onLogout }) {
-  const [assignMaintenanceTicketsTasks, setAssignMaintenanceTicketsTasks] =
-    useState([]);
-  const [loading, setLoading] = useState(true);
+  const [maintenaceTicket, setMaintenanceTicket] = useState(null);
+  const [assignedUsers, setAssignedUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10,
   });
   const params = useParams();
 
-  const fetchAssignMaintenanceTicketsTasks = async () => {
+  console.log(maintenaceTicket);
+
+  const fetchMaintenanceTicket = async () => {
+    try {
+      const result = await getMaintenanceById(params.ticketId);
+      if (result.error) {
+        toast.error(result.message);
+      } else {
+        setMaintenanceTicket(result.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchAssignMaintenanceTicketUser = async () => {
     try {
       const result = await getAllAssignsAndUsers(params.ticketId);
       if (result.error) {
         toast.error(result.message);
       } else {
-        setAssignMaintenanceTicketsTasks(result.data);
+        setAssignedUsers(result.data);
       }
       setLoading(false);
     } catch (error) {
@@ -71,163 +86,40 @@ export default function AssignmentMaintenanceIndex({ authedUser, onLogout }) {
   };
 
   useEffect(() => {
-    fetchAssignMaintenanceTicketsTasks();
+    fetchMaintenanceTicket();
+    fetchAssignMaintenanceTicketUser();
   }, [params.ticketId]);
 
   // copyan tanstacktablenya
   const [columnFilters, setColumnFilters] = useState([]);
   const columns = [
     {
-      accessorKey: "title",
-      header: "Title",
+      accessorKey: "name",
+      header: "Name",
       cell: ({ row }) => (
-        <div className="font-normal">{row.getValue("title")}</div>
+        <div className="font-normal">{row.getValue("name")}</div>
       ),
     },
     {
-      accessorKey: "description",
-      header: "Description",
+      accessorKey: "phone_number",
+      header: "Phone Number",
       cell: ({ row }) => (
-        <div className="font-normal w-36 text-justify">
-          {row.getValue("description")}
-        </div>
+        <div className="font-normal">{row.getValue("phone_number")}</div>
       ),
     },
     {
-      accessorKey: "status",
-      header: "Status",
+      accessorKey: "email",
+      header: "Email",
       cell: ({ row }) => (
-        <div
-          className={`font-medium p-2 rounded-md w-fit ${
-            row.getValue("status") == "completed"
-              ? "bg-[#4AD991]/10 text-[#4AD991] border-[1px] border-[#4AD991]/30"
-              : row.getValue("status") == "need_maintenance"
-              ? "bg-yellow-100 text-yellow-500 border-[1px] border-yellow-300 dark:bg-[#D9A72E]/30 dark:text-[#D9A72E] dark:border-[#D9A72E]/30"
-              : "bg-[#515DEF]/10 text-[#515DEF] border-[1px] border-[#515DEF]/30"
-          }`}
-        >
-          {row.getValue("status") == "completed"
-            ? "Completed"
-            : row.getValue("status") == "need_maintenance"
-            ? "Need Maintenance"
-            : "In Progress"}
-        </div>
+        <div className="font-normal">{row.getValue("email")}</div>
       ),
-    },
-    {
-      accessorKey: "assign_users",
-      header: "Engineer",
-      cell: ({ row }) => {
-        const users = row.getValue("assign_users") || [];
-
-        return (
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button
-                variant="ghost"
-                className="p-2 rounded-md dark:bg-[#515DEF]/10 bg-gray-100 border dark:border-[#515DEF]/30 border-gray-100"
-              >
-                <EllipsisVerticalIcon className="h-4 w-4 text-black dark:text-white" />
-              </Button>
-            </DialogTrigger>
-
-            <DialogContent className="sm:max-w-[600px]">
-              <DialogHeader>
-                <DialogTitle>Assigned Users</DialogTitle>
-                <DialogDescription>
-                  List of all engineers assigned to this ticket.
-                </DialogDescription>
-              </DialogHeader>
-
-              <div className="mt-4 space-y-3">
-                {users.length === 0 && (
-                  <p className="text-sm text-gray-500">No users assigned.</p>
-                )}
-
-                {users.map((user) => (
-                  <div
-                    key={user.id}
-                    className="flex items-center justify-between border p-3 rounded-lg"
-                  >
-                    <div>
-                      <p className="font-semibold">{user.name}</p>
-                      <p className="text-sm text-gray-500">
-                        {user.role === "admin" ? "Admin" : "Engineer"}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </DialogContent>
-          </Dialog>
-        );
-      },
-    },
-    {
-      id: "actions",
-      header: "Actions",
-      cell: ({ row }) => {
-        // const maintenaceTickets = row.original;
-        return (
-          <div className="flex gap-2 items-center">
-            <TooltipProvider delayDuration={200}>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Link
-                    // to={`/maintenance-ticket/update/${maintenaceTickets.id}`}
-                    className="text-sm bg-yellow-100 rounded-md p-2 dark:bg-[#D9A72E]/30 dark:text-[#D9A72E] dark:border-[#D9A72E]/30 h-fit"
-                  >
-                    <PencilSquareIcon className="h-4 w-4 text-yellow-500" />
-                  </Link>
-                </TooltipTrigger>
-                <TooltipContent>Update Maintenance Tickets</TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button
-                  variant="none"
-                  className="text-sm bg-red-100 rounded-md p-2 dark:bg-[#515DEF]/10  dark:border-[1px] dark:border-[#515DEF]/30 h-fit"
-                >
-                  <TooltipProvider delayDuration={200}>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <TrashIcon className="h-4 w-4 text-red-500 dark:text-[#515DEF]" />
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        Delete Maintenance Tickets
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
-                  <DialogTitle className="leading-6">
-                    Are you sure to delete this maintenance ticket?
-                  </DialogTitle>
-                  <DialogDescription>
-                    This action cannot be undone. This will permanently delete
-                  </DialogDescription>
-                </DialogHeader>
-
-                <DialogFooter>
-                  <DialogClose asChild>
-                    <Button variant="outline">Cancel</Button>
-                  </DialogClose>
-                  <Button variant="destructive">Confirm</Button>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
-          </div>
-        );
-      },
     },
   ];
 
+
   // copyan tanstacktablenya
   const table = useReactTable({
-    data: assignMaintenanceTicketsTasks,
+    data: assignedUsers[0]?.assign_users || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
     onColumnFiltersChange: setColumnFilters,
@@ -254,11 +146,41 @@ export default function AssignmentMaintenanceIndex({ authedUser, onLogout }) {
             Back
           </Link>
           <Link
-            to={`/assignment-maintenance/tasks/create`}
+            to={`/assignment-maintenance/tasks/create/${params.ticketId}`}
             className="bg-[#515DEF] px-4 py-2 rounded-[4px] text-white hover:shadow-2xl transition-all duration-300 ease-in-out flex items-center justify-center gap-2 h-fit"
           >
             Assignment Maintenance
           </Link>
+        </div>
+      </div>
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10 border-[1px] mt-5 p-5 rounded-md">
+        <div className="flex flex-col gap-2">
+          <p className="text-[16px] font-medium text-gray-500">Title</p>
+          <p>{maintenaceTicket?.title}</p>
+        </div>
+        <div className="flex flex-col gap-2">
+          <p className="text-[16px] font-medium text-gray-500">Description</p>
+          <p>{maintenaceTicket?.description}</p>
+        </div>
+        <div className="flex flex-col gap-2">
+          <p className="text-[16px] font-medium text-gray-500">
+            Maintenance Status
+          </p>
+          <div
+            className={`font-medium p-2 rounded-md w-fit ${
+              maintenaceTicket?.status == "completed"
+                ? "bg-[#4AD991]/10 text-[#4AD991] border-[1px] border-[#4AD991]/30"
+                : maintenaceTicket?.status == "need_maintenance"
+                ? "bg-yellow-100 text-yellow-500 border-[1px] border-yellow-300 dark:bg-[#D9A72E]/30 dark:text-[#D9A72E] dark:border-[#D9A72E]/30"
+                : "bg-[#515DEF]/10 text-[#515DEF] border-[1px] border-[#515DEF]/30"
+            }`}
+          >
+            {maintenaceTicket?.status == "completed"
+              ? "Completed"
+              : maintenaceTicket?.status == "need_maintenance"
+              ? "Need Maintenance"
+              : "In Progress"}
+          </div>
         </div>
       </div>
       <div className="mt-6">
@@ -270,10 +192,10 @@ export default function AssignmentMaintenanceIndex({ authedUser, onLogout }) {
           <div className="w-full">
             <div className="flex items-center py-4">
               <Input
-                placeholder="Search by title"
-                value={table.getColumn("title")?.getFilterValue() ?? ""}
+                placeholder="Search by name"
+                value={table.getColumn("name")?.getFilterValue() ?? ""}
                 onChange={(event) => {
-                  table.getColumn("title")?.setFilterValue(event.target.value);
+                  table.getColumn("name")?.setFilterValue(event.target.value);
                 }}
                 className="max-w-sm"
               />

@@ -7,6 +7,7 @@ const { maintenanceTicketSchema, maintenanceTicketUpdateSchame } = require('../v
 
 const router = express.Router();
 
+router.get('/', authenticate, authorizeRoles('admin'), maintenanceTicketController.getAllMaintenance);
 router.get('/:userId', authenticate, authorizeRoles('admin'), maintenanceTicketController.getAllMaintenanceTickets);
 router.get('/single/:id', authenticate, authorizeRoles('admin'), maintenanceTicketController.getMaintenanceTicketById);
 router.post('/:userId', authenticate, authorizeRoles('admin'), validate(maintenanceTicketSchema, 'body'), maintenanceTicketController.createMaintenanceTicket);

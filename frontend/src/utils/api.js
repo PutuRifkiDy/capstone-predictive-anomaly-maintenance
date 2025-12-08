@@ -355,6 +355,33 @@ async function deleteChatLogById(id) {
   }
 }
 
+async function getAllMaintenanceTickets() {
+  try {
+    const response = await fetchWithToken(`${BASE_URL}/maintenancetickets`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const responseJson = await response.json();
+
+    if (responseJson.status == "success") {
+      return {
+        error: false,
+        data: responseJson.maintenanceTickets,
+      };
+    }
+    return {
+      error: true,
+      message: responseJson.error,
+      data: null,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 async function getMaintenanceTicketById(userId) {
   try {
     const response = await fetchWithToken(`${BASE_URL}/maintenancetickets/${userId}`, {
@@ -439,7 +466,7 @@ async function deleteMaintenanceTicketById(id) {
 
 async function getMaintenanceById(id) {
   try {
-    const response= await fetchWithToken(`${BASE_URL}/maintenancetickets/single/${id}`, {
+    const response = await fetchWithToken(`${BASE_URL}/maintenancetickets/single/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -520,6 +547,60 @@ async function getAllAssignsAndUsers(maintenanceTicketId) {
   }
 }
 
+async function getAssignedUsers(maintenanceTicketId) {
+  try {
+    const response = await fetchWithToken(`${BASE_URL}/assignmaintenancetasks/assign/${maintenanceTicketId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+
+    const responseJson = await response.json();
+
+    if (responseJson.status == "success") {
+      return {
+        error: false,
+        data: responseJson.assignMaintenanceUsers,
+      };
+    }
+    return {
+      error: true,
+      message: responseJson.error,
+      data: null,
+    };
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+async function createAssignmentTicket({ userId, maintenanceTicketId }) {
+  try {
+    const response = await fetchWithToken(`${BASE_URL}/assignmaintenancetasks/assign`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId, maintenanceTicketId }),
+    });
+
+    const responseJson = await response.json();
+
+    if (responseJson.status == "success") {
+      return {
+        error: false,
+        message: responseJson.message,
+      };
+    }
+    return {
+      error: true,
+      message: responseJson.error,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export {
   getAccessToken,
   putAccessToken,
@@ -542,5 +623,8 @@ export {
   deleteMaintenanceTicketById,
   updateMaintenanceTicketById,
   getMaintenanceById,
-  getAllAssignsAndUsers
+  getAllAssignsAndUsers,
+  getAssignedUsers,
+  createAssignmentTicket,
+  getAllMaintenanceTickets
 };
