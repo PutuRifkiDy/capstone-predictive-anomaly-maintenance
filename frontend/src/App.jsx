@@ -115,7 +115,7 @@ export default function App() {
         }
       />
       <Route
-        path="/assignment-maintenance/tasks/create"
+        path="/assignment-maintenance/tasks/create/:ticketId"
         element={
           <AssignmentMaintenanceCreate
             authedUser={authedUser}

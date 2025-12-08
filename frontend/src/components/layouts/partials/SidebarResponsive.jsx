@@ -87,19 +87,19 @@ export default function SidebarResponsive({ authedUser, onLogout }) {
                 to={`/maintenance-ticket`}
                 className={`
                   ${
-                    currentPath.startsWith("/maintenance-ticket")
+                    currentPath.startsWith("/maintenance") || currentPath.startsWith("/assignment")
                       ? "bg-[#515DEF]/10 relative text-[#515DEF] pl-5"
                       : "text-foreground hover:bg-gray-100 dark:hover:bg-[#7E89AC]/30 transition-all duration-300 ease-in-out"
                   }
                   group flex gap-x-3 rounded-md p-3 text-sm font-medium items-center
                 `}
               >
-                {currentPath.startsWith("/maintenance-ticket") && (
+                {currentPath.startsWith("/maintenance") || currentPath.startsWith("/assignment") && (
                   <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
                 )}
                 <TicketIcon
                   className={`w-6 h-6 ${
-                    currentPath.startsWith("/maintenance-ticket")
+                    currentPath.startsWith("/maintenance") || currentPath.startsWith("/assignment")
                       ? "text-[#515DEF]"
                       : "text-foreground"
                   }`}
