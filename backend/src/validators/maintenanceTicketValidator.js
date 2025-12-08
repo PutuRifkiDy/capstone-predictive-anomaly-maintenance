@@ -12,7 +12,12 @@ const maintenanceTicketUpdateSchame = Joi.object({
   status: Joi.string().valid('need_maintenance', 'in_progress', 'completed'),
 });
 
+const statusMaintenanceSchema = Joi.object({
+  status: Joi.string().valid('need_maintenance', 'in_progress', 'completed').required(),
+});
+
 module.exports = {
   maintenanceTicketSchema,
-  maintenanceTicketUpdateSchame
+  maintenanceTicketUpdateSchame,
+  statusMaintenanceSchema
 };

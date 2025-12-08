@@ -42,9 +42,7 @@ import {
 } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import {
-  getAssignedEngineersTickets,
-} from "@/utils/api";
+import { getAssignedEngineersTickets } from "@/utils/api";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { Button } from "@/components/ui/button";
 export default function AssignmentEngineerIndex({ authedUser, onLogout }) {
@@ -60,14 +58,13 @@ export default function AssignmentEngineerIndex({ authedUser, onLogout }) {
       setLoading(true);
       const result = await getAssignedEngineersTickets(authedUser.id);
 
-      if(!result.error){
+      if (!result.error) {
         setAssignedEngineerTickets(result.data);
-      }else{
+      } else {
         setAssignedEngineerTickets([]);
       }
     } catch (error) {
       toast.error(error.message || "Failed to fetch data");
-      
     } finally {
       setLoading(false);
     }
@@ -98,8 +95,47 @@ export default function AssignmentEngineerIndex({ authedUser, onLogout }) {
       accessorKey: "status",
       header: "Status",
       cell: ({ row }) => (
-        <div className="font-normal">{row.getValue("status")}</div>
+        <div
+          className={`font-medium p-2 rounded-md w-fit ${
+            row.getValue("status") == "completed"
+              ? "bg-[#4AD991]/10 text-[#4AD991] border-[1px] border-[#4AD991]/30"
+              : row.getValue("status") == "need_maintenance"
+              ? "bg-yellow-100 text-yellow-500 border-[1px] border-yellow-300 dark:bg-[#D9A72E]/30 dark:text-[#D9A72E] dark:border-[#D9A72E]/30"
+              : "bg-[#515DEF]/10 text-[#515DEF] border-[1px] border-[#515DEF]/30"
+          }`}
+        >
+          {row.getValue("status") == "completed"
+            ? "Completed"
+            : row.getValue("status") == "need_maintenance"
+            ? "Need Maintenance"
+            : "In Progress"}
+        </div>
       ),
+    },
+    {
+      accessorKey: "actions",
+      header: "Actions",
+      cell: ({ row }) => {
+        const maintenaceTicket = row.original;
+        console.log(maintenaceTicket);
+        return (
+          <div className="flex gap-2">
+            <TooltipProvider delayDuration={200}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link
+                    to={`/task-maintenance/${maintenaceTicket.id}`}
+                    className="text-sm bg-yellow-100 rounded-md p-2 dark:bg-[#D9A72E]/30 dark:text-[#D9A72E] dark:border-[#D9A72E]/30 h-fit"
+                  >
+                    <PencilSquareIcon className="h-4 w-4 text-yellow-500" />
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent>Update Status Ticket</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        );
+      },
     },
   ];
 
@@ -139,7 +175,7 @@ export default function AssignmentEngineerIndex({ authedUser, onLogout }) {
           </Link> */}
         </div>
       </div>
-      
+
       <div className="mt-6">
         {loading ? (
           <div className="text-center py-10 text-lg text-muted-foreground">

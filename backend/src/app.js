@@ -26,8 +26,8 @@ app.use(express.json());
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 app.use('/chatbot', aiAgentRoutes);
-app.use('/maintenancetickets', maintenanceTicketRoutes);
-app.use('/assignmaintenancetasks', assignMaintenanceTicketRoutes);
+app.use('/maintenance-tickets', maintenanceTicketRoutes);
+app.use('/assign-maintenance-tasks', assignMaintenanceTicketRoutes);
 app.use('/assign-engineer-tasks', assignEngineerRoutes);
 
 // Global Error Handler

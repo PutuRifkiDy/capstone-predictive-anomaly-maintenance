@@ -357,7 +357,7 @@ async function deleteChatLogById(id) {
 
 async function getAllMaintenanceTickets() {
   try {
-    const response = await fetchWithToken(`${BASE_URL}/maintenancetickets`, {
+    const response = await fetchWithToken(`${BASE_URL}/maintenance-tickets`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -384,7 +384,7 @@ async function getAllMaintenanceTickets() {
 
 async function getMaintenanceTicketById(userId) {
   try {
-    const response = await fetchWithToken(`${BASE_URL}/maintenancetickets/${userId}`, {
+    const response = await fetchWithToken(`${BASE_URL}/maintenance-tickets/${userId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -411,7 +411,7 @@ async function getMaintenanceTicketById(userId) {
 
 async function createMaintenanceTicket({ title, description, status, userId }) {
   try {
-    const response = await fetchWithToken(`${BASE_URL}/maintenancetickets/${userId}`, {
+    const response = await fetchWithToken(`${BASE_URL}/maintenance-tickets/${userId}`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
@@ -440,7 +440,7 @@ async function createMaintenanceTicket({ title, description, status, userId }) {
 
 async function deleteMaintenanceTicketById(id) {
   try {
-    const response = await fetchWithToken(`${BASE_URL}/maintenancetickets/${id}`, {
+    const response = await fetchWithToken(`${BASE_URL}/maintenance-tickets/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -466,7 +466,7 @@ async function deleteMaintenanceTicketById(id) {
 
 async function getMaintenanceById(id) {
   try {
-    const response = await fetchWithToken(`${BASE_URL}/maintenancetickets/single/${id}`, {
+    const response = await fetchWithToken(`${BASE_URL}/maintenance-tickets/single/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -493,7 +493,7 @@ async function getMaintenanceById(id) {
 
 async function updateMaintenanceTicketById(id, { title, description, status }) {
   try {
-    const response = await fetchWithToken(`${BASE_URL}/maintenancetickets/${id}`, {
+    const response = await fetchWithToken(`${BASE_URL}/maintenance-tickets/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -522,7 +522,7 @@ async function updateMaintenanceTicketById(id, { title, description, status }) {
 
 async function getAllAssignsAndUsers(maintenanceTicketId) {
   try {
-    const response = await fetchWithToken(`${BASE_URL}/assignmaintenancetasks/${maintenanceTicketId}`, {
+    const response = await fetchWithToken(`${BASE_URL}/assign-maintenance-tasks/${maintenanceTicketId}`, {
       method: 'GET',
       headers: {
         "Content-Type": "application/json",
@@ -549,7 +549,7 @@ async function getAllAssignsAndUsers(maintenanceTicketId) {
 
 async function getAssignedUsers(maintenanceTicketId) {
   try {
-    const response = await fetchWithToken(`${BASE_URL}/assignmaintenancetasks/assign/${maintenanceTicketId}`, {
+    const response = await fetchWithToken(`${BASE_URL}/assign-maintenance-tasks/assign/${maintenanceTicketId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -576,7 +576,7 @@ async function getAssignedUsers(maintenanceTicketId) {
 
 async function createAssignmentTicket({ userId, maintenanceTicketId }) {
   try {
-    const response = await fetchWithToken(`${BASE_URL}/assignmaintenancetasks/assign`, {
+    const response = await fetchWithToken(`${BASE_URL}/assign-maintenance-tasks/assign`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -603,7 +603,7 @@ async function createAssignmentTicket({ userId, maintenanceTicketId }) {
 
 async function deleteAssignmentTicketById(id) {
   try {
-    const response = await fetchWithToken(`${BASE_URL}/assignmaintenancetasks/assign/${id}`, {
+    const response = await fetchWithToken(`${BASE_URL}/assign-maintenance-tasks/assign/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -653,6 +653,60 @@ async function getAssignedEngineersTickets(userId) {
   }
 }
 
+async function updateAssignedEngineersTickets(id, { status }) {
+  try {
+    const response = await fetchWithToken(`${BASE_URL}/assign-engineer-tasks/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status })
+    });
+
+    const responseJson = await response.json();
+
+    if (responseJson.status == "success") {
+      return {
+        error: false,
+        message: responseJson.message,
+      };
+    }
+    return {
+      error: true,
+      message: responseJson.error,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function getAssignedEngineerTicketStatusById(id) {
+  try {
+    const response = await fetchWithToken(`${BASE_URL}/assign-engineer-tasks/status/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+
+    const responseJson = await response.json();
+
+    if (responseJson.status == "success") {
+      return {
+        error: false,
+        data: responseJson.assignedEngineerTicket,
+      };
+    }
+    return {
+      error: true,
+      message: responseJson.error,
+      data: null,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export {
   getAccessToken,
   putAccessToken,
@@ -680,5 +734,7 @@ export {
   createAssignmentTicket,
   getAllMaintenanceTickets,
   deleteAssignmentTicketById,
-  getAssignedEngineersTickets
+  getAssignedEngineersTickets,
+  updateAssignedEngineersTickets,
+  getAssignedEngineerTicketStatusById
 };

@@ -25,7 +25,6 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
           <>
             <li>
               {authedUser.role === "admin" ? (
-
                 <ul role="list" className="-mx-2 space-y-2">
                   <li>
                     <Link
@@ -90,10 +89,12 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                     group flex gap-x-3 rounded-md p-3 text-sm font-medium items-center
                   `}
                     >
-                      {currentPath.startsWith("/maintenance") ||
-                        (currentPath.startsWith("/assignment") && (
-                          <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
-                        ))}
+                      {currentPath.startsWith("/maintenance-ticket") && (
+                        <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                      )}
+                      {currentPath.startsWith("/assignment-maintenance") && (
+                        <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                      )}
                       <TicketIcon
                         className={`w-6 h-6 ${
                           currentPath.startsWith("/maintenance") ||
@@ -158,13 +159,12 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                       Dashboard
                     </Link>
                   </li>
-                  
+
                   <li>
                     <Link
                       to={`/task-maintenance`}
                       className={`
                     ${
-                      currentPath.startsWith("/maintenance") ||
                       currentPath.startsWith("/task-maintenance")
                         ? "bg-[#515DEF]/10 relative text-[#515DEF] pl-5"
                         : "text-foreground hover:bg-gray-100 dark:hover:bg-[#7E89AC]/30 transition-all duration-300 ease-in-out"
@@ -172,13 +172,11 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                     group flex gap-x-3 rounded-md p-3 text-sm font-medium items-center
                   `}
                     >
-                      {currentPath.startsWith("/task-maintenance") ||
-                        (currentPath.startsWith("/task-maintenance") && (
-                          <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
-                        ))}
+                      {currentPath.startsWith("/task-maintenance") && (
+                        <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                      )}
                       <TicketIcon
                         className={`w-6 h-6 ${
-                          currentPath.startsWith("/task-maintenance") ||
                           currentPath.startsWith("/task-maintenance")
                             ? "text-[#515DEF]"
                             : "text-foreground"
@@ -226,7 +224,7 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                       {authedUser.name}
                     </p>
                     <div className="flex justify-center font-medium items-center bg-[#515DEF] rounded-full py-1 px-3 text-white w-fit text-[10px]">
-                      {authedUser.role == "admin" ? "Admin" :  "Engineer"}
+                      {authedUser.role == "admin" ? "Admin" : "Engineer"}
                     </div>
                   </div>
                 </DropdownMenuTrigger>
@@ -264,12 +262,11 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
           <>
             <li>
               {authedUser.role === "admin" ? (
-
-              <ul role="list" className="space-y-2">
-                <li>
-                  <Link
-                    to={"/dashboard"}
-                    className={`
+                <ul role="list" className="space-y-2">
+                  <li>
+                    <Link
+                      to={"/dashboard"}
+                      className={`
                   ${
                     currentPath === "/dashboard"
                       ? "bg-[#515DEF]/10 relative text-[#515DEF]"
@@ -279,24 +276,24 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                     isSidebarOpen == true ? "rounded-md" : ""
                   } p-3 text-sm font-medium items-center justify-center
                 `}
-                  >
-                    {currentPath === "/dashboard" && (
-                      <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
-                    )}
-                    <HomeIcon
-                      className={`w-6 h-6 ${
-                        currentPath === "/dashboard"
-                          ? "text-[#515DEF]"
-                          : "text-foreground"
-                      }`}
-                    />
-                    {/* Dashboard */}
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={"/admin/users"}
-                    className={`
+                    >
+                      {currentPath === "/dashboard" && (
+                        <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                      )}
+                      <HomeIcon
+                        className={`w-6 h-6 ${
+                          currentPath === "/dashboard"
+                            ? "text-[#515DEF]"
+                            : "text-foreground"
+                        }`}
+                      />
+                      {/* Dashboard */}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={"/admin/users"}
+                      className={`
                   ${
                     currentPath.startsWith("/admin/users")
                       ? "bg-[#515DEF]/10 relative text-[#515DEF]"
@@ -306,24 +303,24 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                     isSidebarOpen == true ? "rounded-md" : ""
                   } p-3 text-sm font-medium items-center justify-center
                 `}
-                  >
-                    {currentPath.startsWith("/admin/users") && (
-                      <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
-                    )}
-                    <UserGroupIcon
-                      className={`w-6 h-6 ${
-                        currentPath.startsWith("/admin/users")
-                          ? "text-[#515DEF]"
-                          : "text-foreground"
-                      }`}
-                    />
-                    {/* User Management */}
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={`/maintenance-ticket`}
-                    className={`
+                    >
+                      {currentPath.startsWith("/admin/users") && (
+                        <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                      )}
+                      <UserGroupIcon
+                        className={`w-6 h-6 ${
+                          currentPath.startsWith("/admin/users")
+                            ? "text-[#515DEF]"
+                            : "text-foreground"
+                        }`}
+                      />
+                      {/* User Management */}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={`/maintenance-ticket`}
+                      className={`
                   ${
                     currentPath.startsWith("/maintenance") ||
                     currentPath.startsWith("/assignment")
@@ -332,26 +329,26 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                   }
                   group flex justify-center gap-x-3 rounded-md p-3 text-sm font-medium items-center
                 `}
-                  >
-                    {currentPath.startsWith("/maintenance") ||
-                      (currentPath.startsWith("/assignment") && (
-                        <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
-                      ))}
-                    <TicketIcon
-                      className={`w-6 h-6 ${
-                        currentPath.startsWith("/maintenance") ||
-                        currentPath.startsWith("/assignment")
-                          ? "text-[#515DEF]"
-                          : "text-foreground"
-                      }`}
-                    />
-                    {/* Maintenance Tickets{} */}
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={`/chatbot/${authedUser.id}`}
-                    className={`
+                    >
+                      {currentPath.startsWith("/maintenance") ||
+                        (currentPath.startsWith("/assignment") && (
+                          <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                        ))}
+                      <TicketIcon
+                        className={`w-6 h-6 ${
+                          currentPath.startsWith("/maintenance") ||
+                          currentPath.startsWith("/assignment")
+                            ? "text-[#515DEF]"
+                            : "text-foreground"
+                        }`}
+                      />
+                      {/* Maintenance Tickets{} */}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={`/chatbot/${authedUser.id}`}
+                      className={`
                   ${
                     currentPath === "/chatbot"
                       ? "bg-[#515DEF]/10 relative text-[#515DEF]"
@@ -361,27 +358,27 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                     isSidebarOpen == true ? "rounded-md" : ""
                   } p-3 text-sm font-medium items-center justify-center
                 `}
-                  >
-                    {currentPath === "/chatbot" && (
-                      <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
-                    )}
-                    <ChatBubbleLeftRightIcon
-                      className={`w-6 h-6 ${
-                        currentPath === "/chatbot"
-                          ? "text-[#515DEF]"
-                          : "text-foreground"
-                      }`}
-                    />
-                    {/* Chatbot */}
-                  </Link>
-                </li>
-              </ul>
+                    >
+                      {currentPath === "/chatbot" && (
+                        <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                      )}
+                      <ChatBubbleLeftRightIcon
+                        className={`w-6 h-6 ${
+                          currentPath === "/chatbot"
+                            ? "text-[#515DEF]"
+                            : "text-foreground"
+                        }`}
+                      />
+                      {/* Chatbot */}
+                    </Link>
+                  </li>
+                </ul>
               ) : (
                 <ul role="list" className="space-y-2">
-                <li>
-                  <Link
-                    to={"/dashboard"}
-                    className={`
+                  <li>
+                    <Link
+                      to={"/dashboard"}
+                      className={`
                   ${
                     currentPath === "/dashboard"
                       ? "bg-[#515DEF]/10 relative text-[#515DEF]"
@@ -391,24 +388,24 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                     isSidebarOpen == true ? "rounded-md" : ""
                   } p-3 text-sm font-medium items-center justify-center
                 `}
-                  >
-                    {currentPath === "/dashboard" && (
-                      <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
-                    )}
-                    <HomeIcon
-                      className={`w-6 h-6 ${
-                        currentPath === "/dashboard"
-                          ? "text-[#515DEF]"
-                          : "text-foreground"
-                      }`}
-                    />
-                    {/* Dashboard */}
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={`/task-maintenance`}
-                    className={`
+                    >
+                      {currentPath === "/dashboard" && (
+                        <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                      )}
+                      <HomeIcon
+                        className={`w-6 h-6 ${
+                          currentPath === "/dashboard"
+                            ? "text-[#515DEF]"
+                            : "text-foreground"
+                        }`}
+                      />
+                      {/* Dashboard */}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={`/task-maintenance`}
+                      className={`
                   ${
                     currentPath.startsWith("/task-maintenance") ||
                     currentPath.startsWith("/task-maintenance")
@@ -417,26 +414,26 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                   }
                   group flex justify-center gap-x-3 rounded-md p-3 text-sm font-medium items-center
                 `}
-                  >
-                    {currentPath.startsWith("/task-maintenance") ||
-                      (currentPath.startsWith("/task-maintenance") && (
-                        <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
-                      ))}
-                    <TicketIcon
-                      className={`w-6 h-6 ${
-                        currentPath.startsWith("/task-maintenance") ||
-                        currentPath.startsWith("/task-maintenance")
-                          ? "text-[#515DEF]"
-                          : "text-foreground"
-                      }`}
-                    />
-                    {/* Maintenance Tickets{} */}
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={`/chatbot/${authedUser.id}`}
-                    className={`
+                    >
+                      {currentPath.startsWith("/task-maintenance") ||
+                        (currentPath.startsWith("/task-maintenance") && (
+                          <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                        ))}
+                      <TicketIcon
+                        className={`w-6 h-6 ${
+                          currentPath.startsWith("/task-maintenance") ||
+                          currentPath.startsWith("/task-maintenance")
+                            ? "text-[#515DEF]"
+                            : "text-foreground"
+                        }`}
+                      />
+                      {/* Maintenance Tickets{} */}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={`/chatbot/${authedUser.id}`}
+                      className={`
                   ${
                     currentPath === "/chatbot"
                       ? "bg-[#515DEF]/10 relative text-[#515DEF]"
@@ -446,21 +443,21 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                     isSidebarOpen == true ? "rounded-md" : ""
                   } p-3 text-sm font-medium items-center justify-center
                 `}
-                  >
-                    {currentPath === "/chatbot" && (
-                      <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
-                    )}
-                    <ChatBubbleLeftRightIcon
-                      className={`w-6 h-6 ${
-                        currentPath === "/chatbot"
-                          ? "text-[#515DEF]"
-                          : "text-foreground"
-                      }`}
-                    />
-                    {/* Chatbot */}
-                  </Link>
-                </li>
-              </ul>
+                    >
+                      {currentPath === "/chatbot" && (
+                        <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                      )}
+                      <ChatBubbleLeftRightIcon
+                        className={`w-6 h-6 ${
+                          currentPath === "/chatbot"
+                            ? "text-[#515DEF]"
+                            : "text-foreground"
+                        }`}
+                      />
+                      {/* Chatbot */}
+                    </Link>
+                  </li>
+                </ul>
               )}
             </li>
             <li className="mt-auto flex items-center justify-center">

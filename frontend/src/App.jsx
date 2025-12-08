@@ -14,6 +14,7 @@ import MaintenanceTicketUpdate from "./pages/app/maintenancetickets/MaintenanceT
 import AssignmentMaintenanceIndex from "./pages/app/assignmaintenancetasks/AssignmentMaintenanceIndex";
 import AssignmentMaintenanceCreate from "./pages/app/assignmaintenancetasks/AssignmentMaintenanceCreate";
 import AssignmentEngineerIndex from "./pages/app/assignmaintenancetasksengineer/AssignmentEngineerIndex";
+import AssignmentEngineerUpdate from "./pages/app/assignmaintenancetasksengineer/AssignmentEngineerUpdate";
 
 export default function App() {
   const [authedUser, setAuthedUser] = useState(null);
@@ -115,7 +116,16 @@ export default function App() {
           />
         }
       />
-      <Route 
+      <Route
+        path="/assignment-maintenance/tasks/create/:ticketId"
+        element={
+          <AssignmentMaintenanceCreate
+            authedUser={authedUser}
+            onLogout={onLogout}
+          />
+        }
+      />
+      <Route
         path="/task-maintenance"
         element={
           <AssignmentEngineerIndex
@@ -125,9 +135,9 @@ export default function App() {
         }
       />
       <Route
-        path="/assignment-maintenance/tasks/create/:ticketId"
+        path="/task-maintenance/:id"
         element={
-          <AssignmentMaintenanceCreate
+          <AssignmentEngineerUpdate
             authedUser={authedUser}
             onLogout={onLogout}
           />

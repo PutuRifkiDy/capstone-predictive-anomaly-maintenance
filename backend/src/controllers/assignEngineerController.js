@@ -13,6 +13,41 @@ class AssignEngineerController {
       next(error);
     }
   }
+
+  async updateAssignedEngineerTicketMaintenance(req, res, next) {
+    try {
+      const { id } = req.params;
+      const { status } = req.body;
+
+      const updatedTicket = await assignEngineerTaskService.updateAssignedEngineerTicketMaintenance(id, { status });
+      res.json({
+        status: 'success',
+        message: 'Maintenance ticket updated successfully',
+        updatedTicket,
+      });
+    } catch (error) {
+      if (error.message === 'Maintenance ticket not found') {
+        return res.status(404).json({ error: error.message });
+      }
+      next(error);
+    }
+  }
+
+  async getAssignedEngineerTicketById(req, res, next) {
+    try {
+      const { id } = req.params;
+      const assignedEngineerTicket = await assignEngineerTaskService.getAssignedEngineerTicketStatusById(id);
+      res.json({
+        status: 'success',
+        assignedEngineerTicket,
+      });
+    } catch (error) {
+      if (error.message === 'Maintenance ticket not found') {
+        return res.status(404).json({ error: error.message });
+      }
+      next(error);
+    }
+  }
 }
 
 module.exports = new AssignEngineerController();
