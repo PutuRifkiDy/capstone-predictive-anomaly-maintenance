@@ -1,5 +1,5 @@
 import AppLayout from "@/components/layouts/AppLayout";
-import { Button } from "@/components/ui/button";
+import { Link, useParams } from "react-router";
 import {
   Dialog,
   DialogClose,
@@ -32,10 +32,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import {
-  deleteMaintenanceTicketById,
-  getMaintenanceTicketById,
-} from "@/utils/api";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 import {
   flexRender,
@@ -45,24 +41,28 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
 import { toast } from "sonner";
+import { getAllAssignsAndUsers } from "@/utils/api";
+import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
+import { Button } from "@/components/ui/button";
 
-export default function MaintenanceTicketIndex({ authedUser, onLogout }) {
-  const [maintenanceTickets, setMaintenanceTickets] = useState([]);
+export default function AssignmentMaintenanceIndex({ authedUser, onLogout }) {
+  const [assignMaintenanceTicketsTasks, setAssignMaintenanceTicketsTasks] =
+    useState([]);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10,
   });
+  const params = useParams();
 
-  const fetchMaintenanceTicketsData = async () => {
+  const fetchAssignMaintenanceTicketsTasks = async () => {
     try {
-      const result = await getMaintenanceTicketById(authedUser.id);
-      if (result.error == false) {
-        setMaintenanceTickets(result.data);
+      const result = await getAllAssignsAndUsers(params.ticketId);
+      if (result.error) {
+        toast.error(result.message);
       } else {
-        setMaintenanceTickets([]);
+        setAssignMaintenanceTicketsTasks(result.data);
       }
       setLoading(false);
     } catch (error) {
@@ -71,8 +71,8 @@ export default function MaintenanceTicketIndex({ authedUser, onLogout }) {
   };
 
   useEffect(() => {
-    fetchMaintenanceTicketsData();
-  }, []);
+    fetchAssignMaintenanceTicketsTasks();
+  }, [params.ticketId]);
 
   // copyan tanstacktablenya
   const [columnFilters, setColumnFilters] = useState([]);
@@ -115,46 +115,66 @@ export default function MaintenanceTicketIndex({ authedUser, onLogout }) {
       ),
     },
     {
-      accessorKey: "name",
-      header: "Created By",
-      cell: ({ row }) => (
-        <div className="font-normal">{row.getValue("name")}</div>
-      ),
-    },
-    {
-      accessorKey: "role",
-      header: "Role",
-      cell: ({ row }) => (
-        <div
-          className={`font-medium p-2 rounded-md w-fit ${
-            row.getValue("role") == "admin"
-              ? "bg-yellow-100 text-yellow-500 border-[1px] border-yellow-300 dark:bg-[#D9A72E]/30 dark:text-[#D9A72E] dark:border-[#D9A72E]/30"
-              : "bg-[#515DEF]/10 text-[#515DEF] border-[1px] border-[#515DEF]/30"
-          }`}
-        >
-          {row.getValue("role") == "admin" ? "Admin" : "Engineer"}
-        </div>
-      ),
+      accessorKey: "assign_users",
+      header: "Engineer",
+      cell: ({ row }) => {
+        const users = row.getValue("assign_users") || [];
+
+        return (
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button
+                variant="ghost"
+                className="p-2 rounded-md dark:bg-[#515DEF]/10 bg-gray-100 border dark:border-[#515DEF]/30 border-gray-100"
+              >
+                <EllipsisVerticalIcon className="h-4 w-4 text-black dark:text-white" />
+              </Button>
+            </DialogTrigger>
+
+            <DialogContent className="sm:max-w-[600px]">
+              <DialogHeader>
+                <DialogTitle>Assigned Users</DialogTitle>
+                <DialogDescription>
+                  List of all engineers assigned to this ticket.
+                </DialogDescription>
+              </DialogHeader>
+
+              <div className="mt-4 space-y-3">
+                {users.length === 0 && (
+                  <p className="text-sm text-gray-500">No users assigned.</p>
+                )}
+
+                {users.map((user) => (
+                  <div
+                    key={user.id}
+                    className="flex items-center justify-between border p-3 rounded-lg"
+                  >
+                    <div>
+                      <p className="font-semibold">{user.name}</p>
+                      <p className="text-sm text-gray-500">
+                        {user.role === "admin" ? "Admin" : "Engineer"}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </DialogContent>
+          </Dialog>
+        );
+      },
     },
     {
       id: "actions",
       header: "Actions",
       cell: ({ row }) => {
-        const maintenaceTicket = row.original;
+        // const maintenaceTickets = row.original;
         return (
           <div className="flex gap-2 items-center">
             <TooltipProvider delayDuration={200}>
-              <Button asChild variant="blue" className="bg-[#515DEF] text-white">
-                <Link
-                  to={`/assignment-maintenance/tasks/${maintenaceTicket.id}`}
-                >
-                  Assign Maintenance
-                </Link>
-              </Button>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Link
-                    to={`/maintenance-ticket/update/${maintenaceTicket.id}`}
+                    // to={`/maintenance-ticket/update/${maintenaceTickets.id}`}
                     className="text-sm bg-yellow-100 rounded-md p-2 dark:bg-[#D9A72E]/30 dark:text-[#D9A72E] dark:border-[#D9A72E]/30 h-fit"
                   >
                     <PencilSquareIcon className="h-4 w-4 text-yellow-500" />
@@ -195,22 +215,7 @@ export default function MaintenanceTicketIndex({ authedUser, onLogout }) {
                   <DialogClose asChild>
                     <Button variant="outline">Cancel</Button>
                   </DialogClose>
-                  <Button
-                    variant="destructive"
-                    onClick={async () => {
-                      const response = await deleteMaintenanceTicketById(
-                        maintenaceTicket.id
-                      );
-                      if (response.error) {
-                        toast.error(response.message);
-                      } else {
-                        fetchMaintenanceTicketsData();
-                        toast.success(response.message);
-                      }
-                    }}
-                  >
-                    Confirm
-                  </Button>
+                  <Button variant="destructive">Confirm</Button>
                 </DialogFooter>
               </DialogContent>
             </Dialog>
@@ -222,7 +227,7 @@ export default function MaintenanceTicketIndex({ authedUser, onLogout }) {
 
   // copyan tanstacktablenya
   const table = useReactTable({
-    data: maintenanceTickets,
+    data: assignMaintenanceTicketsTasks,
     columns,
     getCoreRowModel: getCoreRowModel(),
     onColumnFiltersChange: setColumnFilters,
@@ -239,14 +244,22 @@ export default function MaintenanceTicketIndex({ authedUser, onLogout }) {
     <AppLayout authedUser={authedUser} onLogout={onLogout}>
       <div className="flex md:flex-row flex-col md:mb-0 md:gap-0 gap-5 justify-between">
         <p className="font-medium text-[32px] tracking-[-0.11px] text-[#000000] dark:text-white">
-          Maintenance Tickets
+          Assignment Maintenance
         </p>
-        <Link
-          to={`/maintenance-ticket/create`}
-          className="bg-[#515DEF] px-4 py-2 rounded-[4px] text-white hover:shadow-2xl transition-all duration-300 ease-in-out flex items-center justify-center gap-2 h-fit"
-        >
-          Create Maintenance Ticket
-        </Link>
+        <div className="flex gap-2 items-center">
+          <Link
+            to={`/maintenance-ticket`}
+            className="bg-[#515DEF] px-4 py-2 rounded-[4px] text-white hover:shadow-2xl transition-all duration-300 ease-in-out flex items-center justify-center gap-2 h-fit"
+          >
+            Back
+          </Link>
+          <Link
+            to={`/assignment-maintenance/tasks/create`}
+            className="bg-[#515DEF] px-4 py-2 rounded-[4px] text-white hover:shadow-2xl transition-all duration-300 ease-in-out flex items-center justify-center gap-2 h-fit"
+          >
+            Assignment Maintenance
+          </Link>
+        </div>
       </div>
       <div className="mt-6">
         {loading ? (

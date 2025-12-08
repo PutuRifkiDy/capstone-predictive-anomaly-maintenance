@@ -62,7 +62,7 @@ export default function MaintenanceTicketUpdate({ authedUser, onLogout }) {
         toast.error(result.error);
       } else {
         toast.success(result.message);
-        navigate(`/maintenance-ticket/${authedUser.id}`);
+        navigate(`/maintenance-ticket`);
         setTitle("");
         setDescription("");
         setStatus("");
@@ -86,7 +86,7 @@ export default function MaintenanceTicketUpdate({ authedUser, onLogout }) {
               Maintenance Ticket Information
             </p>
             <Link
-              to={`/maintenance-ticket/${authedUser.id}`}
+              to={`/maintenance-ticket`}
               className="flex items-center gap-3 px-4 py-2 text-white bg-[#515DEF] rounded-md group"
             >
               <ArrowLeftIcon className="text-white w-3 h-3 group-hover:-translate-x-1 transition-all duration-300 ease-in-out" />

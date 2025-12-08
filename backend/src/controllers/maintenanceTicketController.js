@@ -1,4 +1,4 @@
-const maintenanceTicket = require('../services/maintenanceTicket');
+const maintenanceTicket = require('../services/maintenanceTicketService');
 
 class MaintenanceTicketController {
   async getAllMaintenanceTickets(req, res, next) {

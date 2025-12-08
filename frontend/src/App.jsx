@@ -11,6 +11,8 @@ import ChatbotIndex from "./pages/app/chatbot/ChatbotIndex";
 import MaintenanceTicketIndex from "./pages/app/maintenancetickets/MaintenanceTicketIndex";
 import MaintenanceTicketCreate from "./pages/app/maintenancetickets/MaintenanceTicketCreate";
 import MaintenanceTicketUpdate from "./pages/app/maintenancetickets/MaintenanceTicketUpdate";
+import AssignmentMaintenanceIndex from "./pages/app/assignmaintenancetasks/AssignmentMaintenanceIndex";
+import AssignmentMaintenanceCreate from "./pages/app/assignmaintenancetasks/AssignmentMaintenanceCreate";
 
 export default function App() {
   const [authedUser, setAuthedUser] = useState(null);
@@ -80,13 +82,13 @@ export default function App() {
         element={<UserUpdate authedUser={authedUser} onLogout={onLogout} />}
       />
       <Route
-        path="/maintenance-ticket/:id"
+        path="/maintenance-ticket"
         element={
           <MaintenanceTicketIndex authedUser={authedUser} onLogout={onLogout} />
         }
       />
       <Route
-        path="/maintenance-ticket/create/:id"
+        path="/maintenance-ticket/create"
         element={
           <MaintenanceTicketCreate
             authedUser={authedUser}
@@ -98,6 +100,24 @@ export default function App() {
         path="/maintenance-ticket/update/:id"
         element={
           <MaintenanceTicketUpdate
+            authedUser={authedUser}
+            onLogout={onLogout}
+          />
+        }
+      />
+      <Route
+        path="/assignment-maintenance/tasks/:ticketId"
+        element={
+          <AssignmentMaintenanceIndex
+            authedUser={authedUser}
+            onLogout={onLogout}
+          />
+        }
+      />
+      <Route
+        path="/assignment-maintenance/tasks/create"
+        element={
+          <AssignmentMaintenanceCreate
             authedUser={authedUser}
             onLogout={onLogout}
           />

@@ -10,6 +10,7 @@ import {
   UserGroupIcon,
   ChatBubbleLeftRightIcon,
   TicketIcon,
+  DocumentArrowDownIcon,
 } from "@heroicons/react/24/outline";
 import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/solid";
 import { Link, useLocation } from "react-router";
@@ -76,7 +77,7 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                 </li>
                 <li>
                   <Link
-                    to={`/maintenance-ticket/${authedUser.id}`}
+                    to={`/maintenance-ticket`}
                     className={`
                   ${
                     currentPath.startsWith("/maintenance-ticket")
@@ -231,14 +232,14 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                 </li>
                 <li>
                   <Link
-                    to={`/maintenance-ticket/${authedUser.id}`}
+                    to={`/maintenance-ticket`}
                     className={`
                   ${
                     currentPath.startsWith("/maintenance-ticket")
                       ? "bg-[#515DEF]/10 relative text-[#515DEF] pl-5"
                       : "text-foreground hover:bg-gray-100 dark:hover:bg-[#7E89AC]/30 transition-all duration-300 ease-in-out"
                   }
-                  group flex gap-x-3 rounded-md p-3 text-sm font-medium items-center
+                  group flex justify-center gap-x-3 rounded-md p-3 text-sm font-medium items-center
                 `}
                   >
                     {currentPath.startsWith("/maintenance-ticket") && (
@@ -256,7 +257,7 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                 </li>
                 <li>
                   <Link
-                    to={"/chatbot"}
+                    to={`/chatbot/${authedUser.id}`}
                     className={`
                   ${
                     currentPath === "/chatbot"

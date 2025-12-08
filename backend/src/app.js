@@ -3,6 +3,7 @@ const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const aiAgentRoutes = require('./routes/aiAgentRoutes');
 const maintenanceTicketRoutes = require('./routes/maintenanceTicketsRoutes');
+const assignMaintenanceTicketRoutes = require('./routes/assignMaintenanceTaskRoutes');
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 app.use('/chatbot', aiAgentRoutes);
 app.use('/maintenancetickets', maintenanceTicketRoutes);
+app.use('/assignmaintenancetasks', assignMaintenanceTicketRoutes);
 
 // Global Error Handler
 app.use((err, req, res) => {

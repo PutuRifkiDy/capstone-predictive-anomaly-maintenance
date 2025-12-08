@@ -11,6 +11,7 @@ import {
   UserGroupIcon,
   ChatBubbleLeftRightIcon,
   TicketIcon,
+  DocumentArrowDownIcon,
 } from "@heroicons/react/24/outline";
 import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/solid";
 import { Link, useLocation } from "react-router";
@@ -83,7 +84,7 @@ export default function SidebarResponsive({ authedUser, onLogout }) {
             </li>
             <li>
               <Link
-                to={`/maintenance-ticket/${authedUser.id}`}
+                to={`/maintenance-ticket`}
                 className={`
                   ${
                     currentPath.startsWith("/maintenance-ticket")

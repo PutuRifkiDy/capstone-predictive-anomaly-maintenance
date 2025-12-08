@@ -43,7 +43,7 @@ export default function MaintenanceTicketCreate({ authedUser, onLogout }) {
         setTitle("");
         setDescription("");
         setStatus("");
-        navigate(`/maintenance-ticket/${authedUser.id}`);
+        navigate(`/maintenance-ticket`);
       }
     } catch (error) {
       console.log(error);
@@ -62,7 +62,7 @@ export default function MaintenanceTicketCreate({ authedUser, onLogout }) {
           <div className="flex md:flex-row flex-col-reverse items-center justify-between lg:px-10 md:px-10 px-3 py-5 md:gap-0 gap-5">
             <p className="font-medium text-[16px]">Maintenance Ticket Information</p>
             <Link
-              to={`/maintenance-ticket/${authedUser.id}`}
+              to={`/maintenance-ticket`}
               className="flex items-center gap-3 px-4 py-2 text-white bg-[#515DEF] rounded-md group"
             >
               <ArrowLeftIcon className="text-white w-3 h-3 group-hover:-translate-x-1 transition-all duration-300 ease-in-out" />

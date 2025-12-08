@@ -493,6 +493,33 @@ async function updateMaintenanceTicketById(id, { title, description, status }) {
   }
 }
 
+async function getAllAssignsAndUsers(maintenanceTicketId) {
+  try {
+    const response = await fetchWithToken(`${BASE_URL}/assignmaintenancetasks/${maintenanceTicketId}`, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+
+    const responseJson = await response.json();
+
+    if (responseJson.status == "success") {
+      return {
+        error: false,
+        data: responseJson.allTicketsAssignUsers,
+      };
+    }
+    return {
+      error: true,
+      message: responseJson.error,
+      data: null,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export {
   getAccessToken,
   putAccessToken,
@@ -514,5 +541,6 @@ export {
   createMaintenanceTicket,
   deleteMaintenanceTicketById,
   updateMaintenanceTicketById,
-  getMaintenanceById
+  getMaintenanceById,
+  getAllAssignsAndUsers
 };
