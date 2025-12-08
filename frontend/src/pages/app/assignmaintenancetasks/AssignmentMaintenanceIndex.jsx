@@ -42,7 +42,11 @@ import {
 } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { getAllAssignsAndUsers, getMaintenanceById } from "@/utils/api";
+import {
+  deleteAssignmentTicketById,
+  getAllAssignsAndUsers,
+  getMaintenanceById,
+} from "@/utils/api";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { Button } from "@/components/ui/button";
 
@@ -55,8 +59,6 @@ export default function AssignmentMaintenanceIndex({ authedUser, onLogout }) {
     pageSize: 10,
   });
   const params = useParams();
-
-  console.log(maintenaceTicket);
 
   const fetchMaintenanceTicket = async () => {
     try {
@@ -128,6 +130,66 @@ export default function AssignmentMaintenanceIndex({ authedUser, onLogout }) {
           {row.getValue("role") == "admin" ? "Admin" : "Engineer"}
         </div>
       ),
+    },
+    {
+      accessorKey: "actions",
+      header: "Actions",
+      cell: ({ row }) => {
+        const assignmentMaintenanceId = row.original;
+        return (
+          <div className="flex gap-2 items-center">
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button
+                  variant="none"
+                  className="text-sm bg-red-100 rounded-md p-2 dark:bg-[#515DEF]/10  dark:border-[1px] dark:border-[#515DEF]/30 h-fit"
+                >
+                  <TooltipProvider delayDuration={200}>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <TrashIcon className="h-4 w-4 text-red-500 dark:text-[#515DEF]" />
+                      </TooltipTrigger>
+                      <TooltipContent>Delete Assignment</TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle className="leading-6">
+                    Are you sure to delete this assignment ticket?
+                  </DialogTitle>
+                  <DialogDescription>
+                    This action cannot be undone. This will permanently delete
+                  </DialogDescription>
+                </DialogHeader>
+
+                <DialogFooter>
+                  <DialogClose asChild>
+                    <Button variant="outline">Cancel</Button>
+                  </DialogClose>
+                  <Button
+                    variant="destructive"
+                    onClick={async () => {
+                      const response = await deleteAssignmentTicketById(
+                        assignmentMaintenanceId.id
+                      );
+                      if (response.error) {
+                        toast.error(response.message);
+                      } else {
+                        fetchAssignMaintenanceTicketUser();
+                        toast.success(response.message);
+                      }
+                    }}
+                  >
+                    Confirm
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          </div>
+        );
+      },
     },
   ];
 

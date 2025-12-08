@@ -601,6 +601,32 @@ async function createAssignmentTicket({ userId, maintenanceTicketId }) {
   }
 }
 
+async function deleteAssignmentTicketById(id) {
+  try {
+    const response = await fetchWithToken(`${BASE_URL}/assignmaintenancetasks/assign/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+
+    const responseJson = await response.json();
+
+    if (responseJson.status == "success") {
+      return {
+        error: false,
+        message: responseJson.message,
+      };
+    }
+    return {
+      error: true,
+      message: responseJson.error,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export {
   getAccessToken,
   putAccessToken,
@@ -626,5 +652,6 @@ export {
   getAllAssignsAndUsers,
   getAssignedUsers,
   createAssignmentTicket,
-  getAllMaintenanceTickets
+  getAllMaintenanceTickets,
+  deleteAssignmentTicketById
 };

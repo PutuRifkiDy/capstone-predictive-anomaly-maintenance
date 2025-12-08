@@ -28,7 +28,7 @@ class AssignMaintenanceTaskService {
 
     const tickets = ticketResponse.rows;
 
-    const userResponse = await db.query('SELECT assign_maintenance_tasks.maintenance_ticket_id, users.id, users.name, users.role, users.email, users.phone_number FROM assign_maintenance_tasks LEFT JOIN users ON users.id = assign_maintenance_tasks.user_id WHERE assign_maintenance_tasks.maintenance_ticket_id = $1', [maintenanceTicketId]);
+    const userResponse = await db.query('SELECT assign_maintenance_tasks.id as assignment_maitenance_task_id, assign_maintenance_tasks.maintenance_ticket_id, users.id, users.name, users.role, users.email, users.phone_number FROM assign_maintenance_tasks LEFT JOIN users ON users.id = assign_maintenance_tasks.user_id WHERE assign_maintenance_tasks.maintenance_ticket_id = $1', [maintenanceTicketId]);
 
     const userAssignments = userResponse.rows;
 
@@ -45,7 +45,8 @@ class AssignMaintenanceTaskService {
           name: userAssignment.name,
           role: userAssignment.role,
           email: userAssignment.email,
-          phone_number: userAssignment.phone_number
+          phone_number: userAssignment.phone_number,
+          id_assignment_maitenance_task: userAssignment.assignment_maitenance_task_id
         });
       }
     });
