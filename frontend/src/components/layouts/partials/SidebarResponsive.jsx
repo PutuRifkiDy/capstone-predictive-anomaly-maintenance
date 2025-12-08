@@ -31,6 +31,8 @@ export default function SidebarResponsive({ authedUser, onLogout }) {
       </header>
       <ul className="flex flex-1 flex-col gap-y-7" role="list">
         <li>
+          {authedUser.role === "admin" ? (
+
           <ul role="list" className="-mx-2 space-y-2">
             <li>
               <Link
@@ -136,6 +138,88 @@ export default function SidebarResponsive({ authedUser, onLogout }) {
               </Link>
             </li>
           </ul>
+          ) : (
+            <ul role="list" className="-mx-2 space-y-2">
+            <li>
+              <Link
+                to={"/dashboard"}
+                className={`
+                  ${
+                    currentPath.startsWith("/dashboard")
+                      ? "bg-[#515DEF]/10 relative text-[#515DEF] pl-5"
+                      : "text-foreground hover:bg-gray-100 dark:hover:bg-[#7E89AC]/30 transition-all duration-300 ease-in-out"
+                  }
+                  group flex gap-x-3 rounded-md p-3 text-sm font-medium items-center
+                `}
+              >
+                {currentPath.startsWith("/dashboard") && (
+                  <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                )}
+                <HomeIcon
+                  className={`w-6 h-6 ${
+                    currentPath.startsWith("/dashboard")
+                      ? "text-[#515DEF]"
+                      : "text-foreground"
+                  }`}
+                />
+                Dashboard
+              </Link>
+            </li>
+            <li>
+              <Link
+                to={`/task-maintenance`}
+                className={`
+                  ${
+                    currentPath.startsWith("/task-maintenance") ||
+                    currentPath.startsWith("/task-maintenance")
+                      ? "bg-[#515DEF]/10 relative text-[#515DEF] pl-5"
+                      : "text-foreground hover:bg-gray-100 dark:hover:bg-[#7E89AC]/30 transition-all duration-300 ease-in-out"
+                  }
+                  group flex gap-x-3 rounded-md p-3 text-sm font-medium items-center
+                `}
+              >
+                {currentPath.startsWith("/task-maintenance") ||
+                  (currentPath.startsWith("/task-maintenance") && (
+                    <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                  ))}
+                <TicketIcon
+                  className={`w-6 h-6 ${
+                    currentPath.startsWith("/task-maintenance") ||
+                    currentPath.startsWith("/task-maintenance")
+                      ? "text-[#515DEF]"
+                      : "text-foreground"
+                  }`}
+                />
+                Maintenance Tickets
+              </Link>
+            </li>
+            <li>
+              <Link
+                to={`/chatbot/${authedUser.id}`}
+                className={`
+                  ${
+                    currentPath.startsWith("/chatbot")
+                      ? "bg-[#515DEF]/10 relative text-[#515DEF] pl-5"
+                      : "text-foreground hover:bg-gray-100 dark:hover:bg-[#7E89AC]/30 transition-all duration-300 ease-in-out"
+                  }
+                  group flex gap-x-3 rounded-md p-3 text-sm font-medium items-center
+                `}
+              >
+                {currentPath.startsWith("/chatbot") && (
+                  <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                )}
+                <ChatBubbleLeftRightIcon
+                  className={`w-6 h-6 ${
+                    currentPath.startsWith("/chatbot")
+                      ? "text-[#515DEF]"
+                      : "text-foreground"
+                  }`}
+                />
+                Chatbot
+              </Link>
+            </li>
+          </ul>
+          )}
         </li>
         <li className="mt-auto flex items-center justify-center">
           <DropdownMenu>
