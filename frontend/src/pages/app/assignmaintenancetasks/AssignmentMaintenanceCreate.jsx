@@ -55,7 +55,7 @@ export default function AssignmentMaintenanceCreate({ authedUser, onLogout }) {
     setFilteredUsers(availableUsers);
 
     if (availableUsers.length === 0) {
-      toast.error("All users are already assigned to this ticket.");
+      toast.error("All users role engineer are already assigned to this ticket.");
     }
   }
 

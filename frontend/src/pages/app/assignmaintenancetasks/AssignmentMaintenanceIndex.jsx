@@ -114,8 +114,22 @@ export default function AssignmentMaintenanceIndex({ authedUser, onLogout }) {
         <div className="font-normal">{row.getValue("email")}</div>
       ),
     },
+    {
+      accessorKey: "role",
+      header: "Role",
+      cell: ({ row }) => (
+        <div
+          className={`font-medium p-2 rounded-md w-fit ${
+            row.getValue("role") == "admin"
+              ? "bg-yellow-100 text-yellow-500 border-[1px] border-yellow-300 dark:bg-[#D9A72E]/30 dark:text-[#D9A72E] dark:border-[#D9A72E]/30"
+              : "bg-[#515DEF]/10 text-[#515DEF] border-[1px] border-[#515DEF]/30"
+          }`}
+        >
+          {row.getValue("role") == "admin" ? "Admin" : "Engineer"}
+        </div>
+      ),
+    },
   ];
-
 
   // copyan tanstacktablenya
   const table = useReactTable({
