@@ -41,6 +41,22 @@ class AssignmentMaintenanceTicketController {
       next(error);
     }
   }
+
+  async deleteAssignmentTicketById(req, res, next) {
+    const id = parseInt(req.params.id);
+    try {
+      await assignmentMaintenanceTicket.deleteAssignmentTicketById(id);
+      res.json({
+        status: 'success',
+        message: 'Assignment deleted successfully',
+      });
+    } catch (error) {
+      if (error.message === 'Assignment not found') {
+        return res.status(404).json({ error: error.message });
+      }
+      next(error);
+    }
+  }
 }
 
 module.exports = new AssignmentMaintenanceTicketController();
