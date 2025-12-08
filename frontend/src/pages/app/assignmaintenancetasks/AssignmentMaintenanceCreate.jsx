@@ -46,7 +46,9 @@ export default function AssignmentMaintenanceCreate({ authedUser, onLogout }) {
     const assignedResponse = await getAssignedUsers(ticketId);
     const assigned = assignedResponse.data;
 
-    const availableUsers = users.filter(
+    const availableUsers = users.
+    filter((user) => user.role != "admin")
+    .filter(
       (user) => !assigned.some((assignedUser) => assignedUser.id === user.id)
     );
 
