@@ -22,8 +22,6 @@ export default function AssignmentMaintenanceCreate({ authedUser, onLogout }) {
   const [selectedUser, setSelectedUser] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
 
-  console.log(filteredUsers);
-
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const params = useParams();
