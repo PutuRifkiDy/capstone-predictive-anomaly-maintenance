@@ -52,6 +52,16 @@ class AssignMaintenanceTaskService {
 
     return Object.values(ticketMap);
   }
+
+  async deleteAssignmentTicketById(id) {
+    const result = await db.query('DELETE FROM assign_maintenance_tasks WHERE id = $1 RETURNING id', [id]);
+
+    if (!result.rows.length) {
+      throw new Error('Assignment not found');
+    }
+
+    return result.rows[0];
+  }
 }
 
 module.exports = new AssignMaintenanceTaskService();
