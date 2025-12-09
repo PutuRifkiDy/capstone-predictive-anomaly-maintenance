@@ -11,7 +11,7 @@ app = FastAPI()
 # -------------------------------------------------------
 
 tabnet = TabNetClassifier()
-tabnet.load_model("models/tabnet_anomaly_model.zip")
+tabnet.load_model("models/tabnet_anomaly_model.zip.zip")
 
 preproc_tabnet = joblib.load("models/tabnet_anomaly_preproc.joblib")
 meta_tabnet = joblib.load("models/tabnet_anomaly_meta.joblib")
@@ -23,9 +23,9 @@ threshold_anomaly = meta_tabnet["threshold"]
 # LOAD SINGLE XGB MULTICLASS MODEL
 # -------------------------------------------------------
 
-xgb_model = joblib.load("models/xgb_ovr_fe.joblib")  # hanya 1 file model
+xgb_model = joblib.load("models/failure_type_xgb_ovr_fe_models.joblib") 
 scaler_fe = joblib.load("models/scaler_fe.joblib")
-le_failtype = joblib.load("models/label_failtype.joblib")
+le_failtype = joblib.load("models/label_encoder_failure_type_ovr_fe.joblib")
 
 # -------------------------------------------------------
 # INPUT SCHEMA
