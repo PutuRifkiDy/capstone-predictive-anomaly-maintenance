@@ -3,6 +3,8 @@ from pydantic import BaseModel
 import joblib
 import numpy as np
 from pytorch_tabnet.tab_model import TabNetClassifier
+import warnings
+warnings.filterwarnings("ignore")
 
 app = FastAPI()
 
