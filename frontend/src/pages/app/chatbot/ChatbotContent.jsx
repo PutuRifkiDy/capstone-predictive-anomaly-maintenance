@@ -30,6 +30,7 @@ import { toast } from "sonner";
 
 export default function ChatbotContent({ authedUser }) {
   const context = useContext(SidebarOpenContext);
+  // const [loading, setLoading] = useState(false);
   const [inputMessage, onInputMessageChange, setInputMessage] = useInput();
   const [chatHistory, setChatHistory] = useState([]);
   const params = useParams();
@@ -49,7 +50,33 @@ export default function ChatbotContent({ authedUser }) {
     };
 
     fetchChatHistory();
-  }, [params.id, chatHistory]);
+  }, [params.id]);
+
+  // const handleSendMessage = async (event) => {
+  //   event.preventDefault();
+
+  //   if (inputMessage.trim() === "") {
+  //     toast.error("Please enter a message");
+  //     return;
+  //   }
+  //   try {
+  //     setLoading(true);
+  //     const response = await chatCopilot({
+  //       message: inputMessage,
+  //       userId: authedUser.id,
+  //     });
+
+  //     if (response.error) {
+  //       toast.error(response.message);
+  //     } else {
+  //       setInputMessage("");
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const handleSendMessage = async (event) => {
     event.preventDefault();
@@ -58,6 +85,24 @@ export default function ChatbotContent({ authedUser }) {
       toast.error("Please enter a message");
       return;
     }
+
+    const userTemp = {
+      id: "temp-user",
+      sender_type: "user",
+      message: inputMessage,
+    };
+
+    const agentLoadingTemp = {
+      id: "temp-loading",
+      sender_type: "agent",
+      message: "Thinking",
+      loading: true,
+    };
+
+    setChatHistory((prev) => [...prev, userTemp, agentLoadingTemp]);
+
+    setInputMessage("");
+
     try {
       const response = await chatCopilot({
         message: inputMessage,
@@ -66,8 +111,6 @@ export default function ChatbotContent({ authedUser }) {
 
       if (response.error) {
         toast.error(response.message);
-      } else {
-        setInputMessage("");
       }
     } catch (error) {
       console.error(error);
@@ -161,91 +204,150 @@ export default function ChatbotContent({ authedUser }) {
               </DialogContent>
             </Dialog>
             {chatHistory.map((message, index) => (
-              <div key={index} className="flex flex-col mb-1">
-                <div
-                  className={`flex items-center gap-4 ${
-                    message.sender_type == "agent"
-                      ? "justify-start"
-                      : "justify-end"
-                  }`}
-                >
+              <>
+                {message.loading ? (
                   <div
-                    className={`flex items-center justify-center w-12 h-12 p-4 rounded-full ${
+                    className={`flex items-center gap-4 ${
                       message.sender_type == "agent"
-                        ? "bg-[#515DEF]/30 border-[1px] border-[#515DEF]/10"
-                        : "bg-[#515DEF]"
-                    } text-white`}
+                        ? "justify-start"
+                        : "justify-end"
+                    }`}
                   >
-                    {message.sender_type == "agent" ? (
-                      <CpuChipIcon className="w-8 h-8 shrink-0 text-[#515DEF]" />
-                    ) : (
-                      authedUser.name.substring(0, 2).toUpperCase()
-                    )}
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <p className="font-medium text-[#1E293B] dark:text-white">
-                      {message.sender_type == "agent"
-                        ? "Predicta Chatbot"
-                        : authedUser.name}
-                    </p>
                     <div
-                      className={`p-3 ${
+                      className={`flex items-center justify-center w-12 h-12 p-4 rounded-full ${
                         message.sender_type == "agent"
-                          ? "bg-gray-50 border-[1px] border-gray-200 dark:bg-[#515DEF]/20 dark:border-[#515DEF]/20 relative rounded-r-lg rounded-br-lg"
-                          : "bg-[#515DEF] border-[1px] border-[#515DEF]/30 rounded-lg"
-                      }`}
+                          ? "bg-[#515DEF]/30 border-[1px] border-[#515DEF]/10"
+                          : "bg-[#515DEF]"
+                      } text-white`}
                     >
-                      {message.sender_type == "agent" && (
-                        <div className="absolute -left-1 right-0 h-full w-[5px] bg-[#515DEF] inset-y-0 rounded-tl-md rounded-bl-lg"></div>
+                      {message.sender_type == "agent" ? (
+                        <CpuChipIcon className="w-8 h-8 shrink-0 text-[#515DEF]" />
+                      ) : (
+                        authedUser.name.substring(0, 2).toUpperCase()
                       )}
-                      <p
-                        className={`${
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <p className="font-medium text-[#1E293B] dark:text-white">
+                        {message.sender_type == "agent"
+                          ? "Predicta Chatbot"
+                          : authedUser.name}
+                      </p>
+                      <div
+                        className={`p-3 ${
                           message.sender_type == "agent"
-                            ? "text-gray-800 dark:text-white"
-                            : "text-white"
+                            ? "bg-gray-50 border-[1px] border-gray-200 dark:bg-[#515DEF]/20 dark:border-[#515DEF]/20 relative rounded-r-lg rounded-br-lg"
+                            : "bg-[#515DEF] border-[1px] border-[#515DEF]/30 rounded-lg"
                         }`}
                       >
-                        {message.message}
-                      </p>
-                    </div>
-                    {message.sender_type == "agent" && (
-                      <div className="flex items-center gap-2 mt-2">
-                        <Dialog>
-                          <DialogTrigger asChild className="cursor-pointer">
-                            <TrashIcon className="w-6 h-6 text-red-500" />
-                          </DialogTrigger>
-                          <DialogContent className="sm:max-w-[425px]">
-                            <DialogHeader>
-                              <DialogTitle>
-                                Are you sure to delete this chat logs?
-                              </DialogTitle>
-                              <DialogDescription>
-                                This action cannot be undone. This will
-                                permanently delete
-                              </DialogDescription>
-                            </DialogHeader>
-                            <DialogFooter>
-                              <DialogClose asChild>
-                                <Button variant="outline">Cancel</Button>
-                              </DialogClose>
-                              <Button
-                                variant="destructive"
-                                onClick={() => handleDeleteChatLog(message.id)}
-                              >
-                                Confirm
-                              </Button>
-                            </DialogFooter>
-                          </DialogContent>
-                        </Dialog>
-                        <DocumentDuplicateIcon
-                          className="w-6 h-6 text-gray-500 cursor-pointer"
-                          onClick={() => copyClipboard(message.message)}
-                        />
+                        {message.sender_type == "agent" && (
+                          <div className="absolute -left-1 right-0 h-full w-[5px] bg-[#515DEF] inset-y-0 rounded-tl-md rounded-bl-lg"></div>
+                        )}
+                        <p
+                          className={`${
+                            message.sender_type == "agent"
+                              ? "text-gray-800 dark:text-white"
+                              : "text-white"
+                          } font-medium flex items-center gap-2 `}
+                        >
+                          
+                          {message.message}
+                          <span className="w-2 h-2 bg-[#515DEF] rounded-full animate-bounce flex items-center [animation-delay:0.3s]"></span>
+                          <span className="w-2 h-2 bg-[#515DEF] rounded-full animate-bounce flex items-center[animation-delay:0.2s]"></span>
+                          <span className="w-2 h-2 bg-[#515DEF] rounded-full animate-bounce flex items-center [animation-delay:0.1s]"></span>
+                        </p>
                       </div>
-                    )}
+                    </div>
                   </div>
-                </div>
-              </div>
+                ) : (
+                  <div key={index} className="flex flex-col mb-1">
+                    <div
+                      className={`flex items-center gap-4 ${
+                        message.sender_type == "agent"
+                          ? "justify-start"
+                          : "justify-end"
+                      }`}
+                    >
+                      <div
+                        className={`flex items-center justify-center w-12 h-12 p-4 rounded-full ${
+                          message.sender_type == "agent"
+                            ? "bg-[#515DEF]/30 border-[1px] border-[#515DEF]/10"
+                            : "bg-[#515DEF]"
+                        } text-white`}
+                      >
+                        {message.sender_type == "agent" ? (
+                          <CpuChipIcon className="w-8 h-8 shrink-0 text-[#515DEF]" />
+                        ) : (
+                          authedUser.name.substring(0, 2).toUpperCase()
+                        )}
+                      </div>
+                      <div className="flex flex-col gap-1">
+                        <p className="font-medium text-[#1E293B] dark:text-white">
+                          {message.sender_type == "agent"
+                            ? "Predicta Chatbot"
+                            : authedUser.name}
+                        </p>
+                        <div
+                          className={`p-3 ${
+                            message.sender_type == "agent"
+                              ? "bg-gray-50 border-[1px] border-gray-200 dark:bg-[#515DEF]/20 dark:border-[#515DEF]/20 relative rounded-r-lg rounded-br-lg"
+                              : "bg-[#515DEF] border-[1px] border-[#515DEF]/30 rounded-lg"
+                          }`}
+                        >
+                          {message.sender_type == "agent" && (
+                            <div className="absolute -left-1 right-0 h-full w-[5px] bg-[#515DEF] inset-y-0 rounded-tl-md rounded-bl-lg"></div>
+                          )}
+                          <p
+                            className={`${
+                              message.sender_type == "agent"
+                                ? "text-gray-800 dark:text-white"
+                                : "text-white"
+                            } text-justify`}
+                          >
+                            {message.message}
+                          </p>
+                        </div>
+                        {message.sender_type == "agent" && (
+                          <div className="flex items-center gap-2 mt-2">
+                            <Dialog>
+                              <DialogTrigger asChild className="cursor-pointer">
+                                <TrashIcon className="w-6 h-6 text-red-500" />
+                              </DialogTrigger>
+                              <DialogContent className="sm:max-w-[425px]">
+                                <DialogHeader>
+                                  <DialogTitle>
+                                    Are you sure to delete this chat logs?
+                                  </DialogTitle>
+                                  <DialogDescription>
+                                    This action cannot be undone. This will
+                                    permanently delete
+                                  </DialogDescription>
+                                </DialogHeader>
+                                <DialogFooter>
+                                  <DialogClose asChild>
+                                    <Button variant="outline">Cancel</Button>
+                                  </DialogClose>
+                                  <Button
+                                    variant="destructive"
+                                    onClick={() =>
+                                      handleDeleteChatLog(message.id)
+                                    }
+                                  >
+                                    Confirm
+                                  </Button>
+                                </DialogFooter>
+                              </DialogContent>
+                            </Dialog>
+                            <DocumentDuplicateIcon
+                              className="w-6 h-6 text-gray-500 cursor-pointer"
+                              onClick={() => copyClipboard(message.message)}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </>
             ))}
           </>
         )}
