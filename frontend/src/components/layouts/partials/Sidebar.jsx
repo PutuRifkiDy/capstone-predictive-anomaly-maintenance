@@ -172,7 +172,10 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                     group flex gap-x-3 rounded-md p-3 text-sm font-medium items-center
                   `}
                     >
-                      {currentPath.startsWith("/task-maintenance") && (
+                      {currentPath.startsWith("/maintenance-ticket") && (
+                        <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                      )}
+                      {currentPath.startsWith("/assignment-maintenance") && (
                         <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
                       )}
                       <TicketIcon
@@ -330,10 +333,12 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                   group flex justify-center gap-x-3 rounded-md p-3 text-sm font-medium items-center
                 `}
                     >
-                      {currentPath.startsWith("/maintenance") ||
-                        (currentPath.startsWith("/assignment") && (
-                          <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
-                        ))}
+                      {currentPath.startsWith("/maintenance-ticket") && (
+                        <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                      )}
+                      {currentPath.startsWith("/assignment-maintenance") && (
+                        <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                      )}
                       <TicketIcon
                         className={`w-6 h-6 ${
                           currentPath.startsWith("/maintenance") ||
@@ -350,7 +355,7 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                       to={`/chatbot/${authedUser.id}`}
                       className={`
                   ${
-                    currentPath === "/chatbot"
+                    currentPath.startsWith("/chatbot")
                       ? "bg-[#515DEF]/10 relative text-[#515DEF]"
                       : "text-foreground hover:bg-gray-100 dark:hover:bg-[#7E89AC]/30 transition-all duration-300 ease-in-out"
                   }
@@ -359,12 +364,12 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                   } p-3 text-sm font-medium items-center justify-center
                 `}
                     >
-                      {currentPath === "/chatbot" && (
+                      {currentPath.startsWith("/chatbot") && (
                         <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
                       )}
                       <ChatBubbleLeftRightIcon
                         className={`w-6 h-6 ${
-                          currentPath === "/chatbot"
+                          currentPath.startsWith("/chatbot")
                             ? "text-[#515DEF]"
                             : "text-foreground"
                         }`}
@@ -435,7 +440,7 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                       to={`/chatbot/${authedUser.id}`}
                       className={`
                   ${
-                    currentPath === "/chatbot"
+                    currentPath.startsWith("/chatbot")
                       ? "bg-[#515DEF]/10 relative text-[#515DEF]"
                       : "text-foreground hover:bg-gray-100 dark:hover:bg-[#7E89AC]/30 transition-all duration-300 ease-in-out"
                   }
@@ -444,12 +449,12 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                   } p-3 text-sm font-medium items-center justify-center
                 `}
                     >
-                      {currentPath === "/chatbot" && (
+                      {currentPath.startsWith("/chatbot") && (
                         <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
                       )}
                       <ChatBubbleLeftRightIcon
                         className={`w-6 h-6 ${
-                          currentPath === "/chatbot"
+                          currentPath.startsWith("/chatbot")
                             ? "text-[#515DEF]"
                             : "text-foreground"
                         }`}

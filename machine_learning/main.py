@@ -40,6 +40,14 @@ def get_top_n(n: int = 5):
     sorted_data = sorted(MACHINES, key=lambda x: x["anomaly_probability"], reverse=True)
     return sorted_data[:n]
 
+# -------------------------
+# GET: Top N mesin resiko paling rendah
+# -------------------------
+@app.get("/machines/bottom/{n}")
+def get_bottom_n(n: int = 5):
+    sorted_data = sorted(MACHINES, key=lambda x: x["anomaly_probability"])
+    return sorted_data[:n]
+
 
 # -------------------------
 # GET: Cari berdasarkan failure type / machine type

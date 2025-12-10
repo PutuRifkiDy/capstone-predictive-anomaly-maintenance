@@ -133,7 +133,7 @@ export default function ChatbotContent({ authedUser }) {
               <DialogTrigger asChild>
                 <Button
                   variant="default"
-                  className="bg-[#515DEF] hover:bg-[#515DEF]/90"
+                  className="bg-[#515DEF] hover:bg-[#515DEF]/90 dark:text-white"
                 >
                   Clear All Chat
                 </Button>

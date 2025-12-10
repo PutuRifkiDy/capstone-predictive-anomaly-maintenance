@@ -36,7 +36,11 @@ import {
   deleteMaintenanceTicketById,
   getAllMaintenanceTickets,
 } from "@/utils/api";
-import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
+import {
+  PencilSquareIcon,
+  TrashIcon,
+  UserGroupIcon,
+} from "@heroicons/react/24/solid";
 import {
   flexRender,
   getCoreRowModel,
@@ -145,13 +149,22 @@ export default function MaintenanceTicketIndex({ authedUser, onLogout }) {
         return (
           <div className="flex gap-2 items-center">
             <TooltipProvider delayDuration={200}>
-              <Button asChild variant="blue" className="bg-[#515DEF] text-white">
-                <Link
-                  to={`/assignment-maintenance/tasks/${maintenaceTicket.id}`}
-                >
-                  Assign Maintenance
-                </Link>
-              </Button>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button
+                    asChild
+                    variant="none"
+                    className="bg-[#515DEF]/30 text-[#515DEF] h-fit w-fit"
+                  >
+                    <Link
+                      to={`/assignment-maintenance/tasks/${maintenaceTicket.id}`}
+                    >
+                      <UserGroupIcon className="w-4 h-4" />
+                    </Link>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>Assign Maintenance Tasks</TooltipContent>
+              </Tooltip>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Link
@@ -163,58 +176,54 @@ export default function MaintenanceTicketIndex({ authedUser, onLogout }) {
                 </TooltipTrigger>
                 <TooltipContent>Update Maintenance Tickets</TooltipContent>
               </Tooltip>
-            </TooltipProvider>
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button
-                  variant="none"
-                  className="text-sm bg-red-100 rounded-md p-2 dark:bg-[#515DEF]/10  dark:border-[1px] dark:border-[#515DEF]/30 h-fit"
-                >
-                  <TooltipProvider delayDuration={200}>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="none"
+                        className="text-sm bg-red-100 rounded-md p-2 dark:bg-[#515DEF]/10  dark:border-[1px] dark:border-[#515DEF]/30 h-fit"
+                      >
                         <TrashIcon className="h-4 w-4 text-red-500 dark:text-[#515DEF]" />
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        Delete Maintenance Tickets
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
-                  <DialogTitle className="leading-6">
-                    Are you sure to delete this maintenance ticket?
-                  </DialogTitle>
-                  <DialogDescription>
-                    This action cannot be undone. This will permanently delete
-                  </DialogDescription>
-                </DialogHeader>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent> Delete Maintenance Tickets</TooltipContent>
+                  </Tooltip>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle className="leading-6">
+                      Are you sure to delete this maintenance ticket?
+                    </DialogTitle>
+                    <DialogDescription>
+                      This action cannot be undone. This will permanently delete
+                    </DialogDescription>
+                  </DialogHeader>
 
-                <DialogFooter>
-                  <DialogClose asChild>
-                    <Button variant="outline">Cancel</Button>
-                  </DialogClose>
-                  <Button
-                    variant="destructive"
-                    onClick={async () => {
-                      const response = await deleteMaintenanceTicketById(
-                        maintenaceTicket.id
-                      );
-                      if (response.error) {
-                        toast.error(response.message);
-                      } else {
-                        fetchMaintenanceTicketsData();
-                        toast.success(response.message);
-                      }
-                    }}
-                  >
-                    Confirm
-                  </Button>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
+                  <DialogFooter>
+                    <DialogClose asChild>
+                      <Button variant="outline">Cancel</Button>
+                    </DialogClose>
+                    <Button
+                      variant="destructive"
+                      onClick={async () => {
+                        const response = await deleteMaintenanceTicketById(
+                          maintenaceTicket.id
+                        );
+                        if (response.error) {
+                          toast.error(response.message);
+                        } else {
+                          fetchMaintenanceTicketsData();
+                          toast.success(response.message);
+                        }
+                      }}
+                    >
+                      Confirm
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+            </TooltipProvider>
           </div>
         );
       },
