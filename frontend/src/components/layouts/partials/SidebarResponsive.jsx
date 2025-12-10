@@ -12,6 +12,7 @@ import {
   ChatBubbleLeftRightIcon,
   TicketIcon,
   DocumentArrowDownIcon,
+  Cog8ToothIcon,
 } from "@heroicons/react/24/outline";
 import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/solid";
 import { Link, useLocation } from "react-router";
@@ -46,7 +47,7 @@ export default function SidebarResponsive({ authedUser, onLogout }) {
                 `}
                 >
                   {currentPath.startsWith("/dashboard") && (
-                    <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                    <div className="absolute left-2 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
                   )}
                   <HomeIcon
                     className={`w-6 h-6 ${
@@ -71,7 +72,7 @@ export default function SidebarResponsive({ authedUser, onLogout }) {
                 `}
                 >
                   {currentPath.startsWith("/admin/users") && (
-                    <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                    <div className="absolute left-2 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
                   )}
                   <UserGroupIcon
                     className={`w-6 h-6 ${
@@ -96,10 +97,12 @@ export default function SidebarResponsive({ authedUser, onLogout }) {
                   group flex gap-x-3 rounded-md p-3 text-sm font-medium items-center
                 `}
                 >
-                  {currentPath.startsWith("/maintenance-ticket") ||
-                    (currentPath.startsWith("/assignment-maintenance") && (
-                      <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
-                    ))}
+                  {currentPath.startsWith("/maintenance-ticket") && (
+                    <div className="absolute left-2 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                  )}
+                  {currentPath.startsWith("/assignment-maintenance") && (
+                    <div className="absolute left-2 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                  )}
                   <TicketIcon
                     className={`w-6 h-6 ${
                       currentPath.startsWith("/maintenance-ticket") ||
@@ -113,6 +116,31 @@ export default function SidebarResponsive({ authedUser, onLogout }) {
               </li>
               <li>
                 <Link
+                  to={`/machine-learning/uploads`}
+                  className={`
+                    ${
+                      currentPath.startsWith("/machine-learning/uploads")
+                        ? "bg-[#515DEF]/10 relative text-[#515DEF] pl-5"
+                        : "text-foreground hover:bg-gray-100 dark:hover:bg-[#7E89AC]/30 transition-all duration-300 ease-in-out"
+                    }
+                    group flex gap-x-3 rounded-md p-3 text-sm font-medium items-center
+                  `}
+                >
+                  {currentPath.startsWith("/machine-learning/uploads") && (
+                    <div className="absolute left-2 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                  )}
+                  <Cog8ToothIcon
+                    className={`w-6 h-6 ${
+                      currentPath.startsWith("/machine-learning/uploads")
+                        ? "text-[#515DEF]"
+                        : "text-foreground"
+                    }`}
+                  />
+                  Machine Learning
+                </Link>
+              </li>
+              <li>
+                <Link
                   to={`/chatbot/${authedUser.id}`}
                   className={`
                   ${
@@ -120,11 +148,11 @@ export default function SidebarResponsive({ authedUser, onLogout }) {
                       ? "bg-[#515DEF]/10 relative text-[#515DEF] pl-5"
                       : "text-foreground hover:bg-gray-100 dark:hover:bg-[#7E89AC]/30 transition-all duration-300 ease-in-out"
                   }
-                  group flex gap-x-3 rounded-md pl-5 p-3 text-sm font-medium items-center
+                  group flex gap-x-3 rounded-md p-3 text-sm font-medium items-center
                 `}
                 >
                   {currentPath.startsWith("/chatbot") && (
-                    <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                    <div className="absolute left-2 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
                   )}
                   <ChatBubbleLeftRightIcon
                     className={`w-6 h-6 ${
