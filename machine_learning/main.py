@@ -1,133 +1,75 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
-import joblib
-import numpy as np
-from pytorch_tabnet.tab_model import TabNetClassifier
-import warnings
-warnings.filterwarnings("ignore")
+from typing import Optional
+import json
 
-app = FastAPI()
+app = FastAPI(
+    title="Predictive Maintenance API",
+    description="API untuk membaca hasil prediksi ML dari file JSON.",
+    version="1.0",
+)
 
-# -------------------------------------------------------
-# LOAD TABNET ANOMALY MODEL
-# -------------------------------------------------------
-
-tabnet = TabNetClassifier()
-tabnet.load_model("models/tabnet_anomaly_model.zip.zip")
-
-preproc_tabnet = joblib.load("models/tabnet_anomaly_preproc.joblib")
-meta_tabnet = joblib.load("models/tabnet_anomaly_meta.joblib")
-
-scaler_tabnet = preproc_tabnet["scaler"]
-threshold_anomaly = meta_tabnet["threshold"]
-
-# -------------------------------------------------------
-# LOAD SINGLE XGB MULTICLASS MODEL
-# -------------------------------------------------------
-
-xgb_model = joblib.load("models/failure_type_xgb_ovr_fe_models.joblib") 
-scaler_fe = joblib.load("models/scaler_fe.joblib")
-le_failtype = joblib.load("models/label_encoder_failure_type_ovr_fe.joblib")
-
-# -------------------------------------------------------
-# INPUT SCHEMA
-# -------------------------------------------------------
-
-class InputData(BaseModel):
-    air_temp: float
-    process_temp: float
-    rot_speed: float
-    torque: float
-    tool_wear: float
-    type_encoded: int
-
-# -------------------------------------------------------
-# FEATURE ENGINEERING
-# -------------------------------------------------------
-
-def feature_engineering(data: InputData):
-    d = data
-
-    features = {
-        "Air temperature [K]": d.air_temp,
-        "Process temperature [K]": d.process_temp,
-        "Rotational speed [rpm]": d.rot_speed,
-        "Torque [Nm]": d.torque,
-        "Tool wear [min]": d.tool_wear,
-        "Type_Encoded": d.type_encoded,
-        "Temp_Diff": d.process_temp - d.air_temp,
-        "Torque_Speed_Product": d.torque * d.rot_speed,
-        "Energy": d.torque * d.rot_speed * d.process_temp,
-        "Load_Factor": d.torque / (d.rot_speed + 1),
-        "Temp_Ratio": d.process_temp / (d.air_temp + 1),
-        "Air temperature [K]_Outlier": 0,
-        "Process temperature [K]_Outlier": 0,
-        "Rotational speed [rpm]_Outlier": 0,
-        "Torque [Nm]_Outlier": 0,
-        "Tool wear [min]_Outlier": 0
-    }
-
-    return np.array(list(features.values())).reshape(1, -1)
-
-# -------------------------------------------------------
-# ENDPOINT: FAILURE TYPE (1 MODEL SAJA)
-# -------------------------------------------------------
-
-@app.post("/predict/failure_type")
-def predict_failure_type(data: InputData):
-    X = feature_engineering(data)
-    X_scaled = scaler_fe.transform(X)
-
-    # Multi-class model → predict_proba: [ [p0, p1, p2, ...] ]
-    proba = xgb_model.predict_proba(X_scaled)[0]
-
-    idx = int(np.argmax(proba))
-    class_name = le_failtype.inverse_transform([idx])[0]
-
-    return {
-        "failure_type": class_name,
-        "probabilities": dict(zip(le_failtype.classes_, proba.tolist()))
-    }
+# -------------------------
+# Load JSON saat startup
+# -------------------------
+with open("predictive_maintenance_results.json", "r") as f:
+    MACHINES = json.load(f)
 
 
-# -------------------------------------------------------
-# ENDPOINT: COMBINED PREDICTION
-# -------------------------------------------------------
+# -------------------------
+# GET: Semua mesin
+# -------------------------
+@app.get("/machines/all")
+def get_all():
+    return MACHINES
 
-@app.post("/predict/all")
-def predict_all(data: InputData):
-    # anomaly
-    X_tabnet = np.array([
-        [
-            data.air_temp,
-            data.process_temp,
-            data.rot_speed,
-            data.torque,
-            data.tool_wear,
-            data.type_encoded,
+
+
+
+# -------------------------
+# GET: Mesin risiko tertinggi (top-1)
+# -------------------------
+@app.get("/machines/highest_risk")
+def highest_risk():
+    sorted_data = sorted(MACHINES, key=lambda x: x["anomaly_probability"], reverse=True)
+    return sorted_data[0]
+
+
+# -------------------------
+# GET: Top N mesin paling berisiko
+# -------------------------
+@app.get("/machines/top/{n}")
+def get_top_n(n: int = 5):
+    sorted_data = sorted(MACHINES, key=lambda x: x["anomaly_probability"], reverse=True)
+    return sorted_data[:n]
+
+
+# -------------------------
+# GET: Cari berdasarkan failure type / machine type
+# -------------------------
+@app.get("/machines/search")
+def search(failure_type: Optional[str] = None, machine_type: Optional[str] = None):
+    result = MACHINES
+
+    if failure_type:
+        result = [
+            m
+            for m in result
+            if failure_type.lower() in m["predicted_failure_type"].lower()
         ]
-    ])
-    X_tabnet_scaled = scaler_tabnet.transform(X_tabnet)
-    prob = tabnet.predict_proba(X_tabnet_scaled.astype(np.float32))[0][1]
-    anomaly = int(prob >= threshold_anomaly)
 
-    # failure type
-    ftype = predict_failure_type(data)
+    if machine_type:
+        result = [
+            m for m in result if m["machine_type"].lower() == machine_type.lower()
+        ]
 
-    recommendations = {
-        "No Failure": "Tidak perlu tindakan.",
-        "Heat Dissipation Failure": "Periksa cooling system.",
-        "Power Failure": "Cek sumber daya.",
-        "Overstrain Failure": "Kurangi beban mesin.",
-        "Random Failures": "Lakukan inspeksi menyeluruh.",
-        "Tool Wear Failure": "Ganti atau perbaiki tool."
-    }
+    return result
 
-    return {
-        "anomaly_detection": {
-            "probability": float(prob),
-            "is_anomaly": anomaly
-        },
-        "failure_type_prediction": ftype,
-        "recommendation": recommendations.get(ftype["failure_type"], "Cek manual.")
-    }
+# -------------------------
+# GET: Detail satu mesin
+# -------------------------
+@app.get("/machines/{product_id}")
+def get_machine(product_id: str):
+    for m in MACHINES:
+        if m["product_id"] == product_id:
+            return m
+    return {"error": "Machine not found"}
