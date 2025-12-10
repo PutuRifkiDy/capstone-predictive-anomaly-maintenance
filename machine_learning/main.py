@@ -23,8 +23,6 @@ def get_all():
     return MACHINES
 
 
-
-
 # -------------------------
 # GET: Mesin risiko tertinggi (top-1)
 # -------------------------
@@ -63,6 +61,7 @@ def search(failure_type: Optional[str] = None, machine_type: Optional[str] = Non
         ]
 
     return result
+
 
 # -------------------------
 # GET: Detail satu mesin
