@@ -272,7 +272,7 @@ export default function MaintenanceTicketIndex({ authedUser, onLogout }) {
                 onChange={(event) => {
                   table.getColumn("title")?.setFilterValue(event.target.value);
                 }}
-                className="max-w-sm"
+                className="max-w-sm dark:border-white"
               />
             </div>
 

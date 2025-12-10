@@ -11,6 +11,7 @@ import {
   ChatBubbleLeftRightIcon,
   TicketIcon,
   DocumentArrowDownIcon,
+  Cog8ToothIcon,
 } from "@heroicons/react/24/outline";
 import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/solid";
 import { Link, useLocation } from "react-router";
@@ -108,6 +109,34 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                   </li>
                   <li>
                     <Link
+                      to={`/machine-learning/uploads`}
+                      className={`
+                    ${
+                      currentPath.startsWith("/machine-learning/uploads")
+                        ? "bg-[#515DEF]/10 relative text-[#515DEF] pl-5"
+                        : "text-foreground hover:bg-gray-100 dark:hover:bg-[#7E89AC]/30 transition-all duration-300 ease-in-out"
+                    }
+                    group flex gap-x-3 rounded-md p-3 text-sm font-medium items-center
+                  `}
+                    >
+                      {currentPath.startsWith("/machine-learning/uploads") && (
+                        <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                      )}
+                      {currentPath.startsWith("/machine-learning/uploads") && (
+                        <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                      )}
+                      <Cog8ToothIcon
+                        className={`w-6 h-6 ${
+                          currentPath.startsWith("/machine-learning/uploads")
+                            ? "text-[#515DEF]"
+                            : "text-foreground"
+                        }`}
+                      />
+                      Machine Learning
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
                       to={`/chatbot/${authedUser.id}`}
                       className={`
                     ${
@@ -172,10 +201,7 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                     group flex gap-x-3 rounded-md p-3 text-sm font-medium items-center
                   `}
                     >
-                      {currentPath.startsWith("/maintenance-ticket") && (
-                        <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
-                      )}
-                      {currentPath.startsWith("/assignment-maintenance") && (
+                      {currentPath.startsWith("/task-maintenance") && (
                         <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
                       )}
                       <TicketIcon
@@ -333,12 +359,10 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                   group flex justify-center gap-x-3 rounded-md p-3 text-sm font-medium items-center
                 `}
                     >
-                      {currentPath.startsWith("/maintenance-ticket") && (
-                        <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
-                      )}
-                      {currentPath.startsWith("/assignment-maintenance") && (
-                        <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
-                      )}
+                      {currentPath.startsWith("/maintenance") ||
+                        (currentPath.startsWith("/assignment") && (
+                          <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                        ))}
                       <TicketIcon
                         className={`w-6 h-6 ${
                           currentPath.startsWith("/maintenance") ||
@@ -352,10 +376,38 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                   </li>
                   <li>
                     <Link
+                      to={`/machine-learning/uploads`}
+                      className={`
+                    ${
+                      currentPath.startsWith("/machine-learning/uploads")
+                        ? "bg-[#515DEF]/10 relative text-[#515DEF] pl-5"
+                        : "text-foreground hover:bg-gray-100 dark:hover:bg-[#7E89AC]/30 transition-all duration-300 ease-in-out"
+                    }
+                    group flex gap-x-3 rounded-md p-3 text-sm font-medium justify-center items-center
+                  `}
+                    >
+                      {currentPath.startsWith("/machine-learning/uploads") && (
+                        <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                      )}
+                      {currentPath.startsWith("/machine-learning/uploads") && (
+                        <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                      )}
+                      <Cog8ToothIcon
+                        className={`w-6 h-6 ${
+                          currentPath.startsWith("/machine-learning/uploads")
+                            ? "text-[#515DEF]"
+                            : "text-foreground"
+                        }`}
+                      />
+                      {/* Machine Learning */}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
                       to={`/chatbot/${authedUser.id}`}
                       className={`
                   ${
-                    currentPath.startsWith("/chatbot")
+                    currentPath === "/chatbot"
                       ? "bg-[#515DEF]/10 relative text-[#515DEF]"
                       : "text-foreground hover:bg-gray-100 dark:hover:bg-[#7E89AC]/30 transition-all duration-300 ease-in-out"
                   }
@@ -364,12 +416,12 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                   } p-3 text-sm font-medium items-center justify-center
                 `}
                     >
-                      {currentPath.startsWith("/chatbot") && (
+                      {currentPath === "/chatbot" && (
                         <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
                       )}
                       <ChatBubbleLeftRightIcon
                         className={`w-6 h-6 ${
-                          currentPath.startsWith("/chatbot")
+                          currentPath === "/chatbot"
                             ? "text-[#515DEF]"
                             : "text-foreground"
                         }`}
@@ -440,7 +492,7 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                       to={`/chatbot/${authedUser.id}`}
                       className={`
                   ${
-                    currentPath.startsWith("/chatbot")
+                    currentPath === "/chatbot"
                       ? "bg-[#515DEF]/10 relative text-[#515DEF]"
                       : "text-foreground hover:bg-gray-100 dark:hover:bg-[#7E89AC]/30 transition-all duration-300 ease-in-out"
                   }
@@ -449,12 +501,12 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                   } p-3 text-sm font-medium items-center justify-center
                 `}
                     >
-                      {currentPath.startsWith("/chatbot") && (
+                      {currentPath === "/chatbot" && (
                         <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
                       )}
                       <ChatBubbleLeftRightIcon
                         className={`w-6 h-6 ${
-                          currentPath.startsWith("/chatbot")
+                          currentPath === "/chatbot"
                             ? "text-[#515DEF]"
                             : "text-foreground"
                         }`}

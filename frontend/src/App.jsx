@@ -15,6 +15,7 @@ import AssignmentMaintenanceIndex from "./pages/app/assignmaintenancetasks/Assig
 import AssignmentMaintenanceCreate from "./pages/app/assignmaintenancetasks/AssignmentMaintenanceCreate";
 import AssignmentEngineerIndex from "./pages/app/assignmaintenancetasksengineer/AssignmentEngineerIndex";
 import AssignmentEngineerUpdate from "./pages/app/assignmaintenancetasksengineer/AssignmentEngineerUpdate";
+import MachineLearningIndex from "./pages/app/machinelearning/MachineLearningIndex";
 
 export default function App() {
   const [authedUser, setAuthedUser] = useState(null);
@@ -146,6 +147,10 @@ export default function App() {
       <Route
         path="/chatbot/:id"
         element={<ChatbotIndex authedUser={authedUser} onLogout={onLogout} />}
+      />
+      <Route
+        path="/machine-learning/uploads"
+        element={<MachineLearningIndex authedUser={authedUser} onLogout={onLogout}/>}
       />
     </Routes>
   );

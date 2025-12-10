@@ -361,7 +361,7 @@ export default function ChatbotContent({ authedUser }) {
         <div className="relative flex gap-3">
           <Input
             type="text"
-            className="focus-visible:ring-0 py-6 rounded-full pl-5"
+            className="focus-visible:ring-0 py-6 rounded-full pl-5 dark:border-white"
             value={inputMessage}
             onChange={onInputMessageChange}
             placeholder="Checking your machine here..."
