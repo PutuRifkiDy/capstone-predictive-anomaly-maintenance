@@ -1,4 +1,5 @@
 const BASE_URL = "http://localhost:3000";
+const ML_BASE_URL = "https://overrashly-unnationalized-chasidy.ngrok-free.dev";
 
 function getAccessToken() {
   return localStorage.getItem("accessToken");
@@ -247,113 +248,6 @@ async function getUserById(id) {
   }
 }
 
-async function chatCopilot({ message, userId }) {
-  try {
-    const response = await fetchWithToken(`${BASE_URL}/chatbot`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ message, userId }),
-    });
-
-    const responseJson = await response.json();
-
-    if (responseJson.status == "success") {
-      return {
-        error: false,
-        data: responseJson.agentResponse,
-      };
-    }
-    return {
-      error: true,
-      message: responseJson.error,
-      data: null,
-    };
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-async function getChatLogsCopilotByUserId(userId) {
-  try {
-    const response = await fetchWithToken(`${BASE_URL}/chatbot/${userId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const responseJson = await response.json();
-
-    if (responseJson.status == "success") {
-      return {
-        error: false,
-        message: responseJson.message,
-        data: responseJson.chatLogs,
-      };
-    }
-    return {
-      error: true,
-      message: responseJson.error,
-      data: null,
-    };
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-async function deleteAllChatLogsByUserId(userId) {
-  try {
-    const response = await fetchWithToken(`${BASE_URL}/chatbot/logs/${userId}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const responseJson = await response.json();
-
-    if (responseJson.status == "success") {
-      return {
-        error: false,
-        message: responseJson.message,
-      };
-    }
-    return {
-      error: true,
-      message: responseJson.error,
-    };
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-async function deleteChatLogById(id) {
-  try {
-    const response = await fetchWithToken(`${BASE_URL}/chatbot/log/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const responseJson = await response.json();
-
-    if (responseJson.status == "success") {
-      return {
-        error: false,
-        message: responseJson.message,
-      };
-    }
-    return {
-      error: true,
-      message: responseJson.error,
-    };
-  } catch (error) {
-    console.log(error);
-  }
-}
 
 async function getAllMaintenanceTickets() {
   try {
@@ -707,6 +601,185 @@ async function getAssignedEngineerTicketStatusById(id) {
   }
 }
 
+async function chatCopilot({ message, userId }) {
+  try {
+    const response = await fetchWithToken(`${BASE_URL}/chatbot`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message, userId }),
+    });
+
+    const responseJson = await response.json();
+
+    if (responseJson.status == "success") {
+      return {
+        error: false,
+        data: responseJson.agentResponse,
+      };
+    }
+    return {
+      error: true,
+      message: responseJson.error,
+      data: null,
+    };
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function getChatLogsCopilotByUserId(userId) {
+  try {
+    const response = await fetchWithToken(`${BASE_URL}/chatbot/${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const responseJson = await response.json();
+
+    if (responseJson.status == "success") {
+      return {
+        error: false,
+        message: responseJson.message,
+        data: responseJson.chatLogs,
+      };
+    }
+    return {
+      error: true,
+      message: responseJson.error,
+      data: null,
+    };
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function deleteAllChatLogsByUserId(userId) {
+  try {
+    const response = await fetchWithToken(`${BASE_URL}/chatbot/logs/${userId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const responseJson = await response.json();
+
+    if (responseJson.status == "success") {
+      return {
+        error: false,
+        message: responseJson.message,
+      };
+    }
+    return {
+      error: true,
+      message: responseJson.error,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function deleteChatLogById(id) {
+  try {
+    const response = await fetchWithToken(`${BASE_URL}/chatbot/log/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const responseJson = await response.json();
+
+    if (responseJson.status == "success") {
+      return {
+        error: false,
+        message: responseJson.message,
+      };
+    }
+    return {
+      error: true,
+      message: responseJson.error,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function uploadDataset(file) {
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const response = await fetch(`${ML_BASE_URL}/dataset/upload`, {
+      method: "POST",
+      body: formData,
+      headers: {
+        "ngrok-skip-browser-warning": "true",
+      },
+    });
+
+    const responseJson = await response.json();
+
+    if (responseJson.status === "success") {
+      return {
+        error: false,
+        message: responseJson.message,
+        path: responseJson.path
+      };
+    }
+
+    return {
+      error: true,
+      message: responseJson.detail || "Upload failed",
+    };
+
+  } catch (error) {
+    console.error("Upload Error:", error);
+    return {
+      error: true,
+      message: "Network error or server unreachable",
+    };
+  }
+}
+
+async function runMachineLearningModel() {
+  try {
+    const response = await fetch(`${ML_BASE_URL}/model/run`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "true",
+      },
+    });
+
+    const responseJson = await response.json();
+
+    if (responseJson.status === "success") {
+      return {
+        error: false,
+        message: responseJson.message,
+        data: responseJson.processed_records,
+      };
+    }
+
+    return {
+      error: true,
+      message: responseJson.detail || "Model execution failed",
+    };
+
+  } catch (error) {
+    console.error("Model Run Error:", error);
+    return {
+      error: true,
+      message: "Network error or server unreachable",
+    };
+  }
+}
+
 export {
   getAccessToken,
   putAccessToken,
@@ -720,10 +793,6 @@ export {
   editUser,
   getUsers,
   getUserById,
-  chatCopilot,
-  getChatLogsCopilotByUserId,
-  deleteAllChatLogsByUserId,
-  deleteChatLogById,
   getMaintenanceTicketById,
   createMaintenanceTicket,
   deleteMaintenanceTicketById,
@@ -736,5 +805,11 @@ export {
   deleteAssignmentTicketById,
   getAssignedEngineersTickets,
   updateAssignedEngineersTickets,
-  getAssignedEngineerTicketStatusById
+  getAssignedEngineerTicketStatusById,
+  chatCopilot,
+  getChatLogsCopilotByUserId,
+  deleteAllChatLogsByUserId,
+  deleteChatLogById,
+  uploadDataset,
+  runMachineLearningModel
 };

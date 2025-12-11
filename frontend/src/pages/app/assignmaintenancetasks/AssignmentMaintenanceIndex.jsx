@@ -172,7 +172,7 @@ export default function AssignmentMaintenanceIndex({ authedUser, onLogout }) {
                     variant="destructive"
                     onClick={async () => {
                       const response = await deleteAssignmentTicketById(
-                        assignmentMaintenanceId.id_assignment_maitenance_task
+                        assignmentMaintenanceId.id_assignment_maintenance_task
                       );
                       if (response.error) {
                         toast.error(response.message);
