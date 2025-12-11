@@ -112,6 +112,21 @@ export default function ChatbotContent({ authedUser }) {
       if (response.error) {
         toast.error(response.message);
       }
+
+      setChatHistory((prev) => {
+        const withoutTempLoading = prev.filter(
+          (msg) => msg.id !== "temp-loading"
+        );
+
+        const agentReal = {
+          id: response.data.id,
+          sender_type: "agent",
+          message: response.data.message,
+          loading: false,
+        };
+
+        return [...withoutTempLoading, agentReal];
+      });
     } catch (error) {
       console.error(error);
     }
@@ -247,9 +262,8 @@ export default function ChatbotContent({ authedUser }) {
                             message.sender_type == "agent"
                               ? "text-gray-800 dark:text-white"
                               : "text-white"
-                          } font-medium flex items-center gap-2 `}
+                          } font-medium flex items-center gap-3 `}
                         >
-                          
                           {message.message}
                           <span className="w-2 h-2 bg-[#515DEF] rounded-full animate-bounce flex items-center [animation-delay:0.3s]"></span>
                           <span className="w-2 h-2 bg-[#515DEF] rounded-full animate-bounce flex items-center[animation-delay:0.2s]"></span>
