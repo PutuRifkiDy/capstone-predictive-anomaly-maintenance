@@ -12,6 +12,24 @@ import {
   getAllMaintenanceTickets,
 } from "@/utils/api";
 import { Link } from "react-router";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Pie } from "react-chartjs-2";
+
+ChartJS.register(ArcElement, Tooltip, Legend);
+
+// export const options = {
+//   responsive: true,
+//   maintainAspectRatio: false,
+//   plugins: {
+//     legend: {
+//       position: "top",
+//     },
+//     title: {
+//       display: true,
+//       text: "Statistic Maintenance Ticket",
+//     },
+//   },
+// };
 
 export default function Dashboard({ authedUser, onLogout }) {
   const [maintenanceTickets, setMaintenanceTickets] = useState([]);
@@ -80,6 +98,45 @@ export default function Dashboard({ authedUser, onLogout }) {
     fetchCountMaintenanceTicketNeedMaintenanceData();
     fetchCountMaintenanceTicketNeedMaintenanceCompletedData();
   }, []);
+
+  const needMaintenance = maintenanceTickets.filter(
+    (ticket) => ticket.status == "need_maintenance"
+  ).length;
+  const inProgress = maintenanceTickets.filter(
+    (ticket) => ticket.status == "in_progress"
+  ).length;
+  const completed = maintenanceTickets.filter(
+    (ticket) => ticket.status == "completed"
+  ).length;
+
+  const labels = ["Need Maintenance", "In Progress", "Completed"];
+
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: "Sum of Maintenance Ticket",
+        data: [needMaintenance, inProgress, completed],
+        backgroundColor: [
+          "rgba(255, 99, 132, 0.2)",
+          "rgba(54, 162, 235, 0.2)",
+          "rgba(255, 206, 86, 0.2)",
+          "rgba(75, 192, 192, 0.2)",
+          "rgba(153, 102, 255, 0.2)",
+          "rgba(255, 159, 64, 0.2)",
+        ],
+        borderColor: [
+          "rgba(255, 99, 132, 1)",
+          "rgba(54, 162, 235, 1)",
+          "rgba(255, 206, 86, 1)",
+          "rgba(75, 192, 192, 1)",
+          "rgba(153, 102, 255, 1)",
+          "rgba(255, 159, 64, 1)",
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
   return (
     <AppLayout authedUser={authedUser} onLogout={onLogout}>
       <div className="flex flex-col xl:pr-80">
@@ -126,12 +183,15 @@ export default function Dashboard({ authedUser, onLogout }) {
               </p>
             </div>
           </div>
-
-          {/* grafik */}
+          <div className="lg:col-span-3 md:col-span-2 col-span-1 bg-white dark:bg-[#081028] border-gray-200 border-[1px] rounded-[15px] p-6 shadow-sm mt-5 flex">
+            <div className="h-[300px] w-full flex items-center justify-center">
+              <Pie data={data} />
+            </div>
+          </div>
         </div>
 
-        <aside className="fixed top-[5.5rem] inset-y-0 right-0 hidden w-[20rem] overflow-y-auto border-l border-gray-200 px-4 lg:px-8 xl:block">
-          <div className="rounded-md p-5 mt-5">
+        <aside className="fixed top-[0rem] inset-y-0 right-0 hidden w-[20rem] overflow-y-auto border-l border-gray-200 px-4 lg:px-8 xl:block z-0">
+          <div className="rounded-md p-5 mt-24">
             <p className="text-xl font-medium">Maintenance Tickets</p>
             <p className="text-[12px] text-gray-500 italic">
               *assign those tickets that need maintenance to engineers

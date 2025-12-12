@@ -130,7 +130,7 @@ export default function AppLayout({ children, authedUser, onLogout }) {
           } transition-all duration-300 ease-in-out relative`}
         >
           {/* header dekstop */}
-          <div className="py-5 lg:flex hidden items-center justify-between border-b border-gray-200 dark:border-gray-500">
+          <div className="py-5 lg:flex hidden items-center justify-between border-b border-gray-200 dark:border-gray-500 bg-white z-50 relative">
             <div className="flex items-center gap-3">
               <button
                 className="border-0 hover:bg-gray-200 dark:hover:bg-[#7E89AC]/20 p-2 sm:ml-2 lg:ml-4 w-fit rounded-lg transition-all duration-300 ease-in-out group"
