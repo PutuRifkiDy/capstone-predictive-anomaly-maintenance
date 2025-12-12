@@ -8,10 +8,13 @@ const { maintenanceTicketSchema, maintenanceTicketUpdateSchame } = require('../v
 const router = express.Router();
 
 router.get('/', authenticate, authorizeRoles('admin'), maintenanceTicketController.getAllMaintenance);
-router.get('/:userId', authenticate, authorizeRoles('admin'), maintenanceTicketController.getAllMaintenanceTickets);
+// router.get('/:userId', authenticate, authorizeRoles('admin'), maintenanceTicketController.getAllMaintenanceTickets);
 router.get('/single/:id', authenticate, authorizeRoles('admin'), maintenanceTicketController.getMaintenanceTicketById);
 router.post('/:userId', authenticate, authorizeRoles('admin'), validate(maintenanceTicketSchema, 'body'), maintenanceTicketController.createMaintenanceTicket);
 router.delete('/:id', authenticate, authorizeRoles('admin'), maintenanceTicketController.deleteMaintenanceTicketById);
 router.patch('/:id', authenticate, authorizeRoles('admin'), validate(maintenanceTicketUpdateSchame, 'body'), maintenanceTicketController.updateMaintenanceTicketById);
+router.get('/need-maintenance/count', authenticate, authorizeRoles('admin'), maintenanceTicketController.countMaintenanceTicketNeedMaintenance);
+router.get('/completed/count', authenticate, authorizeRoles('admin'), maintenanceTicketController.countMaintenanceTicketCompleted);
+
 
 module.exports = router;

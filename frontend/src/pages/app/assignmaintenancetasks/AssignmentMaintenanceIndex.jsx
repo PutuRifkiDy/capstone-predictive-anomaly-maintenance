@@ -229,7 +229,7 @@ export default function AssignmentMaintenanceIndex({ authedUser, onLogout }) {
           </Link>
         </div>
       </div>
-      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10 border-[1px] mt-5 p-5 rounded-md">
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10 border-[1px] dark:border-gray-200/30 mt-5 p-5 rounded-md">
         <div className="flex flex-col gap-2">
           <p className="text-[16px] font-medium text-gray-500">Title</p>
           <p>{maintenaceTicket?.title}</p>
@@ -273,11 +273,11 @@ export default function AssignmentMaintenanceIndex({ authedUser, onLogout }) {
                 onChange={(event) => {
                   table.getColumn("name")?.setFilterValue(event.target.value);
                 }}
-                className="max-w-sm"
+                className="max-w-sm dark:border-gray-200/30"
               />
             </div>
 
-            <div className="overflow-hidden rounded-md border">
+            <div className="overflow-hidden rounded-md border dark:border-gray-200/30">
               <Table>
                 <TableHeader>
                   {table.getHeaderGroups().map((headerGroup) => (

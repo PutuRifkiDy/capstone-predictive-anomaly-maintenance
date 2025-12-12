@@ -248,6 +248,31 @@ async function getUserById(id) {
   }
 }
 
+async function countUserEngineer() {
+  try {
+    const response = await fetchWithToken(`${BASE_URL}/users/engineer/count`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+
+    const responseJson = await response.json();
+
+    if (responseJson.status == "success") {
+      return {
+        error: false,
+        data: responseJson.count,
+      };
+    }
+    return {
+      error: true,
+      data: null,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 async function getAllMaintenanceTickets() {
   try {
@@ -276,32 +301,32 @@ async function getAllMaintenanceTickets() {
   }
 }
 
-async function getMaintenanceTicketById(userId) {
-  try {
-    const response = await fetchWithToken(`${BASE_URL}/maintenance-tickets/${userId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+// async function getMaintenanceTicketById(userId) {
+//   try {
+//     const response = await fetchWithToken(`${BASE_URL}/maintenance-tickets/${userId}`, {
+//       method: "GET",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//     });
 
-    const responseJson = await response.json();
+//     const responseJson = await response.json();
 
-    if (responseJson.status == "success") {
-      return {
-        error: false,
-        data: responseJson.maintenanceTickets,
-      };
-    }
-    return {
-      error: true,
-      message: responseJson.error,
-      data: null,
-    };
-  } catch (error) {
-    console.log(error);
-  }
-}
+//     if (responseJson.status == "success") {
+//       return {
+//         error: false,
+//         data: responseJson.maintenanceTickets,
+//       };
+//     }
+//     return {
+//       error: true,
+//       message: responseJson.error,
+//       data: null,
+//     };
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
 
 async function createMaintenanceTicket({ title, description, status, userId }) {
   try {
@@ -356,6 +381,58 @@ async function deleteMaintenanceTicketById(id) {
   } catch (error) {
     console.log(error);
   }
+}
+
+async function countMaintenanceTicketNeedMaintenance() {
+    try {
+      const response = await fetchWithToken(`${BASE_URL}/maintenance-tickets/need-maintenance/count`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      });
+  
+      const responseJson = await response.json();
+  
+      if (responseJson.status == "success") {
+        return {
+          error: false,
+          data: responseJson.count,
+        };
+      }
+      return {
+        error: true,
+        data: null,
+      };
+    } catch (error) {
+      console.log(error);
+    }
+}
+
+async function countMaintenanceTicketCompleted() {
+    try {
+      const response = await fetchWithToken(`${BASE_URL}/maintenance-tickets/completed/count`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      });
+  
+      const responseJson = await response.json();
+  
+      if (responseJson.status == "success") {
+        return {
+          error: false,
+          data: responseJson.count,
+        };
+      }
+      return {
+        error: true,
+        data: null,
+      };
+    } catch (error) {
+      console.log(error);
+    }
 }
 
 async function getMaintenanceById(id) {
@@ -793,15 +870,17 @@ export {
   editUser,
   getUsers,
   getUserById,
-  getMaintenanceTicketById,
-  createMaintenanceTicket,
-  deleteMaintenanceTicketById,
-  updateMaintenanceTicketById,
+  countUserEngineer,
+  getAllMaintenanceTickets,
   getMaintenanceById,
+  createMaintenanceTicket,
+  updateMaintenanceTicketById,
+  deleteMaintenanceTicketById,
+  countMaintenanceTicketNeedMaintenance,
+  countMaintenanceTicketCompleted,
   getAllAssignsAndUsers,
   getAssignedUsers,
   createAssignmentTicket,
-  getAllMaintenanceTickets,
   deleteAssignmentTicketById,
   getAssignedEngineersTickets,
   updateAssignedEngineersTickets,

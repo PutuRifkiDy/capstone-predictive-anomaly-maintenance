@@ -119,9 +119,9 @@ export default function ChatbotContent({ authedUser }) {
         );
 
         const agentReal = {
-          id: response.data.id,
+          id: response.data?.id,
           sender_type: "agent",
-          message: response.data.message,
+          message: response.data?.message,
           loading: false,
         };
 
@@ -196,7 +196,7 @@ export default function ChatbotContent({ authedUser }) {
                   Clear All Chat
                 </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
+              <DialogContent className="sm:max-w-[425px] dark:bg-[#081028]">
                 <DialogHeader>
                   <DialogTitle>
                     Are you sure to delete all of chat logs?
@@ -207,7 +207,7 @@ export default function ChatbotContent({ authedUser }) {
                 </DialogHeader>
                 <DialogFooter>
                   <DialogClose asChild>
-                    <Button variant="outline">Cancel</Button>
+                    <Button variant="outline" className="dark:bg-[#081028]">Cancel</Button>
                   </DialogClose>
                   <Button
                     variant="destructive"
@@ -326,7 +326,7 @@ export default function ChatbotContent({ authedUser }) {
                               <DialogTrigger asChild className="cursor-pointer">
                                 <TrashIcon className="w-6 h-6 text-red-500" />
                               </DialogTrigger>
-                              <DialogContent className="sm:max-w-[425px]">
+                              <DialogContent className="sm:max-w-[425px] dark:bg-[#081028]">
                                 <DialogHeader>
                                   <DialogTitle>
                                     Are you sure to delete this chat logs?
@@ -338,7 +338,7 @@ export default function ChatbotContent({ authedUser }) {
                                 </DialogHeader>
                                 <DialogFooter>
                                   <DialogClose asChild>
-                                    <Button variant="outline">Cancel</Button>
+                                    <Button variant="outline" className="dark:bg-[#081028]">Cancel</Button>
                                   </DialogClose>
                                   <Button
                                     variant="destructive"

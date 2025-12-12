@@ -359,10 +359,12 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                   group flex justify-center gap-x-3 rounded-md p-3 text-sm font-medium items-center
                 `}
                     >
-                      {currentPath.startsWith("/maintenance") ||
-                        (currentPath.startsWith("/assignment") && (
-                          <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
-                        ))}
+                      {currentPath.startsWith("/assignment") && (
+                        <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                      )}
+                      {currentPath.startsWith("/maintenance") && (
+                        <div className="absolute left-0 inset-y-0 bg-[#515DEF] w-1 rounded-l-[10px]" />
+                      )}
                       <TicketIcon
                         className={`w-6 h-6 ${
                           currentPath.startsWith("/maintenance") ||

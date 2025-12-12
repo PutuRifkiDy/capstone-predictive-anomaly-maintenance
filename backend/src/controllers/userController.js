@@ -85,6 +85,18 @@ class UserController {
       next(error);
     }
   }
+
+  async countUserEngineer(req, res, next) {
+    try {
+      const count = await userService.countUserEngineer();
+      res.json({
+        status: 'success',
+        count,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = new UserController();

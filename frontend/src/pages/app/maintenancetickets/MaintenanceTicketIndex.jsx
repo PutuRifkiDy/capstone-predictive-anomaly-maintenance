@@ -178,19 +178,21 @@ export default function MaintenanceTicketIndex({ authedUser, onLogout }) {
               </Tooltip>
               <Dialog>
                 <DialogTrigger asChild>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        variant="none"
-                        className="text-sm bg-red-100 rounded-md p-2 dark:bg-[#515DEF]/10  dark:border-[1px] dark:border-[#515DEF]/30 h-fit"
-                      >
-                        <TrashIcon className="h-4 w-4 text-red-500 dark:text-[#515DEF]" />
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent> Delete Maintenance Tickets</TooltipContent>
-                  </Tooltip>
+                  <Button
+                    variant="none"
+                    className="text-sm bg-red-100 rounded-md p-2 dark:bg-[#515DEF]/10  dark:border-[1px] dark:border-[#515DEF]/30 h-fit"
+                  >
+                    <TooltipProvider delayDuration={200}>
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <TrashIcon className="h-4 w-4 text-red-500 dark:text-[#515DEF]" />
+                        </TooltipTrigger>
+                        <TooltipContent>Delete Maintenance Ticket</TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </Button>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
+                <DialogContent className="sm:max-w-[425px] dark:bg-[#081028]">
                   <DialogHeader>
                     <DialogTitle className="leading-6">
                       Are you sure to delete this maintenance ticket?
@@ -202,7 +204,7 @@ export default function MaintenanceTicketIndex({ authedUser, onLogout }) {
 
                   <DialogFooter>
                     <DialogClose asChild>
-                      <Button variant="outline">Cancel</Button>
+                      <Button variant="outline" className="dark:bg-[#081028]">Cancel</Button>
                     </DialogClose>
                     <Button
                       variant="destructive"
@@ -272,7 +274,7 @@ export default function MaintenanceTicketIndex({ authedUser, onLogout }) {
                 onChange={(event) => {
                   table.getColumn("title")?.setFilterValue(event.target.value);
                 }}
-                className="max-w-sm dark:border-white"
+                className="max-w-sm dark:border-gray-200/30"
               />
             </div>
 

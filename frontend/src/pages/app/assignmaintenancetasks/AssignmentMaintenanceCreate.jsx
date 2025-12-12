@@ -102,7 +102,7 @@ export default function AssignmentMaintenanceCreate({ authedUser, onLogout }) {
         Assignment Maintenance Ticket
       </p>
       <form className="flex flex-col gap-5 mt-5" onSubmit={onSubmitHandler}>
-        <div className="rounded-xl border-[1px] border-gray-200">
+        <div className="rounded-xl border-[1px] border-gray-200 dark:border-gray-200/30">
           <div className="flex md:flex-row flex-col-reverse items-center justify-between lg:px-10 md:px-10 px-3 py-5 md:gap-0 gap-5">
             <p className="font-medium text-[16px]">Assign Maintenance Ticket</p>
             <Link
@@ -113,7 +113,7 @@ export default function AssignmentMaintenanceCreate({ authedUser, onLogout }) {
               Back to Assign Maintenance Ticket
             </Link>
           </div>
-          <div className="w-full h-[1px] bg-gray-200" />
+          <div className="w-full h-[1px] bg-gray-200 dark:bg-gray-200/30" />
 
           <div className="flex flex-col gap-2 px-3 md:px-10 mb-5 mt-5">
             <label className="text-[14px] text-[#202224] dark:text-gray-400">

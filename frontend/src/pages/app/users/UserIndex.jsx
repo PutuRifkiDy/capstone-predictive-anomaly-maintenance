@@ -224,7 +224,7 @@ export default function UserIndex({ authedUser, onLogout }) {
                 onChange={(event) => {
                   table.getColumn("email")?.setFilterValue(event.target.value);
                 }}
-                className="max-w-sm"
+                className="max-w-sm dark:border-gray-200/30"
               />
             </div>
 

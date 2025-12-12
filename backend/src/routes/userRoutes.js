@@ -18,6 +18,7 @@ router.get('/:id', validate(userIdSchema, 'params'), authenticate, authorizeRole
 
 router.patch('/:id', validate(userIdSchema, 'params'), validate(updateUserSchema, 'body'), authenticate, authorizeRoles('admin'), userController.updateUserById);
 router.delete('/:id', validate(userIdSchema, 'params'), authenticate, authorizeRoles('admin'), userController.deleteUserById);
+router.get('/engineer/count', authenticate, authorizeRoles('admin'), userController.countUserEngineer);
 
 
 module.exports = router;

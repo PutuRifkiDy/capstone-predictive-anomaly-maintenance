@@ -83,7 +83,7 @@ export default function UserUpdate({ authedUser, onLogout }) {
         Create User
       </p>
       <form className="flex flex-col gap-5 mt-5" onSubmit={onSubmitHandler}>
-        <div className="rounded-xl border-[1px] border-gray-200">
+        <div className="rounded-xl border-[1px] border-gray-200 dark:border-gray-200/30">
           <div className="flex md:flex-row flex-col-reverse items-center justify-between lg:px-10 md:px-10 px-3 py-5 md:gap-0 gap-5">
             <p className="font-medium text-[16px]">User Information</p>
             <Link
@@ -94,7 +94,7 @@ export default function UserUpdate({ authedUser, onLogout }) {
               Back to User
             </Link>
           </div>
-          <div className="w-full h-[1px] bg-gray-200" />
+          <div className="w-full h-[1px] bg-gray-200 dark:bg-gray-200/30" />
           <div className="flex flex-col gap-2 md:px-10 px-3 mb-3  mt-5">
             <label
               htmlFor="name"
@@ -106,7 +106,7 @@ export default function UserUpdate({ authedUser, onLogout }) {
             <input
               name="name"
               placeholder="Input your name here..."
-              className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-gray-400 dark:bg-[#081028]"
+              className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-gray-400 dark:bg-[#081028] dark:border-gray-200/30"
               value={name}
               onChange={onNameChange}
             />
@@ -122,7 +122,7 @@ export default function UserUpdate({ authedUser, onLogout }) {
             <input
               name="Email"
               placeholder="Input your email here..."
-              className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-gray-400 dark:bg-[#081028]"
+              className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-gray-400 dark:bg-[#081028] dark:border-gray-200/30"
               value={email}
               onChange={onEmailChange}
             />
@@ -138,7 +138,7 @@ export default function UserUpdate({ authedUser, onLogout }) {
             <input
               name="phone_number"
               placeholder="Input your phone number here..."
-              className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-gray-400 dark:bg-[#081028]"
+              className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-gray-400 dark:bg-[#081028] dark:border-gray-200/30"
               value={phoneNumber}
               onChange={onPhoneNumberChange}
             />
@@ -154,7 +154,7 @@ export default function UserUpdate({ authedUser, onLogout }) {
             <input
               name="password"
               placeholder="Input your password here..."
-              className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-gray-400 dark:bg-[#081028]"
+              className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-gray-400 dark:bg-[#081028] dark:border-gray-200/30"
               value={password ? "" : password}
               onChange={onPasswordChange}
             />

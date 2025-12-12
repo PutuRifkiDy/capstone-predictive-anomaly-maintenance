@@ -50,6 +50,11 @@ class UserService {
     }
   }
 
+  async countUserEngineer() {
+    const result = await db.query('SELECT COUNT(*) FROM users WHERE role = $1', ['user']);
+    return result.rows[0].count;
+  }
+
 }
 
 module.exports = new UserService();

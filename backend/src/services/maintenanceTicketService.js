@@ -11,13 +11,13 @@ class MaintenanceTicketService {
     return result.rows;
   }
 
-  async getAllMaintenanceTicketsByUserId(userId) {
-    const result = await db.query('SELECT maintenance_tickets.*, users.name, users.role FROM maintenance_tickets INNER JOIN users ON maintenance_tickets.user_id = users.id WHERE maintenance_tickets.user_id = $1', [userId]);
-    if (!result.rows) {
-      throw new Error('No maintenance tickets found');
-    }
-    return result.rows;
-  }
+  // async getAllMaintenanceTicketsByUserId(userId) {
+  //   const result = await db.query('SELECT maintenance_tickets.*, users.name, users.role FROM maintenance_tickets INNER JOIN users ON maintenance_tickets.user_id = users.id WHERE maintenance_tickets.user_id = $1', [userId]);
+  //   if (!result.rows) {
+  //     throw new Error('No maintenance tickets found');
+  //   }
+  //   return result.rows;
+  // }
 
   async createMaintenanceTicket(userId, { title, description, status }) {
     const created_at = new Date().toISOString();
@@ -51,6 +51,16 @@ class MaintenanceTicketService {
     if (!result.rows.length) {
       throw new Error('Maintenance ticket not found');
     }
+  }
+
+  async countMaintenanceTicketNeedMaintenance() {
+    const result = await db.query('SELECT COUNT(*) FROM maintenance_tickets WHERE status = $1', ['need_maintenance']);
+    return result.rows[0].count;
+  }
+
+  async countMaintenanceTicketCompleted() {
+    const result = await db.query('SELECT COUNT(*) FROM maintenance_tickets WHERE status = $1', ['completed']);
+    return result.rows[0].count;
   }
 }
 

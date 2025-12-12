@@ -53,6 +53,7 @@ export default function MachineLearningIndex({ authedUser, onLogout }) {
     setIsLoading(false);
     if (!result.error) {
       toast.success("Data is uploaded successfully, run the model now!");
+      setFile(null);
     } else {
       toast.error("Failed to upload file");
     }
@@ -68,9 +69,8 @@ export default function MachineLearningIndex({ authedUser, onLogout }) {
     setIsLoading(false);
     if (!result.error) {
       toast.success(
-        "Complete!, data successfully processed & prediction updated."
+        "Complete!, data successfully process & prediction updated."
       );
-      setFile(null);
     } else {
       toast.error("Failed to run model.");
     }
@@ -82,11 +82,11 @@ export default function MachineLearningIndex({ authedUser, onLogout }) {
         <p className="font-medium text-[32px] tracking-[-0.11px] text-[#000000] dark:text-white">
           Upload File
         </p>
-        <form className="flex flex-col md:flex-row border-[1px] border-gray-200 rounded-[15px] w-full md:h-[533px] py-[65px] px-[47px] gap-10 mt-10 shadow-sm">
+        <form className="flex flex-col md:flex-row border-[1px] border-gray-200 dark:border-gray-500 rounded-[15px] w-full md:h-[533px] py-[65px] px-[47px] gap-10 mt-10 shadow-sm">
           <div
             className={`border-2 border-dashed rounded-[8px] w-full md:w-1/2 flex flex-col items-center justify-center text-center p-10 transition
               ${
-                isDragging ? "border-[#515DEF] bg-blue-50" : "border-gray-300"
+                isDragging ? "border-[#515DEF] bg-blue-50 dark:bg-gray-100/10" : "border-gray-300"
               }`}
             onDrop={handleDrop}
             onDragOver={handleDragOver}
@@ -119,7 +119,7 @@ export default function MachineLearningIndex({ authedUser, onLogout }) {
             <div className="flex flex-col gap-[29px]">
               <p className="font-medium text-xl">Uploaded file</p>
               {file ? (
-                <div className="border-[1px] rounded-[8px] flex  items-center py-[14px] px-[15px] justify-between dark:border-white">
+                <div className="border-[1px] rounded-[8px] flex  items-center py-[14px] px-[15px] justify-between dark:border-gray-500 border-gray-200">
                   <div className="flex flex-row gap-5 items-center">
                     <img
                       src="/csv_icon.png"
@@ -165,11 +165,16 @@ export default function MachineLearningIndex({ authedUser, onLogout }) {
                   ${
                     isLoading
                       ? "border-gray-300 text-gray-400 cursor-not-allowed"
-                      : "border-[#515DEF] text-[#515DEF] hover:bg-blue-50"
+                      : "border-[#515DEF] text-[#515DEF] hover:bg-blue-50 dark:hover:bg-gray-200/5"
                   }`}
               >
                 {isLoading ? "Processing..." : "Run Prediction Model"}
               </button>
+              <p className="text-gray-400 italic text-[13px]">
+                *Upload csv file only and run model prediction first to get
+                prediction result after that you can use chatbot to get summary
+                of the data
+              </p>
             </div>
           </div>
         </form>

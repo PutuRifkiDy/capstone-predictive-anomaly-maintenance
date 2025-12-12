@@ -80,7 +80,7 @@ export default function MaintenanceTicketUpdate({ authedUser, onLogout }) {
         Update Maintenance Ticket
       </p>
       <form className="flex flex-col gap-5 mt-5" onSubmit={onSubmitHandler}>
-        <div className="rounded-xl border-[1px] border-gray-200">
+        <div className="rounded-xl border-[1px] border-gray-200 dark:border-gray-200/30">
           <div className="flex md:flex-row flex-col-reverse items-center justify-between lg:px-10 md:px-10 px-3 py-5 md:gap-0 gap-5">
             <p className="font-medium text-[16px]">
               Maintenance Ticket Information
@@ -93,7 +93,7 @@ export default function MaintenanceTicketUpdate({ authedUser, onLogout }) {
               Back to Maintenance Ticket
             </Link>
           </div>
-          <div className="w-full h-[1px] bg-gray-200" />
+          <div className="w-full h-[1px] bg-gray-200 dark:bg-gray-200/30" />
           <div className="flex flex-col gap-2 md:px-10 px-3 mb-3  mt-5">
             <label
               htmlFor="title"
@@ -105,7 +105,7 @@ export default function MaintenanceTicketUpdate({ authedUser, onLogout }) {
             <input
               name="title"
               placeholder="Input your title here..."
-              className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-gray-400 dark:bg-[#081028]"
+              className="border-[1px] px-4 py-2 border-[#E6EAED] dark:border-gray-200/30 rounded-[4px] focus:outline-none placeholder:text-gray-400 dark:bg-[#081028]"
               value={title}
               onChange={onTitleChange}
             />
@@ -121,7 +121,7 @@ export default function MaintenanceTicketUpdate({ authedUser, onLogout }) {
             <textarea
               name="description"
               placeholder="Input your description here..."
-              className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-gray-400 dark:bg-[#081028] resize-none"
+              className="border-[1px] px-4 py-2 border-[#E6EAED] dark:border-gray-200/30 rounded-[4px] focus:outline-none placeholder:text-gray-400 dark:bg-[#081028] resize-none"
               value={description}
               onChange={onDescriptionChange}
             />
