@@ -48,6 +48,45 @@ class AssignEngineerController {
       next(error);
     }
   }
+
+  async countMaintenanceTicketNeedMaintenanceByUserId(req, res, next) {
+    try {
+      const { userId } = req.params;
+      const countMaintenanceTicket = await assignEngineerTaskService.countMaintenanceTicketNeedMaintenanceByUserId(parseInt(userId));
+      res.json({
+        status: 'success',
+        countMaintenanceTicket,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async countMaintenanceTicketCompletedByUserId(req, res, next) {
+    try {
+      const { userId } = req.params;
+      const countMaintenanceTicket = await assignEngineerTaskService.countMaintenanceTicketCompletedByUserId(parseInt(userId));
+      res.json({
+        status: 'success',
+        countMaintenanceTicket,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async countMaintenanceTicketInProgressByUserId(req, res, next) {
+    try {
+      const { userId } = req.params;
+      const countMaintenanceTicket = await assignEngineerTaskService.countMaintenanceTicketInProgressByUserId(parseInt(userId));
+      res.json({
+        status: 'success',
+        countMaintenanceTicket,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = new AssignEngineerController();

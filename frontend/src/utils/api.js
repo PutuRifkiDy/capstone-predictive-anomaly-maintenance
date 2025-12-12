@@ -227,7 +227,7 @@ async function getUserById(id) {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-      }
+      },
     });
 
     const responseJson = await response.json();
@@ -254,7 +254,7 @@ async function countUserEngineer() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-      }
+      },
     });
 
     const responseJson = await response.json();
@@ -301,42 +301,50 @@ async function getAllMaintenanceTickets() {
   }
 }
 
-// async function getMaintenanceTicketById(userId) {
-//   try {
-//     const response = await fetchWithToken(`${BASE_URL}/maintenance-tickets/${userId}`, {
-//       method: "GET",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     });
+async function getMaintenanceTicketByUserId(userId) {
+  try {
+    const response = await fetchWithToken(
+      `${BASE_URL}/maintenance-tickets/${userId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-//     const responseJson = await response.json();
+    const responseJson = await response.json();
 
-//     if (responseJson.status == "success") {
-//       return {
-//         error: false,
-//         data: responseJson.maintenanceTickets,
-//       };
-//     }
-//     return {
-//       error: true,
-//       message: responseJson.error,
-//       data: null,
-//     };
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
+    console.log(responseJson);
+
+    if (responseJson.status == "success") {
+      return {
+        error: false,
+        data: responseJson.maintenanceTickets,
+      };
+    }
+    return {
+      error: true,
+      message: responseJson.error,
+      data: null,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 async function createMaintenanceTicket({ title, description, status, userId }) {
   try {
-    const response = await fetchWithToken(`${BASE_URL}/maintenance-tickets/${userId}`, {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ title, description, status })
-    });
+    const response = await fetchWithToken(
+      `${BASE_URL}/maintenance-tickets/${userId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ title, description, status }),
+      }
+    );
 
     const responseJson = await response.json();
 
@@ -359,12 +367,15 @@ async function createMaintenanceTicket({ title, description, status, userId }) {
 
 async function deleteMaintenanceTicketById(id) {
   try {
-    const response = await fetchWithToken(`${BASE_URL}/maintenance-tickets/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetchWithToken(
+      `${BASE_URL}/maintenance-tickets/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
-    });
+    );
 
     const responseJson = await response.json();
 
@@ -384,65 +395,74 @@ async function deleteMaintenanceTicketById(id) {
 }
 
 async function countMaintenanceTicketNeedMaintenance() {
-    try {
-      const response = await fetchWithToken(`${BASE_URL}/maintenance-tickets/need-maintenance/count`, {
+  try {
+    const response = await fetchWithToken(
+      `${BASE_URL}/maintenance-tickets/need-maintenance/count`,
+      {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-        }
-      });
-  
-      const responseJson = await response.json();
-  
-      if (responseJson.status == "success") {
-        return {
-          error: false,
-          data: responseJson.count,
-        };
+        },
       }
+    );
+
+    const responseJson = await response.json();
+
+    if (responseJson.status == "success") {
       return {
-        error: true,
-        data: null,
+        error: false,
+        data: responseJson.count,
       };
-    } catch (error) {
-      console.log(error);
     }
+    return {
+      error: true,
+      data: null,
+    };
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 async function countMaintenanceTicketCompleted() {
-    try {
-      const response = await fetchWithToken(`${BASE_URL}/maintenance-tickets/completed/count`, {
+  try {
+    const response = await fetchWithToken(
+      `${BASE_URL}/maintenance-tickets/completed/count`,
+      {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-        }
-      });
-  
-      const responseJson = await response.json();
-  
-      if (responseJson.status == "success") {
-        return {
-          error: false,
-          data: responseJson.count,
-        };
+        },
       }
+    );
+
+    const responseJson = await response.json();
+
+    if (responseJson.status == "success") {
       return {
-        error: true,
-        data: null,
+        error: false,
+        data: responseJson.count,
       };
-    } catch (error) {
-      console.log(error);
     }
+    return {
+      error: true,
+      data: null,
+    };
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 async function getMaintenanceById(id) {
   try {
-    const response = await fetchWithToken(`${BASE_URL}/maintenance-tickets/single/${id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetchWithToken(
+      `${BASE_URL}/maintenance-tickets/single/${id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
-    });
+    );
 
     const responseJson = await response.json();
 
@@ -464,13 +484,16 @@ async function getMaintenanceById(id) {
 
 async function updateMaintenanceTicketById(id, { title, description, status }) {
   try {
-    const response = await fetchWithToken(`${BASE_URL}/maintenance-tickets/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ title, description, status })
-    });
+    const response = await fetchWithToken(
+      `${BASE_URL}/maintenance-tickets/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ title, description, status }),
+      }
+    );
 
     const responseJson = await response.json();
 
@@ -493,12 +516,15 @@ async function updateMaintenanceTicketById(id, { title, description, status }) {
 
 async function getAllAssignsAndUsers(maintenanceTicketId) {
   try {
-    const response = await fetchWithToken(`${BASE_URL}/assign-maintenance-tasks/${maintenanceTicketId}`, {
-      method: 'GET',
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetchWithToken(
+      `${BASE_URL}/assign-maintenance-tasks/${maintenanceTicketId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
-    });
+    );
 
     const responseJson = await response.json();
 
@@ -520,12 +546,15 @@ async function getAllAssignsAndUsers(maintenanceTicketId) {
 
 async function getAssignedUsers(maintenanceTicketId) {
   try {
-    const response = await fetchWithToken(`${BASE_URL}/assign-maintenance-tasks/assign/${maintenanceTicketId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetchWithToken(
+      `${BASE_URL}/assign-maintenance-tasks/assign/${maintenanceTicketId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
-    });
+    );
 
     const responseJson = await response.json();
 
@@ -541,19 +570,22 @@ async function getAssignedUsers(maintenanceTicketId) {
       data: null,
     };
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }
 
 async function createAssignmentTicket({ userId, maintenanceTicketId }) {
   try {
-    const response = await fetchWithToken(`${BASE_URL}/assign-maintenance-tasks/assign`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ userId, maintenanceTicketId }),
-    });
+    const response = await fetchWithToken(
+      `${BASE_URL}/assign-maintenance-tasks/assign`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId, maintenanceTicketId }),
+      }
+    );
 
     const responseJson = await response.json();
 
@@ -574,12 +606,15 @@ async function createAssignmentTicket({ userId, maintenanceTicketId }) {
 
 async function deleteAssignmentTicketById(id) {
   try {
-    const response = await fetchWithToken(`${BASE_URL}/assign-maintenance-tasks/assign/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetchWithToken(
+      `${BASE_URL}/assign-maintenance-tasks/assign/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
-    });
+    );
 
     const responseJson = await response.json();
 
@@ -600,12 +635,15 @@ async function deleteAssignmentTicketById(id) {
 
 async function getAssignedEngineersTickets(userId) {
   try {
-    const response = await fetchWithToken(`${BASE_URL}/assign-engineer-tasks/${userId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetchWithToken(
+      `${BASE_URL}/assign-engineer-tasks/${userId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
-    });
+    );
 
     const responseJson = await response.json();
     if (responseJson.status == "success") {
@@ -618,7 +656,7 @@ async function getAssignedEngineersTickets(userId) {
       error: true,
       message: responseJson.error,
       data: null,
-    }
+    };
   } catch (error) {
     console.log(error);
   }
@@ -626,13 +664,16 @@ async function getAssignedEngineersTickets(userId) {
 
 async function updateAssignedEngineersTickets(id, { status }) {
   try {
-    const response = await fetchWithToken(`${BASE_URL}/assign-engineer-tasks/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ status })
-    });
+    const response = await fetchWithToken(
+      `${BASE_URL}/assign-engineer-tasks/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status }),
+      }
+    );
 
     const responseJson = await response.json();
 
@@ -653,12 +694,15 @@ async function updateAssignedEngineersTickets(id, { status }) {
 
 async function getAssignedEngineerTicketStatusById(id) {
   try {
-    const response = await fetchWithToken(`${BASE_URL}/assign-engineer-tasks/status/${id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetchWithToken(
+      `${BASE_URL}/assign-engineer-tasks/status/${id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
-    });
+    );
 
     const responseJson = await response.json();
 
@@ -671,6 +715,93 @@ async function getAssignedEngineerTicketStatusById(id) {
     return {
       error: true,
       message: responseJson.error,
+      data: null,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function countAssignedEngineerTicketNeedMaintenance(userId) {
+  try {
+    const response = await fetchWithToken(
+      `${BASE_URL}/assign-engineer-tasks/need-maintenance/count/${userId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const responseJson = await response.json();
+
+    if (responseJson.status == "success") {
+      return {
+        error: false,
+        data: responseJson.countMaintenanceTicket.total_need_maintenance,
+      };
+    }
+    return {
+      error: true,
+      data: null,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function countAssignedEngineerTicketInProgress(userId) {
+  try {
+    const response = await fetchWithToken(
+      `${BASE_URL}/assign-engineer-tasks/in-progress/count/${userId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const responseJson = await response.json();
+
+    if (responseJson.status == "success") {
+      return {
+        error: false,
+        data: responseJson.countMaintenanceTicket.total_in_progress,
+      };
+    }
+    return {
+      error: true,
+      data: null,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function countAssignedEngineerTicketCompleted(userId) {
+  try {
+    const response = await fetchWithToken(
+      `${BASE_URL}/assign-engineer-tasks/completed/count/${userId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const responseJson = await response.json();
+
+    if (responseJson.status == "success") {
+      return {
+        error: false,
+        data: responseJson.countMaintenanceTicket.total_completed,
+      };
+    }
+    return {
+      error: true,
       data: null,
     };
   } catch (error) {
@@ -736,12 +867,15 @@ async function getChatLogsCopilotByUserId(userId) {
 
 async function deleteAllChatLogsByUserId(userId) {
   try {
-    const response = await fetchWithToken(`${BASE_URL}/chatbot/logs/${userId}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetchWithToken(
+      `${BASE_URL}/chatbot/logs/${userId}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     const responseJson = await response.json();
 
@@ -805,7 +939,7 @@ async function uploadDataset(file) {
       return {
         error: false,
         message: responseJson.message,
-        path: responseJson.path
+        path: responseJson.path,
       };
     }
 
@@ -813,7 +947,6 @@ async function uploadDataset(file) {
       error: true,
       errorMessage: responseJson.detail || "Upload failed",
     };
-
   } catch (error) {
     console.error("Upload Error:", error);
     return {
@@ -847,7 +980,6 @@ async function runMachineLearningModel() {
       error: true,
       message: responseJson.detail || "Model execution failed",
     };
-
   } catch (error) {
     console.error("Model Run Error:", error);
     return {
@@ -872,6 +1004,7 @@ export {
   getUserById,
   countUserEngineer,
   getAllMaintenanceTickets,
+  getMaintenanceTicketByUserId,
   getMaintenanceById,
   createMaintenanceTicket,
   updateMaintenanceTicketById,
@@ -885,10 +1018,13 @@ export {
   getAssignedEngineersTickets,
   updateAssignedEngineersTickets,
   getAssignedEngineerTicketStatusById,
+  countAssignedEngineerTicketNeedMaintenance,
+  countAssignedEngineerTicketInProgress,
+  countAssignedEngineerTicketCompleted,
   chatCopilot,
   getChatLogsCopilotByUserId,
   deleteAllChatLogsByUserId,
   deleteChatLogById,
   uploadDataset,
-  runMachineLearningModel
+  runMachineLearningModel,
 };

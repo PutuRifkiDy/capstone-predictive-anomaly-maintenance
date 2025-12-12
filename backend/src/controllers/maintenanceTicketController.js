@@ -13,21 +13,21 @@ class MaintenanceTicketController {
     }
   }
 
-  // async getAllMaintenanceTickets(req, res, next) {
-  //   try {
-  //     const userId = parseInt(req.params.userId);
-  //     const maintenanceTickets = await maintenanceTicket.getAllMaintenanceTicketsByUserId(userId);
-  //     res.json({
-  //       maintenanceTickets,
-  //       status: 'success'
-  //     });
-  //   } catch (error) {
-  //     if (error.message === 'No maintenance tickets found') {
-  //       return res.status(404).json({ error: error.message });
-  //     }
-  //     next(error);
-  //   }
-  // }
+  async getAllMaintenanceTicketsByUserId(req, res, next) {
+    try {
+      const userId = parseInt(req.params.userId);
+      const maintenanceTickets = await maintenanceTicket.getAllMaintenanceTicketsByUserId(userId);
+      res.json({
+        maintenanceTickets,
+        status: 'success'
+      });
+    } catch (error) {
+      if (error.message === 'No maintenance tickets found') {
+        return res.status(404).json({ error: error.message });
+      }
+      next(error);
+    }
+  }
 
   async createMaintenanceTicket(req, res, next) {
     try {

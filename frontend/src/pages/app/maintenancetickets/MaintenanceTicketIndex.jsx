@@ -36,6 +36,7 @@ import {
   deleteMaintenanceTicketById,
   getAllMaintenanceTickets,
 } from "@/utils/api";
+import { PlusIcon } from "@heroicons/react/24/outline";
 import {
   PencilSquareIcon,
   TrashIcon,
@@ -257,7 +258,7 @@ export default function MaintenanceTicketIndex({ authedUser, onLogout }) {
           to={`/maintenance-ticket/create`}
           className="bg-[#515DEF] px-4 py-2 rounded-[4px] text-white hover:shadow-2xl transition-all duration-300 ease-in-out flex items-center justify-center gap-2 h-fit"
         >
-          Create Maintenance Ticket
+          <PlusIcon className="w-4 h-4"/> Create Maintenance Ticket
         </Link>
       </div>
       <div className="mt-6">

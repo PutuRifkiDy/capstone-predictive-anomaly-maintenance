@@ -47,7 +47,7 @@ import {
   getAllAssignsAndUsers,
   getMaintenanceById,
 } from "@/utils/api";
-import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
+import { ArrowLeftIcon, EllipsisVerticalIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { Button } from "@/components/ui/button";
 
 export default function AssignmentMaintenanceIndex({ authedUser, onLogout }) {
@@ -217,15 +217,15 @@ export default function AssignmentMaintenanceIndex({ authedUser, onLogout }) {
         <div className="flex gap-2 items-center">
           <Link
             to={`/maintenance-ticket`}
-            className="bg-[#515DEF] px-4 py-2 rounded-[4px] text-white hover:shadow-2xl transition-all duration-300 ease-in-out flex items-center justify-center gap-2 h-fit"
+            className="border-[1px] border-[#515DEF] px-4 py-2 rounded-[4px] text-[#515DEF] hover:shadow-2xl transition-all duration-300 ease-in-out flex items-center justify-center gap-2 h-fit group"
           >
-            Back
+            <ArrowLeftIcon className="w-3 h-3 group-hover:-translate-x-1 transition-all ease-in-out duration-300"/> Back
           </Link>
           <Link
             to={`/assignment-maintenance/tasks/create/${params.ticketId}`}
             className="bg-[#515DEF] px-4 py-2 rounded-[4px] text-white hover:shadow-2xl transition-all duration-300 ease-in-out flex items-center justify-center gap-2 h-fit"
           >
-            Assignment Maintenance
+            <PlusIcon className="w-4 h-4"/>Assignment Maintenance
           </Link>
         </div>
       </div>
