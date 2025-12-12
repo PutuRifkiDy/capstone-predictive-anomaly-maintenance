@@ -6,6 +6,8 @@ import {
 } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import {
+  countAssignedEngineerTicketCompleted,
+  countAssignedEngineerTicketInProgress,
   countAssignedEngineerTicketNeedMaintenance,
   countMaintenanceTicketCompleted,
   countMaintenanceTicketNeedMaintenance,
@@ -104,7 +106,7 @@ export default function Dashboard({ authedUser, onLogout }) {
 
   const fetchCountMaintenanceTicketInProgress = async () => {
     try {
-      const result = await countAssignedEngineerTicketNeedMaintenance(
+      const result = await countAssignedEngineerTicketInProgress(
         authedUser.id
       );
       if (!result.error) {
@@ -119,7 +121,7 @@ export default function Dashboard({ authedUser, onLogout }) {
 
   const fetchCountMaintenanceTicketCompleted = async () => {
     try {
-      const result = await countAssignedEngineerTicketNeedMaintenance(
+      const result = await countAssignedEngineerTicketCompleted(
         authedUser.id
       );
       if (!result.error) {

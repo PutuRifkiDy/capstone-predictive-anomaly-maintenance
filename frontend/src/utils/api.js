@@ -739,7 +739,7 @@ async function countAssignedEngineerTicketNeedMaintenance(userId) {
     if (responseJson.status == "success") {
       return {
         error: false,
-        data: responseJson.countMaintenanceTicket.total_need_maintenance,
+        data: responseJson.countMaintenanceTicketNeedMaintenance.total_need_maintenance,
       };
     }
     return {
@@ -768,7 +768,7 @@ async function countAssignedEngineerTicketInProgress(userId) {
     if (responseJson.status == "success") {
       return {
         error: false,
-        data: responseJson.countMaintenanceTicket.total_in_progress,
+        data: responseJson.countMaintenanceTicketInProgress.total_in_progress,
       };
     }
     return {
@@ -797,7 +797,7 @@ async function countAssignedEngineerTicketCompleted(userId) {
     if (responseJson.status == "success") {
       return {
         error: false,
-        data: responseJson.countMaintenanceTicket.total_completed,
+        data: responseJson.countMaintenanceTicketCompleted.total_completed,
       };
     }
     return {
