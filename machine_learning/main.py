@@ -188,9 +188,7 @@ def search(failure_type: Optional[str] = None, machine_type: Optional[str] = Non
 # GET: Hitung jumlah mesin berdasarkan kriteria
 # -------------------------
 @app.get("/machines/search/count")
-def search_count(
-    failure_type: Optional[str] = None, machine_type: Optional[str] = None
-):
+def search_count(failure_type: Optional[str] = None):
     result = MACHINES
 
     if failure_type:
@@ -200,17 +198,10 @@ def search_count(
             if failure_type.lower() in m.get("predicted_failure_type", "").lower()
         ]
 
-    if machine_type:
-        result = [
-            m
-            for m in result
-            if m.get("machine_type", "").lower() == machine_type.lower()
-        ]
-
     return {
         "status": "success",
         "count": len(result),
-        "filter_applied": {"failure_type": failure_type, "machine_type": machine_type},
+        "filter_applied": {"failure_type": failure_type},
     }
 
     # -------------------------
@@ -251,6 +242,6 @@ def get_maintenance_candidates(failure_type: Optional[str] = None, limit: int = 
 @app.get("/machines/{product_id}")
 def get_machine(product_id: str):
     for m in MACHINES:
-        if m["product_id"] == product_id:
+        if m["Product ID"] == product_id:
             return m
     return {"error": "Machine not found"}
