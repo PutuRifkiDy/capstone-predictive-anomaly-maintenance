@@ -87,9 +87,9 @@ export default function MaintenanceTicketUpdate({ authedUser, onLogout }) {
             </p>
             <Link
               to={`/maintenance-ticket`}
-              className="flex items-center gap-3 px-4 py-2 text-white bg-[#515DEF] rounded-md group"
+              className="flex items-center gap-3 px-4 py-2 text-[#515DEF] border-[1px] border-[#515DEF] rounded-md group"
             >
-              <ArrowLeftIcon className="text-white w-3 h-3 group-hover:-translate-x-1 transition-all duration-300 ease-in-out" />
+              <ArrowLeftIcon className="text-[#515DEF] w-3 h-3 group-hover:-translate-x-1 transition-all duration-300 ease-in-out" />
               Back to Maintenance Ticket
             </Link>
           </div>

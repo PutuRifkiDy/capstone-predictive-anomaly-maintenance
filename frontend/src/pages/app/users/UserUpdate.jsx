@@ -63,7 +63,7 @@ export default function UserUpdate({ authedUser, onLogout }) {
       });
 
       if (result.error) {
-        toast.error(result.error);
+        toast.error(result.message);
       } else {
         navigate("/admin/users");
         toast.success(result.message);
