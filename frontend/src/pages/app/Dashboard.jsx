@@ -1,8 +1,10 @@
 import AppLayout from "../../components/layouts/AppLayout";
 import {
   CheckCircleIcon,
+  ClockIcon,
   DocumentChartBarIcon,
   UserGroupIcon,
+  WrenchScrewdriverIcon,
 } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import {
@@ -203,17 +205,18 @@ export default function Dashboard({ authedUser, onLogout }) {
       (ticket) => ticket.status == "completed"
     ).length;
   } else {
+    console.log("ini eng  ", maintenanceTicketsRoleEngineer);
     needMaintenance = maintenanceTicketsRoleEngineer.filter(
       (ticket) =>
-        ticket.status == "need_maintenance" && ticket.user_id == authedUser.id
+        ticket.status == "need_maintenance"
     ).length;
     inProgress = maintenanceTicketsRoleEngineer.filter(
       (ticket) =>
-        ticket.status == "in_progress" && ticket.user_id == authedUser.id
+        ticket.status == "in_progress"
     ).length;
     completed = maintenanceTicketsRoleEngineer.filter(
       (ticket) =>
-        ticket.status == "completed" && ticket.user_id == authedUser.id
+        ticket.status == "completed"
     ).length;
   }
 
@@ -298,7 +301,7 @@ export default function Dashboard({ authedUser, onLogout }) {
             <>
               <div className="flex flex-row items-center bg-white dark:bg-[#081028] dark:border-gray-500 border-[1px] rounded-[15px] px-4 pb-6 pt-5 sm:pt-6 w-full h-fit gap-[20px] shadow-sm">
                 <div className="bg-[#5D5FEF] rounded-xl p-3 flex justify-center items-center">
-                  <UserGroupIcon className="text-white w-7 h-7" />
+                  <WrenchScrewdriverIcon className="text-white w-7 h-7" />
                 </div>
                 <div className="flex flex-col justify-center gap-1">
                   <p className="text-gray-500 truncate text-sm font-medium text-muted-foreground">
@@ -311,7 +314,7 @@ export default function Dashboard({ authedUser, onLogout }) {
               </div>
               <div className="flex flex-row items-center bg-white dark:bg-[#081028] dark:border-gray-500 border-[1px] rounded-[15px] px-4 pb-6 pt-5 sm:pt-6 w-full h-fit gap-[20px] shadow-sm">
                 <div className="bg-yellow-500 rounded-xl p-3 flex justify-center items-center">
-                  <DocumentChartBarIcon className="text-white w-7 h-7" />
+                  <ClockIcon className="text-white w-7 h-7" />
                 </div>
                 <div className="flex flex-col justify-center gap-1">
                   <p className="text-gray-500 truncate text-sm font-medium text-muted-foreground">

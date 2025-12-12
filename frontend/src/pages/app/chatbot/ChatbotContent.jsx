@@ -184,6 +184,36 @@ export default function ChatbotContent({ authedUser }) {
             <p className="font-medium text-[32px] tracking-[-0.11px] text-[#646B72] dark:text-white">
               Predictive Maintenance Copilot
             </p>
+            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10">
+              <div
+                className="p-5 rounded-[20px] border-2 cursor-pointer text-gray-500"
+                onClick={() =>
+                  setInputMessage("Top 10 mesin yang paling rusak")
+                }
+              >
+                Top 10 mesin yang paling rusak
+              </div>
+              <div
+                className="p-5 rounded-[20px] border-2 cursor-pointer text-gray-500"
+                onClick={() =>
+                  setInputMessage(
+                    "Mesin yang kerusakannya karena penyerapan panas"
+                  )
+                }
+              >
+                Mesin yang kerusakannya karena penyerapan panas
+              </div>
+              <div
+                className="p-5 rounded-[20px] border-2 cursor-pointer text-gray-500"
+                onClick={() =>
+                  setInputMessage(
+                    "Jumlah mesin yang rusak aakibat penggunaan alat"
+                  )
+                }
+              >
+                Jumlah mesin yang rusak aakibat penggunaan alat
+              </div>
+            </div>
           </div>
         ) : (
           <>
@@ -207,7 +237,9 @@ export default function ChatbotContent({ authedUser }) {
                 </DialogHeader>
                 <DialogFooter>
                   <DialogClose asChild>
-                    <Button variant="outline" className="dark:bg-[#081028]">Cancel</Button>
+                    <Button variant="outline" className="dark:bg-[#081028]">
+                      Cancel
+                    </Button>
                   </DialogClose>
                   <Button
                     variant="destructive"
@@ -338,7 +370,12 @@ export default function ChatbotContent({ authedUser }) {
                                 </DialogHeader>
                                 <DialogFooter>
                                   <DialogClose asChild>
-                                    <Button variant="outline" className="dark:bg-[#081028]">Cancel</Button>
+                                    <Button
+                                      variant="outline"
+                                      className="dark:bg-[#081028]"
+                                    >
+                                      Cancel
+                                    </Button>
                                   </DialogClose>
                                   <Button
                                     variant="destructive"
