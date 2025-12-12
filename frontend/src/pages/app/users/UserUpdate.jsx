@@ -155,7 +155,7 @@ export default function UserUpdate({ authedUser, onLogout }) {
               name="password"
               placeholder="Input your password here..."
               className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-gray-400 dark:bg-[#081028] dark:border-gray-200/30"
-              value={password ? "" : password}
+              value={password}
               onChange={onPasswordChange}
             />
           </div>
