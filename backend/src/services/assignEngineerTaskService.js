@@ -43,14 +43,14 @@ class AssignEngineerTaskService {
   }
 
   async countMaintenanceTicketCompletedByUserId(userId) {
-    const result = await db.query('SELECT COUNT(*) AS total_need_maintenance FROM assign_maintenance_tasks amt JOIN maintenance_tickets mt ON amt.maintenance_ticket_id = mt.id WHERE mt.status = $1 AND amt.user_id = $2;',
+    const result = await db.query('SELECT COUNT(*) AS total_completed FROM assign_maintenance_tasks amt JOIN maintenance_tickets mt ON amt.maintenance_ticket_id = mt.id WHERE mt.status = $1 AND amt.user_id = $2;',
       ["completed", userId]
     );
     return result.rows[0];
   }
 
   async countMaintenanceTicketInProgressByUserId(userId) {
-    const result = await db.query('SELECT COUNT(*) AS total_need_maintenance FROM assign_maintenance_tasks amt JOIN maintenance_tickets mt ON amt.maintenance_ticket_id = mt.id WHERE mt.status = $1 AND amt.user_id = $2;',
+    const result = await db.query('SELECT COUNT(*) AS total_in_progress FROM assign_maintenance_tasks amt JOIN maintenance_tickets mt ON amt.maintenance_ticket_id = mt.id WHERE mt.status = $1 AND amt.user_id = $2;',
       ["in_progress", userId]
     );
     return result.rows[0];

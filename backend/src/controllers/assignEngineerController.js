@@ -52,10 +52,10 @@ class AssignEngineerController {
   async countMaintenanceTicketNeedMaintenanceByUserId(req, res, next) {
     try {
       const { userId } = req.params;
-      const countMaintenanceTicket = await assignEngineerTaskService.countMaintenanceTicketNeedMaintenanceByUserId(parseInt(userId));
+      const countMaintenanceTicketNeedMaintenance = await assignEngineerTaskService.countMaintenanceTicketNeedMaintenanceByUserId(parseInt(userId));
       res.json({
         status: 'success',
-        countMaintenanceTicket,
+        countMaintenanceTicketNeedMaintenance,
       });
     } catch (error) {
       next(error);
@@ -65,10 +65,10 @@ class AssignEngineerController {
   async countMaintenanceTicketCompletedByUserId(req, res, next) {
     try {
       const { userId } = req.params;
-      const countMaintenanceTicket = await assignEngineerTaskService.countMaintenanceTicketCompletedByUserId(parseInt(userId));
+      const countMaintenanceTicketCompleted = await assignEngineerTaskService.countMaintenanceTicketCompletedByUserId(parseInt(userId));
       res.json({
         status: 'success',
-        countMaintenanceTicket,
+        countMaintenanceTicketCompleted,
       });
     } catch (error) {
       next(error);
@@ -78,10 +78,10 @@ class AssignEngineerController {
   async countMaintenanceTicketInProgressByUserId(req, res, next) {
     try {
       const { userId } = req.params;
-      const countMaintenanceTicket = await assignEngineerTaskService.countMaintenanceTicketInProgressByUserId(parseInt(userId));
+      const countMaintenanceTicketInProgress = await assignEngineerTaskService.countMaintenanceTicketInProgressByUserId(parseInt(userId));
       res.json({
         status: 'success',
-        countMaintenanceTicket,
+        countMaintenanceTicketInProgress,
       });
     } catch (error) {
       next(error);
