@@ -144,7 +144,7 @@ export default function Dashboard({ authedUser, onLogout }) {
           Dashboard
         </p>
         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 pt-[30px]">
-          <div className="flex flex-row items-center bg-white dark:bg-[#081028] border-gray-200 border-[1px] rounded-[15px] px-4 pb-6 pt-5 sm:pt-6 w-full h-fit gap-[20px] shadow-sm">
+          <div className="flex flex-row items-center bg-white dark:bg-[#081028] dark:border-gray-500 border-[1px] rounded-[15px] px-4 pb-6 pt-5 sm:pt-6 w-full h-fit gap-[20px] shadow-sm">
             <div className="bg-[#5D5FEF] rounded-xl p-3 flex justify-center items-center">
               <UserGroupIcon className="text-white w-7 h-7" />
             </div>
@@ -157,7 +157,7 @@ export default function Dashboard({ authedUser, onLogout }) {
               </p>
             </div>
           </div>
-          <div className="flex flex-row items-center bg-white dark:bg-[#081028] border-gray-200 border-[1px] rounded-[15px] px-4 pb-6 pt-5 sm:pt-6 w-full h-fit gap-[20px] shadow-sm">
+          <div className="flex flex-row items-center bg-white dark:bg-[#081028] dark:border-gray-500 border-[1px] rounded-[15px] px-4 pb-6 pt-5 sm:pt-6 w-full h-fit gap-[20px] shadow-sm">
             <div className="bg-yellow-500 rounded-xl p-3 flex justify-center items-center">
               <DocumentChartBarIcon className="text-white w-7 h-7" />
             </div>
@@ -170,7 +170,7 @@ export default function Dashboard({ authedUser, onLogout }) {
               </p>
             </div>
           </div>
-          <div className="flex flex-row items-center bg-white dark:bg-[#081028] border-gray-200 border-[1px] rounded-[15px] px-4 pb-6 pt-5 sm:pt-6 w-full h-fit gap-[20px] shadow-sm">
+          <div className="flex flex-row items-center bg-white dark:bg-[#081028] dark:border-gray-500 border-[1px] rounded-[15px] px-4 pb-6 pt-5 sm:pt-6 w-full h-fit gap-[20px] shadow-sm">
             <div className="bg-[#4AD991] rounded-xl p-3 flex justify-center items-center">
               <CheckCircleIcon className="text-white w-7 h-7" />
             </div>
@@ -183,14 +183,14 @@ export default function Dashboard({ authedUser, onLogout }) {
               </p>
             </div>
           </div>
-          <div className="lg:col-span-3 md:col-span-2 col-span-1 bg-white dark:bg-[#081028] border-gray-200 border-[1px] rounded-[15px] p-6 shadow-sm mt-5 flex">
+          <div className="lg:col-span-3 md:col-span-2 col-span-1 bg-white dark:bg-[#081028] dark:border-gray-500 border-[1px] rounded-[15px] p-6 shadow-sm mt-5 flex">
             <div className="h-[300px] w-full flex items-center justify-center">
               <Pie data={data} />
             </div>
           </div>
         </div>
 
-        <aside className="fixed top-[0rem] inset-y-0 right-0 hidden w-[20rem] overflow-y-auto border-l border-gray-200 px-4 lg:px-8 xl:block z-0">
+        <aside className="fixed top-[0rem] inset-y-0 right-0 hidden w-[20rem] overflow-y-auto border-l dark:border-gray-500 px-4 lg:px-8 xl:block z-0">
           <div className="rounded-md p-5 mt-24">
             <p className="text-xl font-medium">Maintenance Tickets</p>
             <p className="text-[12px] text-gray-500 italic">

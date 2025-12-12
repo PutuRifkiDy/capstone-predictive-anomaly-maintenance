@@ -811,7 +811,7 @@ async function uploadDataset(file) {
 
     return {
       error: true,
-      message: responseJson.detail || "Upload failed",
+      errorMessage: responseJson.detail || "Upload failed",
     };
 
   } catch (error) {

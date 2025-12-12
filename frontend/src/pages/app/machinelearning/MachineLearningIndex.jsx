@@ -13,7 +13,8 @@ export default function MachineLearningIndex({ authedUser, onLogout }) {
   const [isDragging, setIsDragging] = useState(false);
   const inputRef = useRef(null);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingUpload, setIsLoadingUpload] = useState(false);
+  const [isLoadingRunModel, setIsLoadingRunModel] = useState(false);
   console.log(file);
 
   const handleDrop = (e) => {
@@ -46,33 +47,31 @@ export default function MachineLearningIndex({ authedUser, onLogout }) {
     e.preventDefault();
     if (!file) return;
 
-    setIsLoading(true);
+    setIsLoadingUpload(true);
 
     const result = await uploadDataset(file);
 
-    setIsLoading(false);
+    setIsLoadingUpload(false);
     if (!result.error) {
-      toast.success("Data is uploaded successfully, run the model now!");
+      toast.success(result.message);
       setFile(null);
     } else {
-      toast.error("Failed to upload file");
+      toast.error(result.errorMessage);
     }
   };
 
   const handleRunModel = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    toast.success("Running model..., please wait...", { duration: 10000 });
+    setIsLoadingRunModel(true);
+    toast.success("Running model..., please wait...", { duration: 5000 });
 
     const result = await runMachineLearningModel();
 
-    setIsLoading(false);
+    setIsLoadingRunModel(false);
     if (!result.error) {
-      toast.success(
-        "Complete!, data successfully process & prediction updated."
-      );
+      toast.success(result.message);
     } else {
-      toast.error("Failed to run model.");
+      toast.error(result.error);
     }
   };
 
@@ -86,7 +85,9 @@ export default function MachineLearningIndex({ authedUser, onLogout }) {
           <div
             className={`border-2 border-dashed rounded-[8px] w-full md:w-1/2 flex flex-col items-center justify-center text-center p-10 transition
               ${
-                isDragging ? "border-[#515DEF] bg-blue-50 dark:bg-gray-100/10" : "border-gray-300"
+                isDragging
+                  ? "border-[#515DEF] bg-blue-50 dark:bg-gray-100/10"
+                  : "border-gray-300"
               }`}
             onDrop={handleDrop}
             onDragOver={handleDragOver}
@@ -148,27 +149,27 @@ export default function MachineLearningIndex({ authedUser, onLogout }) {
             <div className="flex flex-col gap-3">
               <button
                 onClick={handleUpload}
-                disabled={!file || isLoading}
+                disabled={!file || isLoadingUpload}
                 className={`w-full rounded-[8px] py-[12px] font-medium transition-colors
                   ${
-                    !file || isLoading
+                    !file || isLoadingUpload
                       ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                       : "bg-[#515DEF] text-white hover:bg-[#3e48c7]"
                   }`}
               >
-                {isLoading ? "Uploading..." : "Upload Dataset"}
+                {isLoadingUpload ? "Uploading..." : "Upload Dataset"}
               </button>
               <button
                 onClick={handleRunModel}
-                disabled={isLoading}
+                disabled={isLoadingRunModel}
                 className={`w-full rounded-[8px] py-[12px] font-medium transition-colors border-2
                   ${
-                    isLoading
+                    isLoadingRunModel
                       ? "border-gray-300 text-gray-400 cursor-not-allowed"
                       : "border-[#515DEF] text-[#515DEF] hover:bg-blue-50 dark:hover:bg-gray-200/5"
                   }`}
               >
-                {isLoading ? "Processing..." : "Run Prediction Model"}
+                {isLoadingRunModel ? "Processing..." : "Run Prediction Model"}
               </button>
               <p className="text-gray-400 italic text-[13px]">
                 *Upload csv file only and run model prediction first to get

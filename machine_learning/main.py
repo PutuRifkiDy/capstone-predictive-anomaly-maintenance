@@ -130,9 +130,9 @@ async def trigger_model():
 # -------------------------
 # GET: Semua mesin
 # -------------------------
-@app.get("/machines/all")
-def get_all():
-    return MACHINES
+# @app.get("/machines/all")
+# def get_all():
+#     return MACHINES
 
 
 # -------------------------
@@ -182,6 +182,67 @@ def search(failure_type: Optional[str] = None, machine_type: Optional[str] = Non
         ]
 
     return result
+
+
+# -------------------------
+# GET: Hitung jumlah mesin berdasarkan kriteria
+# -------------------------
+@app.get("/machines/search/count")
+def search_count(
+    failure_type: Optional[str] = None, machine_type: Optional[str] = None
+):
+    result = MACHINES
+
+    if failure_type:
+        result = [
+            m
+            for m in result
+            if failure_type.lower() in m.get("predicted_failure_type", "").lower()
+        ]
+
+    if machine_type:
+        result = [
+            m
+            for m in result
+            if m.get("machine_type", "").lower() == machine_type.lower()
+        ]
+
+    return {
+        "status": "success",
+        "count": len(result),
+        "filter_applied": {"failure_type": failure_type, "machine_type": machine_type},
+    }
+
+    # -------------------------
+
+
+# GET: Rekomendasi Maintenance (Filter + Sort Risk + Limit)
+# -------------------------
+@app.get("/machines/maintenance-candidates")
+def get_maintenance_candidates(failure_type: Optional[str] = None, limit: int = 5):
+    # 1. Mulai dengan semua data
+    candidates = MACHINES
+
+    # 2. Filter berdasarkan Failure Type (jika diminta user)
+    if failure_type:
+        candidates = [
+            m
+            for m in candidates
+            if failure_type.lower() in m.get("predicted_failure_type", "").lower()
+        ]
+
+    # 3. Filter: Hanya yang probability > 0 (biar ga bikin tiket buat mesin sehat)
+    candidates = [m for m in candidates if m.get("anomaly_probability", 0) > 0]
+
+    # 4. Sorting: Urutkan dari Risiko TERTINGGI (Descending)
+    sorted_candidates = sorted(
+        candidates, key=lambda x: x.get("anomaly_probability", 0), reverse=True
+    )
+
+    # 5. Limit: Ambil N teratas (Default 5 jika user tidak minta jumlah)
+    final_result = sorted_candidates[:limit]
+
+    return {"status": "success", "count": len(final_result), "candidates": final_result}
 
 
 # -------------------------
