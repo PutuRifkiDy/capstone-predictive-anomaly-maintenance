@@ -24,7 +24,7 @@ import {
   CpuChipIcon,
   PaperAirplaneIcon,
 } from "@heroicons/react/24/solid";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
 import { toast } from "sonner";
 
@@ -33,7 +33,16 @@ export default function ChatbotContent({ authedUser }) {
   // const [loading, setLoading] = useState(false);
   const [inputMessage, onInputMessageChange, setInputMessage] = useInput();
   const [chatHistory, setChatHistory] = useState([]);
+  const messagesEndRef = useRef(null);
   const params = useParams();
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatHistory]);
 
   useEffect(() => {
     const fetchChatHistory = async () => {
@@ -188,7 +197,9 @@ export default function ChatbotContent({ authedUser }) {
             <div className="grid w-full lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
               <div
                 className={`p-5 text-[15px] rounded-[20px] border-[1px] font-medium text-center cursor-pointer ${
-                  inputMessage == "Berikan laporan kondisi pabrik hari ini." ? "bg-[#515DEF]/10 border-[#515DEF] text-[#515DEF]" : "text-gray-500"
+                  inputMessage == "Berikan laporan kondisi pabrik hari ini."
+                    ? "bg-[#515DEF]/10 border-[#515DEF] text-[#515DEF]"
+                    : "text-gray-500"
                 }`}
                 onClick={() =>
                   setInputMessage("Berikan laporan kondisi pabrik hari ini.")
@@ -198,17 +209,24 @@ export default function ChatbotContent({ authedUser }) {
               </div>
               <div
                 className={`p-5 text-[15px] rounded-[20px] border-[1px] font-medium text-center cursor-pointer ${
-                  inputMessage == "Sebenarnya tipe mesin apa yang paling sering rusak?" ? "bg-[#515DEF]/10 border-[#515DEF] text-[#515DEF]" : "text-gray-500"
+                  inputMessage ==
+                  "Sebenarnya tipe mesin apa yang paling sering rusak?"
+                    ? "bg-[#515DEF]/10 border-[#515DEF] text-[#515DEF]"
+                    : "text-gray-500"
                 }`}
                 onClick={() =>
-                  setInputMessage("Sebenarnya tipe mesin apa yang paling sering rusak?")
+                  setInputMessage(
+                    "Sebenarnya tipe mesin apa yang paling sering rusak?"
+                  )
                 }
               >
                 Sebenarnya tipe mesin apa yang paling sering rusak?
               </div>
               <div
                 className={`p-5 text-[15px] rounded-[20px] border-[1px] font-medium text-center cursor-pointer ${
-                  inputMessage == "Berapa suhu rata-rata saat Heat Failure?" ? "bg-[#515DEF]/10 border-[#515DEF] text-[#515DEF]" : "text-gray-500"
+                  inputMessage == "Berapa suhu rata-rata saat Heat Failure?"
+                    ? "bg-[#515DEF]/10 border-[#515DEF] text-[#515DEF]"
+                    : "text-gray-500"
                 }`}
                 onClick={() =>
                   setInputMessage("Berapa suhu rata-rata saat Heat Failure?")
@@ -218,17 +236,24 @@ export default function ChatbotContent({ authedUser }) {
               </div>
               <div
                 className={`p-5 text-[15px] rounded-[20px] border-[1px] font-medium text-center cursor-pointer ${
-                  inputMessage == "Berapa rata-rata RPM saat terjadi Power Failure?" ? "bg-[#515DEF]/10 border-[#515DEF] text-[#515DEF]" : "text-gray-500"
+                  inputMessage ==
+                  "Berapa rata-rata RPM saat terjadi Power Failure?"
+                    ? "bg-[#515DEF]/10 border-[#515DEF] text-[#515DEF]"
+                    : "text-gray-500"
                 }`}
                 onClick={() =>
-                  setInputMessage("Berapa rata-rata RPM saat terjadi Power Failure?")
+                  setInputMessage(
+                    "Berapa rata-rata RPM saat terjadi Power Failure?"
+                  )
                 }
               >
                 Berapa rata-rata RPM saat terjadi Power Failure?
               </div>
               <div
                 className={`p-5 text-[15px] rounded-[20px] border-[1px] font-medium text-center cursor-pointer ${
-                  inputMessage == "Top 10 mesin yang paling rusak" ? "bg-[#515DEF]/10 border-[#515DEF] text-[#515DEF]" : "text-gray-500"
+                  inputMessage == "Top 10 mesin yang paling rusak"
+                    ? "bg-[#515DEF]/10 border-[#515DEF] text-[#515DEF]"
+                    : "text-gray-500"
                 }`}
                 onClick={() =>
                   setInputMessage("Top 10 mesin yang paling rusak")
@@ -238,7 +263,10 @@ export default function ChatbotContent({ authedUser }) {
               </div>
               <div
                 className={`p-5 text-[15px] rounded-[20px] border-[1px] font-medium text-center cursor-pointer ${
-                  inputMessage == "Mesin yang kerusakannya karena penyerapan panas" ? "bg-[#515DEF]/10 border-[#515DEF] text-[#515DEF]" : "text-gray-500"
+                  inputMessage ==
+                  "Mesin yang kerusakannya karena penyerapan panas"
+                    ? "bg-[#515DEF]/10 border-[#515DEF] text-[#515DEF]"
+                    : "text-gray-500"
                 }`}
                 onClick={() =>
                   setInputMessage(
@@ -250,7 +278,10 @@ export default function ChatbotContent({ authedUser }) {
               </div>
               <div
                 className={`p-5 text-[15px] rounded-[20px] border-[1px] font-medium text-center cursor-pointer ${
-                  inputMessage == "Jumlah mesin yang rusak aakibat penggunaan alat" ? "bg-[#515DEF]/10 border-[#515DEF] text-[#515DEF]" : "text-gray-500"
+                  inputMessage ==
+                  "Jumlah mesin yang rusak aakibat penggunaan alat"
+                    ? "bg-[#515DEF]/10 border-[#515DEF] text-[#515DEF]"
+                    : "text-gray-500"
                 }`}
                 onClick={() =>
                   setInputMessage(
@@ -400,6 +431,7 @@ export default function ChatbotContent({ authedUser }) {
                             {message.message}
                           </p>
                         </div>
+                        <div ref={messagesEndRef} />
                         {message.sender_type == "agent" && (
                           <div className="flex items-center gap-2 mt-2">
                             <Dialog>
