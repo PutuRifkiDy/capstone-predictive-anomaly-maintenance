@@ -188,6 +188,46 @@ export default function ChatbotContent({ authedUser }) {
             <div className="grid w-full lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
               <div
                 className={`p-5 text-[15px] rounded-[20px] border-[1px] font-medium text-center cursor-pointer ${
+                  inputMessage == "Berikan laporan kondisi pabrik hari ini." ? "bg-[#515DEF]/10 border-[#515DEF] text-[#515DEF]" : "text-gray-500"
+                }`}
+                onClick={() =>
+                  setInputMessage("Berikan laporan kondisi pabrik hari ini.")
+                }
+              >
+                Berikan laporan kondisi pabrik hari ini.
+              </div>
+              <div
+                className={`p-5 text-[15px] rounded-[20px] border-[1px] font-medium text-center cursor-pointer ${
+                  inputMessage == "Sebenarnya tipe mesin apa yang paling sering rusak?" ? "bg-[#515DEF]/10 border-[#515DEF] text-[#515DEF]" : "text-gray-500"
+                }`}
+                onClick={() =>
+                  setInputMessage("Sebenarnya tipe mesin apa yang paling sering rusak?")
+                }
+              >
+                Sebenarnya tipe mesin apa yang paling sering rusak?
+              </div>
+              <div
+                className={`p-5 text-[15px] rounded-[20px] border-[1px] font-medium text-center cursor-pointer ${
+                  inputMessage == "Berapa suhu rata-rata saat Heat Failure?" ? "bg-[#515DEF]/10 border-[#515DEF] text-[#515DEF]" : "text-gray-500"
+                }`}
+                onClick={() =>
+                  setInputMessage("Berapa suhu rata-rata saat Heat Failure?")
+                }
+              >
+                Berapa suhu rata-rata saat Heat Failure?
+              </div>
+              <div
+                className={`p-5 text-[15px] rounded-[20px] border-[1px] font-medium text-center cursor-pointer ${
+                  inputMessage == "Berapa rata-rata RPM saat terjadi Power Failure?" ? "bg-[#515DEF]/10 border-[#515DEF] text-[#515DEF]" : "text-gray-500"
+                }`}
+                onClick={() =>
+                  setInputMessage("Berapa rata-rata RPM saat terjadi Power Failure?")
+                }
+              >
+                Berapa rata-rata RPM saat terjadi Power Failure?
+              </div>
+              <div
+                className={`p-5 text-[15px] rounded-[20px] border-[1px] font-medium text-center cursor-pointer ${
                   inputMessage == "Top 10 mesin yang paling rusak" ? "bg-[#515DEF]/10 border-[#515DEF] text-[#515DEF]" : "text-gray-500"
                 }`}
                 onClick={() =>

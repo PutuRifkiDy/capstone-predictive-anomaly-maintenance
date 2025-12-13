@@ -183,16 +183,9 @@ export default function Dashboard({ authedUser, onLogout }) {
     fetchCountMaintenanceTicketNeedMaintenance();
   }, []);
 
-  console.log(`Completed: ${countMaintenanceTicketCompletedDataEngineer}`);
-  console.log(`In Progress: ${countMaintenanceTicketInProgressDataEngineer}`);
-  console.log(`Need Maintenance: ${countMaintenanceTicketNeedMaintenanceDataEngineer}`);
-
   let needMaintenance = null;
   let inProgress = null;
   let completed = null;
-
-  console.log(maintenanceTickets);
-  console.log(maintenanceTicketsRoleEngineer);
 
   if (authedUser.role == "admin") {
     needMaintenance = maintenanceTickets.filter(
