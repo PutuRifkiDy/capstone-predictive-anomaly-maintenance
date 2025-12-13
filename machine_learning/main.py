@@ -107,7 +107,6 @@ async def trigger_model():
 
     try:
         # Jalankan fungsi ML (dari predictor.py)
-        # Ini akan membaca CSV -> Proses ML -> Tulis JSON
         count = run_and_save_api(
             input_csv=CSV_PATH, output_json=JSON_PATH, model_dir=MODELS_DIR
         )
@@ -145,7 +144,7 @@ def highest_risk():
 
 
 # -------------------------
-# GET: Top N mesin paling berisiko
+# GET: Top N mesin paling berisiko optional dengan parameter failure type
 # -------------------------
 @app.get("/machines/top/{n}")
 def get_top_n(n: int = 5, failure_type: Optional[str] = None):
@@ -164,7 +163,7 @@ def get_top_n(n: int = 5, failure_type: Optional[str] = None):
 
 
 # -------------------------
-# GET: Top N mesin resiko paling rendah
+# GET: Top N mesin resiko paling rendah (optional dengan parameter failure type)
 # -------------------------
 @app.get("/machines/bottom/{n}")
 def get_bottom_n(n: int = 5, failure_type: Optional[str] = None):
@@ -223,17 +222,16 @@ def search_count(failure_type: Optional[str] = None):
         "filter_applied": {"failure_type": failure_type},
     }
 
-    # -------------------------
 
-
+# -------------------------
 # GET: Rekomendasi Maintenance (Filter + Sort Risk + Limit)
 # -------------------------
 @app.get("/machines/maintenance-candidates")
 def get_maintenance_candidates(failure_type: Optional[str] = None, limit: int = 5):
-    # 1. Mulai dengan semua data
+    # Mulai dengan semua data
     candidates = MACHINES
 
-    # 2. Filter berdasarkan Failure Type (jika diminta user)
+    # Filter berdasarkan Failure Type (jika diminta user)
     if failure_type:
         candidates = [
             m
@@ -241,18 +239,126 @@ def get_maintenance_candidates(failure_type: Optional[str] = None, limit: int = 
             if failure_type.lower() in m.get("predicted_failure_type", "").lower()
         ]
 
-    # 3. Filter: Hanya yang probability > 0 (biar ga bikin tiket buat mesin sehat)
+    # Filter: Hanya yang probability > 0 (biar ga bikin tiket buat mesin sehat)
     candidates = [m for m in candidates if m.get("anomaly_probability", 0) > 0]
 
-    # 4. Sorting: Urutkan dari Risiko TERTINGGI (Descending)
+    # Sorting: Urutkan dari Risiko TERTINGGI (Descending)
     sorted_candidates = sorted(
         candidates, key=lambda x: x.get("anomaly_probability", 0), reverse=True
     )
 
-    # 5. Limit: Ambil N teratas (Default 5 jika user tidak minta jumlah)
+    # Limit: Ambil N teratas (Default 5 jika user tidak minta jumlah)
     final_result = sorted_candidates[:limit]
 
     return {"status": "success", "count": len(final_result), "candidates": final_result}
+
+
+# ==========================================
+#  Ringkasan kondisi global mesin
+# ==========================================
+@app.get("/stats/summary")
+def get_factory_summary():
+    total_machines = len(MACHINES)
+    if total_machines == 0:
+        return {"status": "empty", "message": "Belum ada data mesin."}
+
+    # Hitung mesin sehat vs berisiko (Threshold > 50%)
+    risky_machines = [m for m in MACHINES if m.get("anomaly_probability", 0) > 0.5]
+    risky_count = len(risky_machines)
+    healthy_count = total_machines - risky_count
+
+    # Hitung Breakdown Kerusakan
+    failure_counts = {}
+    for m in MACHINES:
+        ftype = m.get("predicted_failure_type", "No Failure")
+        if ftype != "No Failure":
+            failure_counts[ftype] = failure_counts.get(ftype, 0) + 1
+
+    # Cari kerusakan paling dominan
+    top_failure = (
+        max(failure_counts, key=failure_counts.get) if failure_counts else "Tidak ada"
+    )
+
+    return {
+        "status": "success",
+        "total_machines": total_machines,
+        "health_status": {
+            "healthy": healthy_count,
+            "risky": risky_count,
+            "risk_percentage": f"{(risky_count/total_machines)*100:.1f}%",
+        },
+        "most_common_failure": top_failure,
+        "failure_breakdown": failure_counts,
+    }
+
+
+# -------------------------
+# GET: Statistik Berdasarkan Tipe Mesin (L, M, H)
+# -------------------------
+@app.get("/stats/by-machine-type")
+def get_stats_by_type():
+    stats = {}
+
+    # Inisialisasi pengelompokan
+    for m in MACHINES:
+        m_type = m.get(
+            "machine_type", "Unknown"
+        )  # Memastikan key JSON sesuai (misal: "Type" atau "machine_type")
+        if m_type not in stats:
+            stats[m_type] = {"total": 0, "failures": 0, "avg_risk": 0.0}
+
+        stats[m_type]["total"] += 1
+        stats[m_type]["avg_risk"] += m.get("anomaly_probability", 0)
+
+        # Hitung jika ada kerusakan nyata (bukan "No Failure")
+        if m.get("predicted_failure_type") != "No Failure":
+            stats[m_type]["failures"] += 1
+
+    # Rapikan hasil (hitung rata-rata)
+    for m_type in stats:
+        count = stats[m_type]["total"]
+        if count > 0:
+            stats[m_type]["avg_risk"] = round(stats[m_type]["avg_risk"] / count, 3)
+            stats[m_type][
+                "failure_rate"
+            ] = f"{(stats[m_type]['failures'] / count)*100:.1f}%"
+
+    return stats
+
+# -------------------------
+# GET: Rata-rata Sensor berdasarkan Failure Type
+# -------------------------
+@app.get("/stats/sensor-analysis")
+def get_sensor_analysis(failure_type: str):
+    # Filter mesin berdasarkan failure type target
+    target_machines = [
+        m
+        for m in MACHINES
+        if failure_type.lower() in m.get("predicted_failure_type", "").lower()
+    ]
+
+    if not target_machines:
+        return {"message": f"No machines found with failure type: {failure_type}"}
+
+    count = len(target_machines)
+
+    # Menyesuaikan key di bawah dengan nama kolom di JSON/CSV
+    # Contoh: "Air temperature", "Process temperature", "Rotational speed"
+    avg_air_temp = sum(m.get("Air temperature [K]", 0) for m in target_machines) / count
+    avg_proc_temp = (
+        sum(m.get("Process temperature [K]", 0) for m in target_machines) / count
+    )
+    avg_rpm = sum(m.get("Rotational speed [rpm]", 0) for m in target_machines) / count
+
+    return {
+        "failure_type": failure_type,
+        "analyzed_machines": count,
+        "averages": {
+            "air_temperature": round(avg_air_temp, 2),
+            "process_temperature": round(avg_proc_temp, 2),
+            "rotational_speed": round(avg_rpm, 2),
+        },
+    }
 
 
 # -------------------------
