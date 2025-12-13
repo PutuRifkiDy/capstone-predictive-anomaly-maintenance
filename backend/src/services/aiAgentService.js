@@ -14,9 +14,13 @@ class AIAgentService {
     }
 
     try {
+      const userResult = await db.query('SELECT role FROM users WHERE id = $1', [userId]);
+      const userRole = userResult.rows[0].role || 'user';
+
       const n8nResponse = await axios.post(N8N_WEBHOOK_URL, {
         message,
-        userId
+        userId,
+        userRole
       });
 
       await db.query('INSERT INTO chat_logs (sender_type, message, user_id, created_at, updated_at) VALUES ($1, $2, $3, $4, $5)', ['user', message, userId, created_at, updated_at]);

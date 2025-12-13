@@ -175,26 +175,31 @@ export default function ChatbotContent({ authedUser }) {
     <div className="relative">
       <div className="mb-24">
         {chatHistory.length == 0 ? (
-          <div className="flex flex-col items-center justify-center p-36 gap-5">
+          <div className="flex flex-col items-center justify-center p-20 gap-5">
             <img
               src="/empty-chatbot-icon.png"
               className="w-24 h-24"
               alt="empty chatbot"
             />
-            <p className="font-medium text-[32px] tracking-[-0.11px] text-[#646B72] dark:text-white">
-              Predictive Maintenance Copilot
+            <p className="font-medium text-[32px] tracking-[-0.11px] text-gray-600 dark:text-white">
+              Predictive Maintenance{" "}
+              <span className="text-[#515DEF]">Copilot</span>
             </p>
-            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10">
+            <div className="grid w-full lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
               <div
-                className="p-5 rounded-[20px] border-2 cursor-pointer text-gray-500"
+                className={`p-5 text-[15px] rounded-[20px] border-[1px] font-medium text-center cursor-pointer ${
+                  inputMessage == "Top 10 mesin yang paling rusak" ? "bg-[#515DEF]/10 border-[#515DEF] text-[#515DEF]" : "text-gray-500"
+                }`}
                 onClick={() =>
                   setInputMessage("Top 10 mesin yang paling rusak")
                 }
               >
-                Top 10 mesin yang paling rusak
+                Berikan Top 10 mesin yang paling rusak
               </div>
               <div
-                className="p-5 rounded-[20px] border-2 cursor-pointer text-gray-500"
+                className={`p-5 text-[15px] rounded-[20px] border-[1px] font-medium text-center cursor-pointer ${
+                  inputMessage == "Mesin yang kerusakannya karena penyerapan panas" ? "bg-[#515DEF]/10 border-[#515DEF] text-[#515DEF]" : "text-gray-500"
+                }`}
                 onClick={() =>
                   setInputMessage(
                     "Mesin yang kerusakannya karena penyerapan panas"
@@ -204,14 +209,17 @@ export default function ChatbotContent({ authedUser }) {
                 Mesin yang kerusakannya karena penyerapan panas
               </div>
               <div
-                className="p-5 rounded-[20px] border-2 cursor-pointer text-gray-500"
+                className={`p-5 text-[15px] rounded-[20px] border-[1px] font-medium text-center cursor-pointer ${
+                  inputMessage == "Jumlah mesin yang rusak aakibat penggunaan alat" ? "bg-[#515DEF]/10 border-[#515DEF] text-[#515DEF]" : "text-gray-500"
+                }`}
                 onClick={() =>
                   setInputMessage(
                     "Jumlah mesin yang rusak aakibat penggunaan alat"
                   )
                 }
               >
-                Jumlah mesin yang rusak aakibat penggunaan alat
+                Buatkan saya 5 maintenance ticket yang kerusakannya karena
+                penggunaan alat
               </div>
             </div>
           </div>
