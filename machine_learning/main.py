@@ -148,8 +148,18 @@ def highest_risk():
 # GET: Top N mesin paling berisiko
 # -------------------------
 @app.get("/machines/top/{n}")
-def get_top_n(n: int = 5):
-    sorted_data = sorted(MACHINES, key=lambda x: x["anomaly_probability"], reverse=True)
+def get_top_n(n: int = 5, failure_type: Optional[str] = None):
+    data = MACHINES
+
+    if failure_type:
+        data = [
+            m
+            for m in data
+            if failure_type.lower() == m.get("predicted_failure_type", "").lower()
+        ]
+
+    sorted_data = sorted(data, key=lambda x: x["anomaly_probability"], reverse=True)
+
     return sorted_data[:n]
 
 
@@ -157,8 +167,17 @@ def get_top_n(n: int = 5):
 # GET: Top N mesin resiko paling rendah
 # -------------------------
 @app.get("/machines/bottom/{n}")
-def get_bottom_n(n: int = 5):
-    sorted_data = sorted(MACHINES, key=lambda x: x["anomaly_probability"])
+def get_bottom_n(n: int = 5, failure_type: Optional[str] = None):
+    data = MACHINES
+
+    if failure_type:
+        data = [
+            m
+            for m in data
+            if failure_type.lower() == m.get("predicted_failure_type", "").lower()
+        ]
+
+    sorted_data = sorted(data, key=lambda x: x["anomaly_probability"])
     return sorted_data[:n]
 
 
