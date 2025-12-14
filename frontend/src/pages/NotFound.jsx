@@ -9,7 +9,7 @@ export default function NotFound() {
                 <div className="flex flex-row gap-5 justify-center items-center">
                     <div className="relative">
                         <span
-                            className="block text-5xl lg:text-7xl font-normal text-[#0303ef]0303ef leading-none"
+                            className="block text-5xl lg:text-7xl font-normal text-[#0303ef] leading-none"
                             style={{ fontFamily: "Arrintika Signature, cursive" }}
                             data-aos="fade-up"
                             data-aos-duration="400"
@@ -31,7 +31,7 @@ export default function NotFound() {
                 <p className="text-[#3A3A3A] text-xl dark:text-white text-center">
                     Sorry, the page you are looking for was not found.
                 </p>
-                <Button variant="default" type="button" className="shadow-[0_0_15px_#ECBB4E] px-6 py-6 my-10" asChild>
+                <Button variant="default" type="button" asChild>
                     <Link to="/dashboard" className="text-white font-medium rounded-[5px] text-xl group">
                         <ArrowLeftIcon className="w-5 h-5 mr-2 transform transition-transform duration-300 group-hover:translate-x-[-5px]" />
                         Back to Home
