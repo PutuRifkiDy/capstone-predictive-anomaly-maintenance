@@ -67,14 +67,6 @@ export default function App() {
     );
   }
 
-  if (authedUser) {
-    return (
-      <Routes>
-        <Route path="/*" element={<NotFound />} />
-      </Routes>
-    );
-  }
-
   return (
     <Routes>
       <Route
@@ -159,8 +151,11 @@ export default function App() {
       />
       <Route
         path="/machine-learning/uploads"
-        element={<MachineLearningIndex authedUser={authedUser} onLogout={onLogout}/>}
+        element={
+          <MachineLearningIndex authedUser={authedUser} onLogout={onLogout} />
+        }
       />
+      <Route path="/*" element={<NotFound />} />
     </Routes>
   );
 }
