@@ -16,6 +16,7 @@ import AssignmentMaintenanceCreate from "./pages/app/assign-maintenance-tasks/As
 import AssignmentEngineerIndex from "./pages/app/engineer-task-assignment/AssignmentEngineerIndex";
 import AssignmentEngineerUpdate from "./pages/app/engineer-task-assignment/AssignmentEngineerUpdate";
 import MachineLearningIndex from "./pages/app/machine-learning/MachineLearningIndex";
+import NotFound from "./pages/NotFound";
 
 export default function App() {
   const [authedUser, setAuthedUser] = useState(null);
@@ -62,6 +63,14 @@ export default function App() {
     return (
       <Routes>
         <Route path="/*" element={<Login loginSuccess={onLoginSuccess} />} />
+      </Routes>
+    );
+  }
+
+  if (authedUser) {
+    return (
+      <Routes>
+        <Route path="/*" element={<NotFound />} />
       </Routes>
     );
   }
