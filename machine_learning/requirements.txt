@@ -15,6 +15,7 @@ lightgbm==4.1.0
 
 # Deep Learning (CPU versions for compatibility)
 torch==2.1.2
+pytorch-tabnet
 
 # Data visualization
 matplotlib==3.8.2
