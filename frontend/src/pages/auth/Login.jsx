@@ -10,7 +10,7 @@ export default function Login({ loginSuccess }) {
   const [loading, setLoading] = useState(false);
   const [email, onEmailChange] = useInput("");
   const [password, onPasswordChange] = useInput("");
-  
+
   const handleShowPassword = () => setShowPassword(!showPassword);
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -25,23 +25,24 @@ export default function Login({ loginSuccess }) {
     try {
       const result = await login({ email, password });
       if (result.error) {
-        toast.error('Login failed, please check your credentials');
+        toast.error("Login failed, please check your credentials");
       } else {
-        loginSuccess(result.data)
+        loginSuccess(result.data);
       }
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   return (
     <section className="lg:px-24 md:px-5 px-5 py-5 flex gap-24 lg:justify-between md:justify-center justify-center">
       <div className="flex flex-col lg:w-1/2 md:w-full w-full">
-        <header className="flex items-center gap-3">
-          <CompanyLogo />
-          <p className="font-bold text-[35.33px] leading-[150%] tracking-[-1%]">
-            Predicta<span className="text-[#515DEF]">Energy</span>
-          </p>
+        <header className="flex items-center gap-3 shrink-0 h-24">
+          <img
+            src="/prevo-logo-with-text.png"
+            className="w-auto h-full"
+            alt=""
+          />
         </header>
         <div className="flex flex-col mt-24">
           <header className="flex flex-col">
@@ -90,7 +91,7 @@ export default function Login({ loginSuccess }) {
                 />
               )}
             </div>
-            <button 
+            <button
               type="submit"
               disabled={loading}
               className="bg-[#515DEF] py-2 rounded-[4px] text-white mt-10 hover:shadow-2xl transition-all duration-300 ease-in-out disabled:opacity-50"

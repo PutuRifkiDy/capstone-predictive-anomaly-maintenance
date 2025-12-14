@@ -90,12 +90,12 @@ export default function AppLayout({ children, authedUser, onLogout }) {
             ${isSidebarOpen == true ? "px-6" : "px-0"}`}
           >
             {isSidebarOpen == true ? (
-              <header className="flex items-center gap-3 shrink-0 h-24">
-                <img src="/prevo-logo-with-text.png" className="w-full h-auto" alt="" />
+              <header className="flex items-center justify-center gap-3 shrink-0 h-24">
+                <img src="/prevo-logo-with-text.png" className="w-48 h-auto" alt="" />
               </header>
             ) : (
               <header className="flex items-center justify-center gap-3 shrink-0 h-24">
-                <img src="/prevo-logo-without-text.png" className="w-full h-auto" alt="" />
+                <img src="/prevo-logo-without-text.png" className="w-16 h-auto" alt="" />
               </header>
             )}
             <Sidebar
