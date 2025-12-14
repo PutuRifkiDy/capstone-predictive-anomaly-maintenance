@@ -8,14 +8,14 @@ import UserIndex from "./pages/app/users/UserIndex";
 import UserCreate from "./pages/app/users/UserCreate";
 import UserUpdate from "./pages/app/users/UserUpdate";
 import ChatbotIndex from "./pages/app/chatbot/ChatbotIndex";
-import MaintenanceTicketIndex from "./pages/app/maintenancetickets/MaintenanceTicketIndex";
-import MaintenanceTicketCreate from "./pages/app/maintenancetickets/MaintenanceTicketCreate";
-import MaintenanceTicketUpdate from "./pages/app/maintenancetickets/MaintenanceTicketUpdate";
-import AssignmentMaintenanceIndex from "./pages/app/assignmaintenancetasks/AssignmentMaintenanceIndex";
-import AssignmentMaintenanceCreate from "./pages/app/assignmaintenancetasks/AssignmentMaintenanceCreate";
-import AssignmentEngineerIndex from "./pages/app/assignmaintenancetasksengineer/AssignmentEngineerIndex";
-import AssignmentEngineerUpdate from "./pages/app/assignmaintenancetasksengineer/AssignmentEngineerUpdate";
-import MachineLearningIndex from "./pages/app/machinelearning/MachineLearningIndex";
+import MaintenanceTicketIndex from "./pages/app/maintenance-tickets/MaintenanceTicketIndex";
+import MaintenanceTicketCreate from "./pages/app/maintenance-tickets/MaintenanceTicketCreate";
+import MaintenanceTicketUpdate from "./pages/app/maintenance-tickets/MaintenanceTicketUpdate";
+import AssignmentMaintenanceIndex from "./pages/app/assign-maintenance-tasks/AssignmentMaintenanceIndex";
+import AssignmentMaintenanceCreate from "./pages/app/assign-maintenance-tasks/AssignmentMaintenanceCreate";
+import AssignmentEngineerIndex from "./pages/app/engineer-task-assignment/AssignmentEngineerIndex";
+import AssignmentEngineerUpdate from "./pages/app/engineer-task-assignment/AssignmentEngineerUpdate";
+import MachineLearningIndex from "./pages/app/machine-learning/MachineLearningIndex";
 
 export default function App() {
   const [authedUser, setAuthedUser] = useState(null);
