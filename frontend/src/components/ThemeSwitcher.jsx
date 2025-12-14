@@ -1,5 +1,5 @@
-import { useTheme } from '@/Components/ThemeProvider';
-import { Button } from '@/Components/ui/button';
+import { useTheme } from '@/components/ThemeProvider';
+import { Button } from '@/components/ui/button';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
 
 export function ThemeSwitcher() {
