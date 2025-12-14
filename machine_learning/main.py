@@ -57,7 +57,7 @@ def load_data_to_memory():
 # Load data saat aplikasi pertama kali jalan
 @app.on_event("startup")
 async def startup_event():
-    # Pastikan folder data ada
+    # Memastikan folder data ada
     os.makedirs(DATA_DIR, exist_ok=True)
     load_data_to_memory()
 
@@ -199,7 +199,7 @@ def search(failure_type: Optional[str] = None, machine_type: Optional[str] = Non
             m for m in result if m["Type"].lower() == machine_type.lower()
         ]
 
-    return result
+    return result   
 
 
 # -------------------------
@@ -228,10 +228,10 @@ def search_count(failure_type: Optional[str] = None):
 # -------------------------
 @app.get("/machines/maintenance-candidates")
 def get_maintenance_candidates(failure_type: Optional[str] = None, limit: int = 5):
-    # Mulai dengan semua data
+    # assign semua data ke candidates yang akan digenerate ticketnya
     candidates = MACHINES
 
-    # Filter berdasarkan Failure Type (jika diminta user)
+    # Filter berdasarkan Failure Type (jika user minta)
     if failure_type:
         candidates = [
             m
@@ -247,7 +247,7 @@ def get_maintenance_candidates(failure_type: Optional[str] = None, limit: int = 
         candidates, key=lambda x: x.get("anomaly_probability", 0), reverse=True
     )
 
-    # Limit: Ambil N teratas (Default 5 jika user tidak minta jumlah)
+    # Limit: Ambil N teratas (Default 5 jika user ga minta jumlah)
     final_result = sorted_candidates[:limit]
 
     return {"status": "success", "count": len(final_result), "candidates": final_result}
