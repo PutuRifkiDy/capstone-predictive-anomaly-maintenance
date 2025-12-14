@@ -17,6 +17,7 @@ import AssignmentEngineerIndex from "./pages/app/engineer-task-assignment/Assign
 import AssignmentEngineerUpdate from "./pages/app/engineer-task-assignment/AssignmentEngineerUpdate";
 import MachineLearningIndex from "./pages/app/machine-learning/MachineLearningIndex";
 import NotFound from "./pages/NotFound";
+import LandingPage from "./pages/app/LandingPage";
 
 export default function App() {
   const [authedUser, setAuthedUser] = useState(null);
@@ -155,6 +156,7 @@ export default function App() {
           <MachineLearningIndex authedUser={authedUser} onLogout={onLogout} />
         }
       />
+      <Route path="/" element={<LandingPage />} />
       <Route path="/*" element={<NotFound />} />
     </Routes>
   );
