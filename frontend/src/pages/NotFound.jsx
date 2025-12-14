@@ -27,10 +27,10 @@ export default function NotFound() {
         </div>
 
         <h1 className="font-bold text-[35px] text-[#3A3A3A] dark:text-white text-center mt-10">
-          Page Not Found
+          Halaman Tidak Ditemukan
         </h1>
         <p className="text-[#3A3A3A] text-xl dark:text-white text-center">
-          Sorry, the page you are looking for was not found.
+          Maaf, halaman yang Anda cari tidak dapat ditemukan.
         </p>
         <Button
           variant="default"
@@ -43,7 +43,7 @@ export default function NotFound() {
             className="text-white font-medium rounded-[5px] text-xl group"
           >
             <ArrowLeftIcon className="w-5 h-5 mr-2 transform transition-transform duration-300 group-hover:translate-x-[-5px]" />
-            Back to Dashboard
+            Kembali ke Dashboard
           </Link>
         </Button>
         <p className="text-[#A4A3A3] text-xl text-center">
