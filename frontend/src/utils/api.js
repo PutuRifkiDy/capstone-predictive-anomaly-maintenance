@@ -1,5 +1,5 @@
-const BASE_URL = "http://localhost:3000";
-const ML_BASE_URL = "https://overrashly-unnationalized-chasidy.ngrok-free.dev";
+const BASE_URL = "https://backend-prevo.vercel.app";
+const ML_BASE_URL = "https://tridarma6-ml-prevo.hf.space/";
 
 function getAccessToken() {
   return localStorage.getItem("accessToken");
