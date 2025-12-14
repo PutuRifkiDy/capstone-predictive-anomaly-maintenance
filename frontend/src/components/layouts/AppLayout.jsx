@@ -90,16 +90,20 @@ export default function AppLayout({ children, authedUser, onLogout }) {
             ${isSidebarOpen == true ? "px-6" : "px-0"}`}
           >
             {isSidebarOpen == true ? (
-              <header className="flex items-center gap-3 shrink-0 h-24">
-                <CompanyLogo />
-                <p className="font-bold text-[22px] leading-[150%] tracking-[-1%]">
-                  Predicta
-                  <span className="text-[#515DEF]">Energy</span>
-                </p>
+              <header className="flex items-center justify-center gap-3 shrink-0 h-24">
+                <img
+                  src="/prevo-logo-with-text.png"
+                  className="w-48 h-auto"
+                  alt=""
+                />
               </header>
             ) : (
               <header className="flex items-center justify-center gap-3 shrink-0 h-24">
-                <CompanyLogo />
+                <img
+                  src="/prevo-logo-without-text.png"
+                  className="w-16 h-auto"
+                  alt=""
+                />
               </header>
             )}
             <Sidebar
@@ -140,10 +144,8 @@ export default function AppLayout({ children, authedUser, onLogout }) {
               </button>
               <div className="h-5 w-0.5 bg-gray-300" />
               <p className="text-[16px] tracking-[-0.25px] text-gray-500">
-                <span className="font-medium">
-                  Predicta<span className="text-[#515DEF]">Energy</span>
-                </span>{" "}
-                web application for checking the performance of your machines
+                <span className="text-[#515DEF] font-medium">PREVO</span> web
+                application for checking the performance of your machines
               </p>
             </div>
             <div className="pr-5">
