@@ -34,7 +34,7 @@ export default function NotFound() {
                 <Button variant="default" type="button" className="px-6 py-6 my-10" asChild>
                     <Link to="/dashboard" className="text-white font-medium rounded-[5px] text-xl group">
                         <ArrowLeftIcon className="w-5 h-5 mr-2 transform transition-transform duration-300 group-hover:translate-x-[-5px]" />
-                        Back to Home
+                        Back to Dashboard
                     </Link>
                 </Button>
                 <p className="text-[#A4A3A3] text-xl text-center">© Predictive Maintenance Copilot 2025</p>
