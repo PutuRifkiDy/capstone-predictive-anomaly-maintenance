@@ -91,15 +91,11 @@ export default function AppLayout({ children, authedUser, onLogout }) {
           >
             {isSidebarOpen == true ? (
               <header className="flex items-center gap-3 shrink-0 h-24">
-                <img src="/prevo-logo-with-text.png" alt="" />
-                <p className="font-bold text-[22px] leading-[150%] tracking-[-1%]">
-                  Predicta
-                  <span className="text-[#515DEF]">Energy</span>
-                </p>
+                <img src="/prevo-logo-with-text.png" className="w-full h-auto" alt="" />
               </header>
             ) : (
               <header className="flex items-center justify-center gap-3 shrink-0 h-24">
-                <img src="/prevo-logo-without-text.png" alt="" />
+                <img src="/prevo-logo-without-text.png" className="w-full h-auto" alt="" />
               </header>
             )}
             <Sidebar
