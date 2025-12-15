@@ -9,8 +9,8 @@ import {
 import {
   createAssignmentTicket,
   getAssignedUsers,
-  getUsers,
-} from "@/utils/api";
+} from "@/utils/api-maintenance-tickets";
+import { getUsers } from "@/utils/api-user";
 import { ArrowLeftIcon, CheckBadgeIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
@@ -44,16 +44,18 @@ export default function AssignmentMaintenanceCreate({ authedUser, onLogout }) {
     const assignedResponse = await getAssignedUsers(ticketId);
     const assigned = assignedResponse.data;
 
-    const availableUsers = users.
-    filter((user) => user.role != "admin")
-    .filter(
-      (user) => !assigned.some((assignedUser) => assignedUser.id === user.id)
-    );
+    const availableUsers = users
+      .filter((user) => user.role != "admin")
+      .filter(
+        (user) => !assigned.some((assignedUser) => assignedUser.id === user.id)
+      );
 
     setFilteredUsers(availableUsers);
 
     if (availableUsers.length === 0) {
-      toast.error("All users role engineer are already assigned to this ticket.");
+      toast.error(
+        "All users role engineer are already assigned to this ticket."
+      );
     }
   }
 
@@ -133,7 +135,8 @@ export default function AssignmentMaintenanceCreate({ authedUser, onLogout }) {
                 {filteredUsers.length > 0 ? (
                   filteredUsers.map((user) => (
                     <SelectItem key={user.id} value={`${user.id}`}>
-                      {user.name} ({user.role == "admin" ? "Admin" : "Engineer"})
+                      {user.name} ({user.role == "admin" ? "Admin" : "Engineer"}
+                      )
                     </SelectItem>
                   ))
                 ) : (

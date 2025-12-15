@@ -7,19 +7,19 @@ import {
   WrenchScrewdriverIcon,
 } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
+import { Link } from "react-router";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Pie } from "react-chartjs-2";
 import {
   countAssignedEngineerTicketCompleted,
   countAssignedEngineerTicketInProgress,
   countAssignedEngineerTicketNeedMaintenance,
   countMaintenanceTicketCompleted,
   countMaintenanceTicketNeedMaintenance,
-  countUserEngineer,
   getAllMaintenanceTickets,
   getAssignedEngineersTickets,
-} from "@/utils/api";
-import { Link } from "react-router";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Pie } from "react-chartjs-2";
+} from "@/utils/api-maintenance-tickets";
+import { countUserEngineer } from "@/utils/api-user";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 

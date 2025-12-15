@@ -32,9 +32,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { deleteUser, getUsers } from "@/utils/api";
+import { deleteUser, getUsers } from "@/utils/api-user";
 import {
-  InformationCircleIcon,
   PencilSquareIcon,
   TrashIcon,
 } from "@heroicons/react/24/solid";

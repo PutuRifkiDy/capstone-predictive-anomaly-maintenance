@@ -1,15 +1,5 @@
 import AppLayout from "@/components/layouts/AppLayout";
 import { Link } from "react-router";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -32,7 +22,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import {
   flexRender,
   getCoreRowModel,
@@ -42,9 +32,8 @@ import {
 } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { getAssignedEngineersTickets } from "@/utils/api";
-import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { Button } from "@/components/ui/button";
+import { getAssignedEngineersTickets } from "@/utils/api-maintenance-tickets";
 export default function AssignmentEngineerIndex({ authedUser, onLogout }) {
   const [assignedEngineerTickets, setAssignedEngineerTickets] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -117,7 +106,6 @@ export default function AssignmentEngineerIndex({ authedUser, onLogout }) {
       header: "Actions",
       cell: ({ row }) => {
         const maintenaceTicket = row.original;
-        console.log(maintenaceTicket);
         return (
           <div className="flex gap-2">
             <TooltipProvider delayDuration={200}>

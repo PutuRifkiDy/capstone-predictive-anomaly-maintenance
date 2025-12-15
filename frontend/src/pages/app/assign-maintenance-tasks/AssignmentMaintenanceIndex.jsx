@@ -42,13 +42,9 @@ import {
 } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import {
-  deleteAssignmentTicketById,
-  getAllAssignsAndUsers,
-  getMaintenanceById,
-} from "@/utils/api";
-import { ArrowLeftIcon, EllipsisVerticalIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { ArrowLeftIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { Button } from "@/components/ui/button";
+import { deleteAssignmentTicketById, getAllAssignsAndUsers, getMaintenanceById } from "@/utils/api-maintenance-tickets";
 
 export default function AssignmentMaintenanceIndex({ authedUser, onLogout }) {
   const [maintenaceTicket, setMaintenanceTicket] = useState(null);

@@ -32,10 +32,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import {
-  deleteMaintenanceTicketById,
-  getAllMaintenanceTickets,
-} from "@/utils/api";
+import { deleteMaintenanceTicketById, getAllMaintenanceTickets } from "@/utils/api-maintenance-tickets";
+// import {
+//   deleteMaintenanceTicketById,
+//   getAllMaintenanceTickets,
+// } from "@/utils/api";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import {
   PencilSquareIcon,

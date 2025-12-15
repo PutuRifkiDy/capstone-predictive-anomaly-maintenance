@@ -7,10 +7,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import useInput from "@/hooks/useInput";
-import {
-  getMaintenanceById,
-  updateMaintenanceTicketById,
-} from "@/utils/api";
+import { getMaintenanceById, updateMaintenanceTicketById } from "@/utils/api-maintenance-tickets";
 import { ArrowLeftIcon, CheckBadgeIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";

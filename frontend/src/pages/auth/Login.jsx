@@ -1,10 +1,10 @@
 import { useState } from "react";
 import CompanyLogo from "../../components/icons/CompanyLogo";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
-import { login } from "../../utils/api";
 import useInput from "@/hooks/useInput";
 import { toast } from "sonner";
 import { Link } from "react-router";
+import { login } from "@/utils/api-user";
 
 export default function Login({ loginSuccess }) {
   const [showPassword, setShowPassword] = useState(false);

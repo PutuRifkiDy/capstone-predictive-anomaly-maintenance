@@ -1,5 +1,6 @@
 import AppLayout from "@/components/layouts/AppLayout";
-import { runMachineLearningModel, uploadDataset } from "@/utils/api";
+import { runMachineLearningModel, uploadDataset } from "@/utils/api-machine-learning";
+// import { runMachineLearningModel, uploadDataset } from "@/utils/api";
 import {
   DocumentArrowUpIcon,
   DocumentIcon,
@@ -15,7 +16,6 @@ export default function MachineLearningIndex({ authedUser, onLogout }) {
 
   const [isLoadingUpload, setIsLoadingUpload] = useState(false);
   const [isLoadingRunModel, setIsLoadingRunModel] = useState(false);
-  console.log(file);
 
   const handleDrop = (e) => {
     e.preventDefault();

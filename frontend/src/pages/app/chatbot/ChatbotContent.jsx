@@ -12,12 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import SidebarOpenContext from "@/context/SidebarOpenContext";
 import useInput from "@/hooks/useInput";
-import {
-  chatCopilot,
-  deleteAllChatLogsByUserId,
-  deleteChatLogById,
-  getChatLogsCopilotByUserId,
-} from "@/utils/api";
+import { chatCopilot, deleteAllChatLogsByUserId, deleteChatLogById, getChatLogsCopilotByUserId } from "@/utils/api-copilot";
 import { DocumentDuplicateIcon, TrashIcon } from "@heroicons/react/24/outline";
 import {
   ClipboardDocumentCheckIcon,
@@ -60,32 +55,6 @@ export default function ChatbotContent({ authedUser }) {
 
     fetchChatHistory();
   }, [params.id]);
-
-  // const handleSendMessage = async (event) => {
-  //   event.preventDefault();
-
-  //   if (inputMessage.trim() === "") {
-  //     toast.error("Please enter a message");
-  //     return;
-  //   }
-  //   try {
-  //     setLoading(true);
-  //     const response = await chatCopilot({
-  //       message: inputMessage,
-  //       userId: authedUser.id,
-  //     });
-
-  //     if (response.error) {
-  //       toast.error(response.message);
-  //     } else {
-  //       setInputMessage("");
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
   const handleSendMessage = async (event) => {
     event.preventDefault();

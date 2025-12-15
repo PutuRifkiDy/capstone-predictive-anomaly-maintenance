@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Navigate, Route, Routes, useNavigate } from "react-router";
-import { getUserLogged, putAccessToken } from "./utils/api";
 import { toast } from "sonner";
 import Login from "./pages/auth/Login";
 import Dashboard from "./pages/app/Dashboard";
@@ -18,6 +17,7 @@ import AssignmentEngineerUpdate from "./pages/app/engineer-task-assignment/Assig
 import MachineLearningIndex from "./pages/app/machine-learning/MachineLearningIndex";
 import NotFound from "./pages/NotFound";
 import LandingPage from "./pages/app/LandingPage";
+import { getUserLogged, putAccessToken } from "./utils/api-user";
 
 export default function App() {
   const [authedUser, setAuthedUser] = useState(null);

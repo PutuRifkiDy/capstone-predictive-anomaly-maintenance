@@ -6,10 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  getAssignedEngineerTicketStatusById,
-  updateAssignedEngineersTickets,
-} from "@/utils/api";
+import { getAssignedEngineerTicketStatusById, updateAssignedEngineersTickets } from "@/utils/api-maintenance-tickets";
 import { ArrowLeftIcon, CheckBadgeIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";

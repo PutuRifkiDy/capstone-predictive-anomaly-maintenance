@@ -8,10 +8,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import useInput from "@/hooks/useInput";
-import { editUser, getUserById } from "@/utils/api";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Link, useNavigate, useParams } from "react-router";
+import { editUser, getUserById } from "@/utils/api-user";
 
 export default function UserUpdate({ authedUser, onLogout }) {
   const [name, onNameChange, setName] = useInput("");
