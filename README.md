@@ -70,7 +70,7 @@ REFRESH_TOKEN_SECRET=your_refresh_token_secret_key_here_make_it_different_and_se
 ```
 
 Masuk ke directory ./backend/src/config/db.js, lalu ubah bagian kode di bawah:
-...
+```
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false }
@@ -83,9 +83,9 @@ const pool = new Pool({
 //   password: process.env.PGPASSWORD,
 //   port: process.env.PGPORT,
 // });
-...
+```
 Menjadi seperti ini:
-...
+```
 // const pool = new Pool({
 //   connectionString: process.env.DATABASE_URL,
 //   ssl: { rejectUnauthorized: false }
@@ -98,7 +98,7 @@ const pool = new Pool({
    password: process.env.PGPASSWORD,
    port: process.env.PGPORT,
  });
-...
+```
 
 #### c. Jalankan migrations
 Masuk ke direktori `backend` dan jalankan migrations dengan perintah berikut:
