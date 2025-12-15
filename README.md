@@ -1,6 +1,10 @@
 # PREVO 
 Prevo adalah solusi predictive maintenance yang menggabungkan keakuratan model Hybrid dengan kecerdasan Agentic AI. Berbeda dengan sistem konvensional, Prevo tidak hanya memprediksi kerusakan dari data historis, tetapi secara otonom menjadwalkan tiket perbaikan. Inovasi ini menutup celah antara prediksi dan eksekusi, bertujuan mencegah unplanned downtime serta mengoptimalkan efisiensi biaya operasional industri secara signifikan
 
+## Link Projek Machine Learning
+- Google Collab, Dataset, Model, Requirements, dan README.md ML
+[[Projek Machine Learning](https://drive.google.com/drive/folders/1eH9gXOpAeVmALYfMZHib-uPmzX3Qsgej?usp=sharing)]
+
 ## Prasyarat
 Adapun beberap prasyarat untuk menjalankan program ini yaitu:
 - Node.js dan npm
