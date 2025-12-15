@@ -48,7 +48,7 @@ export default function LandingPage({ authedUser, onLogout }) {
             Optimize Assets with Predictive Maintenance
           </h1>
           <p
-            className="text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed lg:leading-[30px] max-w-xl"
+            className="text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed lg:leading-[30px] max-w-xl z-50"
             data-aos="fade-up"
             data-aos-duration="1000"
             data-aos-delay="400"
@@ -58,7 +58,7 @@ export default function LandingPage({ authedUser, onLogout }) {
             failures before they occur, reduce downtime, and optimize your oil
             field operations.
           </p>
-          <div className="absolute top-24 z-0 left-12 dark:hidden">
+          <div className="absolute md:top-24 top-20 z-0 left-12 dark:hidden">
             <TextElement />
           </div>
           <Button
