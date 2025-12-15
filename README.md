@@ -119,7 +119,10 @@ Server Back-End di Lokal akan berjalan di `http://localhost:3000`, karena tim ka
 Masuk ke direktori `frontend` dan jalankan aplikasi React:
 ```
 cd .\frontend\
-npm run dev
+```
+Jika ingin menjalankan secara lokal ganti path server backend dan machine learning di directory /frontend/utils di frontend sesuai dengan port yang telah berjalan, setelah itu jalankan frontend dengan perintah berikut:
+```
+npm install
 ```
 Aplikasi Front-End akan berjalan di `http://localhost:5173`
 
