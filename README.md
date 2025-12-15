@@ -6,7 +6,7 @@ Prevo adalah solusi predictive maintenance yang menggabungkan keakuratan model H
 [[Projek Machine Learning](https://drive.google.com/drive/folders/1eH9gXOpAeVmALYfMZHib-uPmzX3Qsgej?usp=sharing)]
 
 ## Prasyarat
-Adapun beberap prasyarat untuk menjalankan program ini yaitu:
+Adapun beberap prasyarat untuk menjalankan program secara lokal yaitu:
 - Node.js dan npm
 [[Download Node.js dan npm](https://nodejs.org/en)]
 
@@ -39,7 +39,7 @@ npm install
 
 ### 3. Konfigurasi Database
 #### a. Buat database PostgreSQL
-Masuk ke server PostgreSQL dan buat database baru dengan perintah:
+Jika ingin menjalankan secara lokal masuk ke server PostgreSQL dan buat database baru dengan perintah:
 ```
 CREATE USER <<nama user>> WITH ENCRYPTED PASSWORD '<<password>>';;
 CREATE USER developer WITH ENCRYPTED PASSWORD 'supersecretpassword';
@@ -52,7 +52,7 @@ psql --username developer --dbname companydb
 ```
 
 #### b. Konfigurasi Koneksi Database
-Buat file `.env` di direktori `backend` dan tambahkan konfigurasi database :
+Jika ingin menjalankan secara lokal buat file `.env` di direktori `backend` dan tambahkan konfigurasi database :
 ```
 # konfigurasi aplikasi
 PORT=3000
@@ -69,7 +69,7 @@ ACCESS_TOKEN_SECRET=your_access_token_secret_key_here_make_it_long_and_secure
 REFRESH_TOKEN_SECRET=your_refresh_token_secret_key_here_make_it_different_and_secure
 ```
 
-Masuk ke directory ./backend/src/config/db.js, lalu ubah bagian kode di bawah:
+Selanjutnya jika ingin menjalankan secara lokal, masuk ke directory ./backend/src/config/db.js, lalu ubah bagian kode di bawah:
 ```
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -125,10 +125,11 @@ Aplikasi Front-End akan berjalan di `http://localhost:5173`
 
 ### Machine Learning
 Karena tim kami sudah mendeploy server machine learningnya, jadi anda tidak harus menjalankannya di lokal. Tetapi jika nanti ingin menjalankan secara lokal gunakan perintah berikut
-...
+```
 cd .\machine_learning\
+py -m pip install -r requirements.txt
 py -m uvicorn main:app --reload
-...
+```
 
 ### 5. Mengakses Aplikasi
 Buka browser Anda dan akses `http://localhost:5173` untuk melihat aplikasi berjalan.
