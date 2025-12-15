@@ -2,8 +2,17 @@ import { useState } from "react";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { HomeIcon } from "@heroicons/react/24/solid";
+import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/outline";
 
-export default function Navbar() {
+export default function Navbar({ authedUser, onLogout }) {
+  console.log(authedUser);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -27,19 +36,64 @@ export default function Navbar() {
 
         <div className="hidden lg:flex gap-4 items-center">
           <ThemeSwitcher />
-          <Button
-            variant="default"
-            className="bg-[#515DEF] px-8 py-2 hover:bg-[#404bc0]"
-            asChild
-          >
-            <Link to={"/login"} className="dark:text-white font-medium">
-              Login
-            </Link>
-          </Button>
+          {authedUser ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger className="py-6 flex items-center">
+                <div className="flex items-center justify-center w-12 h-12 p-4 rounded-full bg-[#515DEF] text-white">
+                  {authedUser?.name.substring(0, 2).toUpperCase()}
+                </div>{" "}
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                align="end"
+                className="min-w-[13rem] flex flex-col gap-1 dark:bg-[#081028]"
+              >
+                <div className="flex items-center gap-2 p-2">
+                  <div className="flex items-center justify-center w-6 h-6 p-4 rounded-full bg-[#515DEF] text-white">
+                    {authedUser?.name.substring(0, 2).toUpperCase()}
+                  </div>
+                  <div className="flex flex-col justify-center">
+                    <p className="font-medium text-[14px] tracking-[-0.25px] text-foreground">
+                      {authedUser?.name}
+                    </p>
+                    <p className="font-medium text-[10px] tracking-[-0.25px] text-gray-500">
+                      {authedUser?.email}
+                    </p>
+                  </div>
+                </div>
+                <div className="bg-gray-100 w-full h-[1px]" />
+                <DropdownMenuItem
+                  className="flex gap-5 items-center cursor-pointer font-medium"
+                  asChild
+                >
+                  <Link to={"/dashboard"} className="">
+                    <HomeIcon className="!w-6 !h-6 font-medium flex-shrink-0" />
+                    Dashboard
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={onLogout}
+                  className="flex gap-5 items-center cursor-pointer text-red-600 font-medium"
+                >
+                  <ArrowLeftEndOnRectangleIcon className="!w-6 !h-6 font-bold text-red-600 flex-shrink-0" />
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Button
+              variant="default"
+              className="bg-[#515DEF] w-full py-6 px-10 text-lg hover:bg-[#404bc0]"
+              asChild
+            >
+              <Link to={"/login"} className="dark:text-white">
+                Login
+              </Link>
+            </Button>
+          )}
         </div>
 
         <div className="flex items-center gap-4 lg:hidden">
-          <ThemeSwitcher /> 
+          <ThemeSwitcher />
           <button
             onClick={toggleMenu}
             className="text-gray-600 dark:text-white focus:outline-none p-2"
@@ -85,16 +139,60 @@ export default function Navbar() {
         }`}
       >
         <NavLinks mobile />
-
-        <Button
-          variant="default"
-          className="bg-[#515DEF] w-full py-6 text-lg hover:bg-[#404bc0]"
-          asChild
-        >
-          <Link to={"/login"} className="dark:text-white">
-            Login
-          </Link>
-        </Button>
+        {authedUser ? (
+          <DropdownMenu>
+            <DropdownMenuTrigger className="py-6 flex items-center">
+              <div className="flex items-center justify-center w-12 h-12 p-4 rounded-full bg-[#515DEF] text-white">
+                {authedUser?.name.substring(0, 2).toUpperCase()}
+              </div>{" "}
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="start"
+              className="min-w-[13rem] flex flex-col gap-1 dark:bg-[#081028]"
+            >
+              <div className="flex items-center gap-2 p-2">
+                <div className="flex items-center justify-center w-6 h-6 p-4 rounded-full bg-[#515DEF] text-white">
+                  {authedUser?.name.substring(0, 2).toUpperCase()}
+                </div>
+                <div className="flex flex-col justify-center">
+                  <p className="font-medium text-[14px] tracking-[-0.25px] text-foreground">
+                    {authedUser?.name}
+                  </p>
+                  <p className="font-medium text-[10px] tracking-[-0.25px] text-gray-500">
+                    {authedUser?.email}
+                  </p>
+                </div>
+              </div>
+              <div className="bg-gray-100 w-full h-[1px]" />
+              <DropdownMenuItem
+                className="flex gap-5 items-center cursor-pointer font-medium"
+                asChild
+              >
+                <Link to={"/dashboard"} className="">
+                  <HomeIcon className="!w-6 !h-6 font-medium flex-shrink-0" />
+                  Dashboard
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={onLogout}
+                className="flex gap-5 items-center cursor-pointer text-red-600 font-medium"
+              >
+                <ArrowLeftEndOnRectangleIcon className="!w-6 !h-6 font-bold text-red-600 flex-shrink-0" />
+                Logout
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        ) : (
+          <Button
+            variant="default"
+            className="bg-[#515DEF] w-full py-6 text-lg hover:bg-[#404bc0]"
+            asChild
+          >
+            <Link to={"/login"} className="dark:text-white">
+              Login
+            </Link>
+          </Button>
+        )}
       </div>
     </nav>
   );
@@ -111,18 +209,18 @@ function NavLinks({ mobile = false }) {
 
   return (
     <>
-      <Link to={""} className={className}>
+      <a href={"/#"} className={className}>
         Home
-      </Link>
-      <Link to={""} className={className}>
+      </a>
+     <a href={"/#predictive-maintenance"} className={className}>
         Predictive Maintenance
-      </Link>
-      <Link to={""} className={className}>
+      </a>
+     <a href={"/#tasks-assignment"} className={className}>
         Tasks Assignment
-      </Link>
-      <Link to={""} className={className}>
+      </a>
+     <a href={"/#ai-copilot"} className={className}>
         AI Copilot
-      </Link>
-    </>
+      </a>
+   </>
   );
 }

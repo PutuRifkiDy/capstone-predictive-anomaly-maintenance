@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Route, Routes, useNavigate } from "react-router";
+import { Navigate, Route, Routes, useNavigate } from "react-router";
 import { getUserLogged, putAccessToken } from "./utils/api";
 import { toast } from "sonner";
 import Login from "./pages/auth/Login";
@@ -53,110 +53,186 @@ export default function App() {
     setAuthedUser(null);
     putAccessToken("");
     toast.success("Logout successfully");
-    navigate("/login");
+    navigate("/");
   };
 
   if (initializing) {
     return null;
   }
 
-  if (authedUser == null) {
-    return (
-      <Routes>
-        <Route path="/*" element={<Login loginSuccess={onLoginSuccess} />} />
-      </Routes>
-    );
-  }
+  // if (authedUser == null) {
+  //   return (
+  //     <Routes>
+  //       <Route path="/*" element={<Login loginSuccess={onLoginSuccess} />} />
+  //     </Routes>
+  //   );
+  // }
 
   return (
     <Routes>
       <Route
         path="/dashboard"
-        element={<Dashboard authedUser={authedUser} onLogout={onLogout} />}
+        element={
+          authedUser ? (
+            <Dashboard authedUser={authedUser} onLogout={onLogout} />
+          ) : (
+            <Navigate to="/login" />
+          )
+        }
       />
       <Route
         path="/admin/users"
-        element={<UserIndex authedUser={authedUser} onLogout={onLogout} />}
+        element={
+          authedUser ? (
+            <UserIndex authedUser={authedUser} onLogout={onLogout} />
+          ) : (
+            <Navigate to="/login" />
+          )
+        }
       />
       <Route
         path="/admin/users/create"
-        element={<UserCreate authedUser={authedUser} onLogout={onLogout} />}
+        element={
+          authedUser ? (
+            <UserCreate authedUser={authedUser} onLogout={onLogout} />
+          ) : (
+            <Navigate to="/login" />
+          )
+        }
       />
       <Route
         path="/admin/users/update/:id"
-        element={<UserUpdate authedUser={authedUser} onLogout={onLogout} />}
+        element={
+          authedUser ? (
+            <UserUpdate authedUser={authedUser} onLogout={onLogout} />
+          ) : (
+            <Navigate to="/login" />
+          )
+        }
       />
       <Route
         path="/maintenance-ticket"
         element={
-          <MaintenanceTicketIndex authedUser={authedUser} onLogout={onLogout} />
+          authedUser ? (
+            <MaintenanceTicketIndex
+              authedUser={authedUser}
+              onLogout={onLogout}
+            />
+          ) : (
+            <Navigate to="/login" />
+          )
         }
       />
       <Route
         path="/maintenance-ticket/create"
         element={
-          <MaintenanceTicketCreate
-            authedUser={authedUser}
-            onLogout={onLogout}
-          />
+          authedUser ? (
+            <MaintenanceTicketCreate
+              authedUser={authedUser}
+              onLogout={onLogout}
+            />
+          ) : (
+            <Navigate to="/login" />
+          )
         }
       />
       <Route
         path="/maintenance-ticket/update/:id"
         element={
-          <MaintenanceTicketUpdate
-            authedUser={authedUser}
-            onLogout={onLogout}
-          />
+          authedUser ? (
+            <MaintenanceTicketUpdate
+              authedUser={authedUser}
+              onLogout={onLogout}
+            />
+          ) : (
+            <Navigate to="/login" />
+          )
         }
       />
       <Route
         path="/assignment-maintenance/tasks/:ticketId"
         element={
-          <AssignmentMaintenanceIndex
-            authedUser={authedUser}
-            onLogout={onLogout}
-          />
+          authedUser ? (
+            <AssignmentMaintenanceIndex
+              authedUser={authedUser}
+              onLogout={onLogout}
+            />
+          ) : (
+            <Navigate to="/login" />
+          )
         }
       />
       <Route
         path="/assignment-maintenance/tasks/create/:ticketId"
         element={
-          <AssignmentMaintenanceCreate
-            authedUser={authedUser}
-            onLogout={onLogout}
-          />
+          authedUser ? (
+            <AssignmentMaintenanceCreate
+              authedUser={authedUser}
+              onLogout={onLogout}
+            />
+          ) : (
+            <Navigate to="/login" />
+          )
         }
       />
       <Route
         path="/task-maintenance"
         element={
-          <AssignmentEngineerIndex
-            authedUser={authedUser}
-            onLogout={onLogout}
-          />
+          authedUser ? (
+            <AssignmentEngineerIndex
+              authedUser={authedUser}
+              onLogout={onLogout}
+            />
+          ) : (
+            <Navigate to="/login" />
+          )
         }
       />
       <Route
         path="/task-maintenance/:id"
         element={
-          <AssignmentEngineerUpdate
-            authedUser={authedUser}
-            onLogout={onLogout}
-          />
+          authedUser ? (
+            <AssignmentEngineerUpdate
+              authedUser={authedUser}
+              onLogout={onLogout}
+            />
+          ) : (
+            <Navigate to="/login" />
+          )
         }
       />
       <Route
         path="/chatbot/:id"
-        element={<ChatbotIndex authedUser={authedUser} onLogout={onLogout} />}
+        element={
+          authedUser ? (
+            <ChatbotIndex authedUser={authedUser} onLogout={onLogout} />
+          ) : (
+            <Navigate to="/login" />
+          )
+        }
       />
       <Route
         path="/machine-learning/uploads"
         element={
-          <MachineLearningIndex authedUser={authedUser} onLogout={onLogout} />
+          authedUser ? (
+            <MachineLearningIndex authedUser={authedUser} onLogout={onLogout} />
+          ) : (
+            <Navigate to="/login" />
+          )
         }
       />
-      <Route path="/" element={<LandingPage />} />
+      <Route
+        path="/login"
+        element={
+          authedUser ? (
+            <Navigate to="/dashboard" />
+          ) : (
+            <Login loginSuccess={onLoginSuccess} />
+          )
+        }
+      />
+      <Route path="/login" element={<Login loginSuccess={onLoginSuccess} />} />
+      <Route path="/" element={<LandingPage authedUser={authedUser} onLogout={onLogout}/>} />
       <Route path="/*" element={<NotFound />} />
     </Routes>
   );

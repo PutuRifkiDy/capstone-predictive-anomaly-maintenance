@@ -7,6 +7,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import SidebarResponsive from "./partials/SidebarResponsive";
 import SidebarOpenContext from "@/context/SidebarOpenContext";
+import { Link } from "react-router";
 
 export default function AppLayout({ children, authedUser, onLogout }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -91,11 +92,13 @@ export default function AppLayout({ children, authedUser, onLogout }) {
           >
             {isSidebarOpen == true ? (
               <header className="flex items-center justify-center gap-3 shrink-0 h-24">
-                <img
-                  src="/prevo-logo-with-text.png"
-                  className="w-48 h-auto"
-                  alt=""
-                />
+                <Link to={"/"}>
+                  <img
+                    src="/prevo-logo-with-text.png"
+                    className="w-48 h-auto"
+                    alt=""
+                  />
+                </Link>
               </header>
             ) : (
               <header className="flex items-center justify-center gap-3 shrink-0 h-24">

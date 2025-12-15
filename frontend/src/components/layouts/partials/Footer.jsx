@@ -15,16 +15,15 @@ export default function Footer() {
               />
             </Link>
             <p className="text-sm leading-relaxed text-slate-400">
-              Solusi manajemen aset berbasis AI untuk industri Minyak & Gas.
-              Mendeteksi risiko lebih awal, mengoptimalkan kinerja tim, dan
-              mencegah{" "}
-              <em>downtime</em> yang merugikan.
+              AI-driven asset management solution for the Oil & Gas industry.
+              Detect risks early, optimize team performance, and prevent costly{" "}
+              <em>downtime</em>.
             </p>
           </div>
 
           <div>
             <h3 className="text-white font-semibold tracking-wide mb-4">
-              Fitur Platform
+              Platform Features
             </h3>
             <ul className="space-y-3 text-sm">
               <li>
@@ -51,20 +50,12 @@ export default function Footer() {
                   AI Copilot
                 </a>
               </li>
-              <li>
-                <a
-                  href="#machine-learning"
-                  className="hover:text-blue-400 transition-colors"
-                >
-                  Machine Learning
-                </a>
-              </li>
             </ul>
           </div>
 
           <div>
             <h3 className="text-white font-semibold tracking-wide mb-4">
-              Perusahaan
+              Company
             </h3>
             <ul className="space-y-3 text-sm">
               <li>
@@ -72,7 +63,7 @@ export default function Footer() {
                   to="/about"
                   className="hover:text-blue-400 transition-colors"
                 >
-                  Tentang Kami
+                  About Us
                 </Link>
               </li>
               <li>
@@ -80,7 +71,7 @@ export default function Footer() {
                   to="/careers"
                   className="hover:text-blue-400 transition-colors"
                 >
-                  Karir & Engineer
+                  Careers & Engineering
                 </Link>
               </li>
               <li>
@@ -88,7 +79,7 @@ export default function Footer() {
                   to="/privacy"
                   className="hover:text-blue-400 transition-colors"
                 >
-                  Kebijakan Privasi
+                  Privacy Policy
                 </Link>
               </li>
               <li>
@@ -96,7 +87,7 @@ export default function Footer() {
                   to="/terms"
                   className="hover:text-blue-400 transition-colors"
                 >
-                  Syarat & Ketentuan
+                  Terms & Conditions
                 </Link>
               </li>
             </ul>
@@ -104,7 +95,7 @@ export default function Footer() {
 
           <div>
             <h3 className="text-white font-semibold tracking-wide mb-4">
-              Hubungi Kami
+              Contact Us
             </h3>
             <ul className="space-y-4 text-sm text-slate-400">
               <li className="flex items-start gap-3">
@@ -128,10 +119,11 @@ export default function Footer() {
                   />
                 </svg>
                 <span>
-                  Menara Sentra Energi, Lt. 8<br />
+                  Fake Sentra Energi, 8th Floor
+                  <br />
                   Jl. Rasuna Said Kav. X-5
                   <br />
-                  Jakarta Selatan, 12950
+                  South Jakarta, 12950
                 </span>
               </li>
               <li className="flex items-center gap-3">

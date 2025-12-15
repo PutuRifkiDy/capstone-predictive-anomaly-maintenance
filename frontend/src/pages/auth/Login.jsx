@@ -4,6 +4,7 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import { login } from "../../utils/api";
 import useInput from "@/hooks/useInput";
 import { toast } from "sonner";
+import { Link } from "react-router";
 
 export default function Login({ loginSuccess }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -37,23 +38,30 @@ export default function Login({ loginSuccess }) {
   return (
     <section className="lg:px-24 md:px-5 px-5 py-5 flex gap-24 lg:justify-between md:justify-center justify-center">
       <div className="flex flex-col lg:w-1/2 md:w-full w-full">
-        <header className="flex items-center gap-3 shrink-0 h-24">
-          <img
-            src="/prevo-logo-with-text.png"
-            className="w-auto h-full"
-            alt=""
-          />
-        </header>
+        <Link to={"/"}>
+          <header className="flex items-center gap-3 shrink-0 h-24">
+            <img
+              src="/prevo-logo-with-text.png"
+              className="w-auto h-full"
+              alt=""
+            />
+          </header>
+        </Link>
         <div className="flex flex-col mt-24">
           <header className="flex flex-col">
-            <h4 className="font-semibold text-[40px] text-[#313131]">Login</h4>
-            <p className="text-[16px] text-[#313131]">
-              <span>Login</span> untuk mengakses pengecekan mesin
+            <h4 className="font-semibold text-[40px] text-[#313131] dark:text-white">
+              Login
+            </h4>
+            <p className="text-[16px] text-[#313131] dark:text-[#79747E]">
+              <span>Login</span> for access checking and maintenance.
             </p>
           </header>
           <form className="mt-10 flex flex-col gap-5" onSubmit={handleSubmit}>
             <div className="flex flex-col gap-2">
-              <label htmlFor="email" className="text-[14px] text-[#313131]">
+              <label
+                htmlFor="email"
+                className="text-[14px] text-[#313131] dark:text-[#79747E]"
+              >
                 Email
               </label>
               <input
@@ -62,12 +70,15 @@ export default function Login({ loginSuccess }) {
                 value={email}
                 onChange={onEmailChange}
                 placeholder="Masukkan email anda"
-                className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-[#79747E]"
+                className="border-[1px] px-4 py-2 border-[#E6EAED] dark:border-gray-600 rounded-[4px] focus:outline-none placeholder:text-[#79747E] dark:bg-[#081028]"
                 required
               />
             </div>
             <div className="flex flex-col gap-2 relative">
-              <label htmlFor="password" className="text-[14px] text-[#313131]">
+              <label
+                htmlFor="password"
+                className="text-[14px] text-[#313131] dark:text-[#79747E]"
+              >
                 Password
               </label>
               <input
@@ -76,7 +87,7 @@ export default function Login({ loginSuccess }) {
                 onChange={onPasswordChange}
                 placeholder="Masukkan password anda"
                 type={showPassword ? "text" : "password"}
-                className="border-[1px] px-4 py-2 border-[#E6EAED] rounded-[4px] focus:outline-none placeholder:text-[#79747E]"
+                className="border-[1px] px-4 py-2 border-[#E6EAED] dark:border-gray-600 rounded-[4px] focus:outline-none placeholder:text-[#79747E] dark:bg-[#081028]"
                 required
               />
               {showPassword ? (

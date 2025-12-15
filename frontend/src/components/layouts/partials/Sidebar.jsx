@@ -272,9 +272,14 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                     </div>
                   </div>
                   <div className="bg-gray-100 w-full h-[1px]" />
-                  <DropdownMenuItem className="flex gap-5 items-center cursor-pointer font-medium">
-                    <HomeIcon className="!w-6 !h-6 font-medium flex-shrink-0" />
-                    Beranda
+                  <DropdownMenuItem
+                    className="flex gap-5 items-center cursor-pointer font-medium"
+                    asChild
+                  >
+                    <Link to={"/"}>
+                      <HomeIcon className="!w-6 !h-6 font-medium flex-shrink-0" />
+                      Beranda
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={onLogout}
@@ -545,7 +550,7 @@ export default function Sidebar({ isSidebarOpen, authedUser, onLogout }) {
                     className="flex gap-5 items-center cursor-pointer font-medium"
                     asChild
                   >
-                    <Link to={"/"} className="">
+                    <Link to="/" className="">
                       <HomeIcon className="!w-6 !h-6 font-medium flex-shrink-0" />
                       Beranda
                     </Link>

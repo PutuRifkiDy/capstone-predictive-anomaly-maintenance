@@ -108,9 +108,7 @@ export default function Dashboard({ authedUser, onLogout }) {
 
   const fetchCountMaintenanceTicketInProgress = async () => {
     try {
-      const result = await countAssignedEngineerTicketInProgress(
-        authedUser.id
-      );
+      const result = await countAssignedEngineerTicketInProgress(authedUser.id);
       if (!result.error) {
         setCountMaintenanceTicketInProgressDataEngineer(result.data);
       } else {
@@ -123,9 +121,7 @@ export default function Dashboard({ authedUser, onLogout }) {
 
   const fetchCountMaintenanceTicketCompleted = async () => {
     try {
-      const result = await countAssignedEngineerTicketCompleted(
-        authedUser.id
-      );
+      const result = await countAssignedEngineerTicketCompleted(authedUser.id);
       if (!result.error) {
         setCountMaintenanceTicketCompletedDataEngineer(result.data);
       } else {
@@ -200,16 +196,13 @@ export default function Dashboard({ authedUser, onLogout }) {
   } else {
     console.log("ini eng  ", maintenanceTicketsRoleEngineer);
     needMaintenance = maintenanceTicketsRoleEngineer.filter(
-      (ticket) =>
-        ticket.status == "need_maintenance"
+      (ticket) => ticket.status == "need_maintenance"
     ).length;
     inProgress = maintenanceTicketsRoleEngineer.filter(
-      (ticket) =>
-        ticket.status == "in_progress"
+      (ticket) => ticket.status == "in_progress"
     ).length;
     completed = maintenanceTicketsRoleEngineer.filter(
-      (ticket) =>
-        ticket.status == "completed"
+      (ticket) => ticket.status == "completed"
     ).length;
   }
 
