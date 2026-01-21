@@ -1,5 +1,8 @@
 import AppLayout from "@/components/layouts/AppLayout";
-import { runMachineLearningModel, uploadDataset } from "@/utils/api-machine-learning";
+import {
+  runMachineLearningModel,
+  uploadDataset,
+} from "@/utils/api-machine-learning";
 // import { runMachineLearningModel, uploadDataset } from "@/utils/api";
 import {
   DocumentArrowUpIcon,
