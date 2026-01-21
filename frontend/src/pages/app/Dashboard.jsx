@@ -334,7 +334,7 @@ export default function Dashboard({ authedUser, onLogout }) {
           </div>
         </div>
 
-        <aside className="fixed top-[0rem] inset-y-0 right-0 hidden w-[20rem] overflow-y-auto border-l dark:border-gray-500 px-4 lg:px-8 xl:block z-0">
+        <aside className="fixed top-[0rem] inset-y-0 right-0 hidden w-[20rem] overflow-y-auto border-l dark:border-gray-500 px-4 lg:px-4 xl:block z-0">
           <div className="rounded-md p-5 mt-24">
             <p className="text-xl font-medium">Maintenance Tickets</p>
 
